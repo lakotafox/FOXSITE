@@ -2,7 +2,7 @@
   "showSearchBar": false,
   "showFoxbot": false,
   "showDesksWorkstations": false,
-  "showCubicles": true,
+  "showCubicles": false,
   "showSeating": false,
   "showStorage": false,
   "showConferenceMeeting": false,
@@ -11,7 +11,7 @@
   "computer-desks": false,
   "standing-desks": false,
   "modular-benching": false,
-  "cubicle-workstations": true,
+  "cubicle-workstations": false,
   "panel-systems": false,
   "modular-cubicles": false,
   "privacy-screens": false,
@@ -45,5 +45,5 @@
     },
     "subcategories": {}
   },
-  "lastUpdated": "2025-08-25T23:13:05.777Z"
+  "lastUpdated": "2025-08-25T23:31:16.218Z"
 }
