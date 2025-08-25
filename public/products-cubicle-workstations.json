@@ -1,0 +1,224 @@
+{
+  "products": {
+    "cubicleWorkstations": [
+      {
+        "id": 1,
+        "title": "Herman Miller Action Office",
+        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1756164345/yusw54ifcuuhe61vlzoe.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": ""
+      },
+      {
+        "id": 2,
+        "title": "Steelcase Answer Workstation",
+        "image": "/images/tanconf.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": ""
+      },
+      {
+        "id": 3,
+        "title": "Haworth Compose Cubicle",
+        "image": "/images/reception tan.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": ""
+      },
+      {
+        "id": 4,
+        "title": "Knoll Dividends Horizon",
+        "image": "/images/small desk.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": ""
+      },
+      {
+        "id": 5,
+        "title": "HON Abound Workstation",
+        "image": "/images/showfacinggarage.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": ""
+      },
+      {
+        "id": 6,
+        "title": "Allsteel Terrace DNA",
+        "image": "/images/Showroomwglassboard.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": "",
+        "imageCrop": {
+          "scale": 1.6084372494752261,
+          "x": 50,
+          "y": 50
+        }
+      },
+      {
+        "id": 7,
+        "title": "Teknion District Workstation",
+        "image": "/images/conference-room.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": ""
+      },
+      {
+        "id": 8,
+        "title": "Global Evolve Panel System",
+        "image": "/images/desk grey L showroom.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": "",
+        "imageCrop": {
+          "scale": 3.045213915504014,
+          "x": 44,
+          "y": 28
+        }
+      },
+      {
+        "id": 9,
+        "title": "AIS Divi Modular Cubicle",
+        "image": "/images/reception-area.jpg",
+        "description": "",
+        "features": [
+          "Premium Quality",
+          "Professional Grade",
+          "Warranty Included"
+        ],
+        "price": ""
+      }
+    ]
+  },
+  "productsCrops": {
+    "/images/product-2-1754595166035.jpg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "/images/desk grey L showroom.jpg": {
+      "scale": 3.045213915504014,
+      "x": 44,
+      "y": 28
+    },
+    "cloudinary-pending-product-1-1755888182868.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1755888184/gvnrzlasudn0v2f1yb8s.jpg": {
+      "scale": 3.7160171437460914,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-1-1755889552100.png": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1755890604/lakjgz2qwlmkdtfchpsf.jpg": {
+      "scale": 2.1307896418797156,
+      "x": 55,
+      "y": 0
+    },
+    "cloudinary-pending-product-1-1755892781304.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-1-1755899786680.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1755899787/kbtyprangjzibsxmxxys.jpg": {
+      "scale": 3.091788592213226,
+      "x": 33,
+      "y": 50.5
+    },
+    "cloudinary-pending-product-1-1755901303770.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-9-1755901315446.png": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1755901315/ki4u88ftnvbomkjoxt2i.png": {
+      "scale": 1.8845405921011305,
+      "x": 50,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1755901304/hjc8llev7xelwklbdlre.jpg": {
+      "scale": 1.8113615841033548,
+      "x": 50,
+      "y": 50
+    },
+    "/images/Showroomwglassboard.jpg": {
+      "scale": 1.6084372494752261,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-1-1755902650478.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1755902651/tj64tahxzbyexy4uuzug.jpg": {
+      "scale": 2.636163224957592,
+      "x": 52,
+      "y": 98.5
+    },
+    "cloudinary-pending-product-1-1755903890253.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1755903892/ndlvzw9patatpgumipxk.jpg": {
+      "scale": 1.847588815785422,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-1-1756164344068.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    }
+  },
+  "pageName": "Cubicle Workstations",
+  "lastUpdated": "2025-08-25T23:25:51.511Z",
+  "updatedBy": "Kyle"
+}
