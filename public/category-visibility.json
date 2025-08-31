@@ -1,12 +1,12 @@
 {
-  "showSearchBar": false,
-  "showFoxbot": false,
-  "showDesksWorkstations": false,
-  "showCubicles": false,
-  "showSeating": false,
-  "showStorage": false,
-  "showConferenceMeeting": false,
-  "showReceptionLounge": false,
+  "showSearchBar": true,
+  "showFoxbot": true,
+  "showDesksWorkstations": true,
+  "showCubicles": true,
+  "showSeating": true,
+  "showStorage": true,
+  "showConferenceMeeting": true,
+  "showReceptionLounge": true,
   "executive-desks": false,
   "computer-desks": false,
   "standing-desks": false,
@@ -45,5 +45,5 @@
     },
     "subcategories": {}
   },
-  "lastUpdated": "2025-08-26T03:53:49.885Z"
+  "lastUpdated": "2025-08-31T05:06:08.142Z"
 }
