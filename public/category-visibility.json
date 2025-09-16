@@ -1,9 +1,9 @@
 {
   "showSearchBar": false,
   "showFoxbot": false,
-  "showDesksWorkstations": true,
-  "showCubicles": true,
-  "showSeating": true,
+  "showDesksWorkstations": false,
+  "showCubicles": false,
+  "showSeating": false,
   "showStorage": false,
   "showConferenceMeeting": false,
   "showReceptionLounge": false,
@@ -45,5 +45,5 @@
     },
     "subcategories": {}
   },
-  "lastUpdated": "2025-09-16T21:57:32.225Z"
+  "lastUpdated": "2025-09-16T21:59:55.139Z"
 }
