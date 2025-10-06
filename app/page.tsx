@@ -59,11 +59,16 @@ function FoxBuiltWebsiteContent() {
   useEffect(() => {
     // Load products from main-products.json (what the carrie editor publishes)
     fetch('/main-products.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return response.json()
+      })
       .then(data => {
-        if (data.products) {
+        if (data && data.products) {
           setFeaturedProducts(data.products)
-          
+
           // Use productsCrops if available, otherwise extract from products
           if (data.productsCrops) {
             setCropSettings(data.productsCrops)
@@ -83,32 +88,52 @@ function FoxBuiltWebsiteContent() {
       })
       .catch(error => {
         console.error('Error loading main-products.json, falling back to defaults:', error)
-        setFeaturedProducts(getMainProducts())
+        try {
+          setFeaturedProducts(getMainProducts())
+        } catch (e) {
+          console.error('Error loading fallback products:', e)
+          setFeaturedProducts(defaultMainProducts)
+        }
       })
     
     // Load gallery images from content.json
     fetch('/content.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return response.json()
+      })
       .then(data => {
-        if (data.gallery) {
-          setGalleryImages(data.gallery)
-        }
-        if (data.mobileGallery) {
-          setMobileGalleryImages(data.mobileGallery)
-        }
-        if (data.galleryCrops) {
-          setGalleryCrops(data.galleryCrops)
+        if (data) {
+          if (data.gallery) {
+            setGalleryImages(data.gallery)
+          }
+          if (data.mobileGallery) {
+            setMobileGalleryImages(data.mobileGallery)
+          }
+          if (data.galleryCrops) {
+            setGalleryCrops(data.galleryCrops)
+          }
         }
       })
       .catch(error => {
         console.error('Error loading content.json gallery:', error)
-        const savedGallery = localStorage.getItem('foxbuilt-gallery')
-        if (savedGallery) {
-          try {
-            setGalleryImages(JSON.parse(savedGallery))
-          } catch (e) {
-            console.error('Error loading gallery images:', e)
+        // Try localStorage as fallback with defensive checks
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            const savedGallery = localStorage.getItem('foxbuilt-gallery')
+            if (savedGallery) {
+              try {
+                setGalleryImages(JSON.parse(savedGallery))
+              } catch (e) {
+                console.error('Error parsing gallery images from localStorage:', e)
+              }
+            }
           }
+        } catch (e) {
+          // localStorage might be blocked or unavailable
+          console.error('localStorage access denied or unavailable:', e)
         }
       })
   }, [])

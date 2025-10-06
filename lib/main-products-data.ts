@@ -82,14 +82,21 @@ export const defaultMainProducts = {
 
 export function getMainProducts() {
   if (typeof window !== 'undefined') {
-    const saved = localStorage.getItem('foxbuilt-main-products')
-    if (saved) {
-      try {
-        return JSON.parse(saved)
-      } catch (e) {
-        console.error('Error parsing saved main products:', e)
-        return defaultMainProducts
+    try {
+      if (window.localStorage) {
+        const saved = localStorage.getItem('foxbuilt-main-products')
+        if (saved) {
+          try {
+            return JSON.parse(saved)
+          } catch (e) {
+            console.error('Error parsing saved main products:', e)
+            return defaultMainProducts
+          }
+        }
       }
+    } catch (e) {
+      // localStorage might be blocked or unavailable
+      console.error('localStorage access denied or unavailable:', e)
     }
   }
   return defaultMainProducts
@@ -97,7 +104,13 @@ export function getMainProducts() {
 
 export function saveMainProducts(products: any) {
   if (typeof window !== 'undefined') {
-    localStorage.setItem('foxbuilt-main-products', JSON.stringify(products))
+    try {
+      if (window.localStorage) {
+        localStorage.setItem('foxbuilt-main-products', JSON.stringify(products))
+      }
+    } catch (e) {
+      console.error('localStorage access denied or unavailable:', e)
+    }
   }
 }
 
@@ -117,16 +130,22 @@ export async function getPublishedMainProducts() {
   
   // Fallback to localStorage
   if (typeof window !== 'undefined') {
-    const saved = localStorage.getItem('foxbuilt-main-products')
-    const savedCrops = localStorage.getItem('foxbuilt-main-crops')
-    if (saved) {
-      try {
-        const products = JSON.parse(saved)
-        const crops = savedCrops ? JSON.parse(savedCrops) : {}
-        return { products, crops }
-      } catch (e) {
-        console.error('Error parsing saved main products:', e)
+    try {
+      if (window.localStorage) {
+        const saved = localStorage.getItem('foxbuilt-main-products')
+        const savedCrops = localStorage.getItem('foxbuilt-main-crops')
+        if (saved) {
+          try {
+            const products = JSON.parse(saved)
+            const crops = savedCrops ? JSON.parse(savedCrops) : {}
+            return { products, crops }
+          } catch (e) {
+            console.error('Error parsing saved main products:', e)
+          }
+        }
       }
+    } catch (e) {
+      console.error('localStorage access denied or unavailable:', e)
     }
   }
   
