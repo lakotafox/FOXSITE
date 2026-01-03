@@ -68,7 +68,7 @@
       },
       {
         "id": 11,
-        "title": "Refurbished Conference Set",
+        "title": "PUT Something Here",
         "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1767402788/pvhmvjzostpr3fleoy5p.jpg",
         "description": "",
         "features": [
@@ -171,6 +171,11 @@
       "x": 50,
       "y": 50
     },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1767402788/pvhmvjzostpr3fleoy5p.jpg": {
+      "scale": 9.371722253862597,
+      "x": 50,
+      "y": 54
+    },
     "/images/showfacinggarage.jpg": {
       "scale": 1.3,
       "x": 55,
@@ -180,11 +185,6 @@
       "scale": 1,
       "x": 50,
       "y": 50
-    },
-    "https://res.cloudinary.com/dltlrgaay/image/upload/v1767402788/pvhmvjzostpr3fleoy5p.jpg": {
-      "scale": 9.371722253862597,
-      "x": 50,
-      "y": 54
     }
   }
 }
