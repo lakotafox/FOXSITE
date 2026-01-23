@@ -69,7 +69,7 @@
       {
         "id": 11,
         "title": "PUT Something Here",
-        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1769205658/gpdpcephr2lsvxx50j2j.jpg",
+        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1769206015/gmdxgrw4jvxhs252irld.png",
         "description": "",
         "features": [
           "A really good desk",
@@ -186,7 +186,7 @@
       "x": 50,
       "y": 50
     },
-    "cloudinary-pending-product-11-1769205615095.jpeg": {
+    "cloudinary-pending-product-11-1769205991350.png": {
       "scale": 1,
       "x": 50,
       "y": 50
