@@ -69,7 +69,7 @@
       {
         "id": 11,
         "title": "PUT Something Here",
-        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1767402788/pvhmvjzostpr3fleoy5p.jpg",
+        "image": "cloudinary-pending-product-11-1769205283441.jpeg",
         "description": "",
         "features": [
           "A really good desk",
@@ -78,9 +78,9 @@
         ],
         "price": "",
         "imageCrop": {
-          "scale": 9.371722253862597,
+          "scale": 1,
           "x": 50,
-          "y": 54
+          "y": 50
         }
       },
       {
@@ -182,6 +182,11 @@
       "y": 50
     },
     "cloudinary-pending-product-11-1767402740613.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-11-1769205283441.jpeg": {
       "scale": 1,
       "x": 50,
       "y": 50
