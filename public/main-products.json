@@ -69,7 +69,7 @@
       {
         "id": 11,
         "title": "PUT Something Here",
-        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1769206015/gmdxgrw4jvxhs252irld.png",
+        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1769207099/gfdbaagqg3kjugu1bm6t.jpg",
         "description": "",
         "features": [
           "A really good desk",
@@ -78,9 +78,9 @@
         ],
         "price": "",
         "imageCrop": {
-          "scale": 9.371722253862597,
+          "scale": 1.4282462475762734,
           "x": 50,
-          "y": 54
+          "y": 50
         }
       },
       {
@@ -171,7 +171,7 @@
       "x": 50,
       "y": 50
     },
-    "https://res.cloudinary.com/dltlrgaay/image/upload/v1767402788/pvhmvjzostpr3fleoy5p.jpg": {
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1769206015/gmdxgrw4jvxhs252irld.png": {
       "scale": 9.371722253862597,
       "x": 50,
       "y": 54
@@ -181,6 +181,11 @@
       "x": 55,
       "y": 50
     },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1767402788/pvhmvjzostpr3fleoy5p.jpg": {
+      "scale": 9.371722253862597,
+      "x": 50,
+      "y": 54
+    },
     "cloudinary-pending-product-11-1767402740613.jpeg": {
       "scale": 1,
       "x": 50,
@@ -188,6 +193,16 @@
     },
     "cloudinary-pending-product-11-1769205991350.png": {
       "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-11-1769207087490.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1769207099/gfdbaagqg3kjugu1bm6t.jpg": {
+      "scale": 1.4282462475762734,
       "x": 50,
       "y": 50
     }
