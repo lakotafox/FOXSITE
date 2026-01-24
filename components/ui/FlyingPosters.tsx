@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { gsap } from 'gsap'
-import { Search, Info, X } from 'lucide-react'
+import { Search, Info, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import FullImageModal from '@/components/ui/FullImageModal'
 
 interface FlyingPostersProps {
@@ -306,6 +306,38 @@ export default function FlyingPosters({
     }
   }
 
+  // Navigate carousel by direction (for arrow buttons)
+  const navigateCarousel = (direction: 'left' | 'right') => {
+    const delta = direction === 'right' ? 1 : -1
+    const targetPosition = currentPosition + delta
+
+    // Cancel any ongoing animation
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current)
+    }
+
+    // Animate to new position
+    const startPosition = currentPosition
+    const startTime = Date.now()
+    const duration = 500 // 500ms animation
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1)
+
+      // Ease out cubic for smooth deceleration
+      const eased = 1 - Math.pow(1 - progress, 3)
+
+      const newPosition = startPosition + (targetPosition - startPosition) * eased
+      setCurrentPosition(newPosition)
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate)
+      }
+    }
+    animate()
+  }
+
   const handleCardClick = (index: number) => {
     if (isDragging) return
     
@@ -463,8 +495,19 @@ export default function FlyingPosters({
       <div className="fixed md:bottom-8 bottom-4 left-0 right-0 text-center z-50 pointer-events-none">
         {!showHelpText && (
           <>
-            {/* Desktop buttons - same as mobile */}
-            <div className="hidden md:flex flex-col items-center justify-center gap-2 pointer-events-auto">
+            {/* Desktop buttons with arrow navigation */}
+            <div className="hidden md:flex flex-row items-center justify-center gap-4 pointer-events-auto">
+              {/* Left arrow */}
+              <button
+                onClick={() => navigateCarousel('left')}
+                className="inline-flex items-center justify-center text-white text-base bg-black/50 hover:bg-black/70 p-3 rounded-full transition-all"
+                aria-label="Previous image"
+                title="Previous image"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              {/* Zoom button */}
               <button
                 onClick={() => {
                   // Find the current focal image and open it
@@ -481,13 +524,15 @@ export default function FlyingPosters({
                 <Search className="w-5 h-5" />
                 <span className="text-sm">Zoom</span>
               </button>
+
+              {/* Info button */}
               {onInfoClick && (
                 <button
                   onClick={() => {
                     // Get current focal image index
                     const focalIndex = Math.round(currentPosition) % items.length
                     const normalizedIndex = focalIndex < 0 ? focalIndex + items.length : focalIndex
-                    
+
                     // Call the info click handler if provided
                     onInfoClick(normalizedIndex)
                   }}
@@ -499,6 +544,16 @@ export default function FlyingPosters({
                   <span className="text-sm">Info</span>
                 </button>
               )}
+
+              {/* Right arrow */}
+              <button
+                onClick={() => navigateCarousel('right')}
+                className="inline-flex items-center justify-center text-white text-base bg-black/50 hover:bg-black/70 p-3 rounded-full transition-all"
+                aria-label="Next image"
+                title="Next image"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
             </div>
             {/* Mobile buttons */}
             <div className="md:hidden flex flex-row items-center justify-between w-full px-4 pointer-events-auto" 
