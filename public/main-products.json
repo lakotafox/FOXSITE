@@ -69,7 +69,7 @@
       {
         "id": 11,
         "title": "Desk",
-        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1769207099/gfdbaagqg3kjugu1bm6t.jpg",
+        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1770415351/qsgdre0lfuhavpsxbw1j.jpg",
         "description": "",
         "features": [
           "A really good desk it is really good ",
@@ -202,6 +202,11 @@
       "y": 50
     },
     "cloudinary-pending-product-11-1769207087490.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-11-1770415350650.jpeg": {
       "scale": 1,
       "x": 50,
       "y": 50
