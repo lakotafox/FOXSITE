@@ -69,7 +69,7 @@
       {
         "id": 11,
         "title": "Desk",
-        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1770415351/qsgdre0lfuhavpsxbw1j.jpg",
+        "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1771027034/o6y7lrsbvgajsh1nwobf.jpg",
         "description": "",
         "features": [
           "A really good desk it is really good ",
@@ -171,7 +171,7 @@
       "x": 50,
       "y": 50
     },
-    "https://res.cloudinary.com/dltlrgaay/image/upload/v1769207099/gfdbaagqg3kjugu1bm6t.jpg": {
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1770415351/qsgdre0lfuhavpsxbw1j.jpg": {
       "scale": 1.4282462475762734,
       "x": 50,
       "y": 50
@@ -179,6 +179,11 @@
     "/images/showfacinggarage.jpg": {
       "scale": 1.3,
       "x": 55,
+      "y": 50
+    },
+    "https://res.cloudinary.com/dltlrgaay/image/upload/v1769207099/gfdbaagqg3kjugu1bm6t.jpg": {
+      "scale": 1.4282462475762734,
+      "x": 50,
       "y": 50
     },
     "https://res.cloudinary.com/dltlrgaay/image/upload/v1769206015/gmdxgrw4jvxhs252irld.png": {
@@ -207,6 +212,11 @@
       "y": 50
     },
     "cloudinary-pending-product-11-1770415350650.jpeg": {
+      "scale": 1,
+      "x": 50,
+      "y": 50
+    },
+    "cloudinary-pending-product-11-1771027033836.JPG": {
       "scale": 1,
       "x": 50,
       "y": 50
