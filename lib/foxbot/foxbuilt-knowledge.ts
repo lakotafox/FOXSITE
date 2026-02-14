@@ -225,7 +225,7 @@ export const FOXBUILT_KNOWLEDGE = {
   },
   
   catalog: {
-    pages: 148,
+    pages: 164,
     url: "/catalog",
     contents: [
       "Complete product listings",

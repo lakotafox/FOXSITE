@@ -161,7 +161,7 @@ function ListViewContent() {
       {/* Footer */}
       <footer className="bg-slate-800 border-t-4 border-yellow-500 text-zinc-400 py-6">
         <div className="container mx-auto px-4">
-          <p className="text-sm font-bold">&copy; 2025, FOXBUILT.</p>
+          <p className="text-sm font-bold">&copy; 2026, FOXBUILT.</p>
           <p className="text-xs text-yellow-500 mt-1">Want a free website? Email lakota.code@gmail.com</p>
         </div>
       </footer>

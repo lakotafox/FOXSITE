@@ -48,7 +48,7 @@ export async function processMessageV2(userMessage: string): Promise<BotResponse
 
   // Catalog request
   if (lowerMessage.includes('catalog') || lowerMessage.includes('brochure')) {
-    responseText = "View our complete 148-page catalog at /catalog. It features our full range of office furniture. Would you like me to help you find something specific?"
+    responseText = "View our complete 164-page catalog at /catalog. It features our full range of office furniture. Would you like me to help you find something specific?"
     conversationContext.lastIntent = 'catalog'
     return { text: responseText, products: [] }
   }

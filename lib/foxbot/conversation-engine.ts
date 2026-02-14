@@ -84,7 +84,7 @@ function generateResponse(intent: string, query: string, products: Product[]): s
       return "You can reach our sales team at:\n📞 Phone: (801) 899-9406\n📧 Email: sales@foxbuilt.com\n📍 Visit our showroom at our location\n\nOur team is available Monday-Friday 8am-6pm and Saturday 10am-4pm."
 
     case 'catalog':
-      return "You can view our complete catalog at /catalog. It features our full range of office furniture, seating, storage solutions, and more with 148 pages of products. Would you like me to help you find something specific?"
+      return "You can view our complete catalog at /catalog. It features our full range of office furniture, seating, storage solutions, and more with 164 pages of products. Would you like me to help you find something specific?"
 
     case 'quantity':
       return "Excellent! We offer bulk discounts for large orders. For quantities over 10 items, please contact our sales team for special pricing. What items are you looking to purchase in bulk?"

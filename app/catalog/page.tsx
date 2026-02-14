@@ -46,7 +46,7 @@ export default function CatalogPage() {
         </div>
         
         <iframe
-          src="https://online.fliphtml5.com/hxniv/gevh/"
+          src="https://online.fliphtml5.com/klihw/N9NE_West_Catalog_Web-2026/"
           className="w-full h-full"
           style={{ minHeight: 'calc(100vh - 80px)' }}
           frameBorder="0"

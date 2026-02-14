@@ -14,7 +14,7 @@ export default function TurnJSSimple() {
   const flipbookRef = useRef<HTMLDivElement>(null)
   const pageFlipRef = useRef<any>(null)
   
-  const totalPages = 148
+  const totalPages = 164
 
   // Array of page turn sound files - KEEPING YOUR SOUNDS!
   const pageTurnSounds = [
@@ -494,13 +494,14 @@ export default function TurnJSSimple() {
               </button>
               {activeDropdown === 'desking' && (
                 <div className="absolute top-full left-0 mt-0 bg-slate-800 rounded-b shadow-xl py-2 min-w-[250px] border border-slate-700" style={{ zIndex: 9999 }}>
-                  <button onClick={() => goToPage(4)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">04-28: Classic Laminate</button>
-                  <button onClick={() => goToPage(30)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">30-37: Elements Laminate</button>
-                  <button onClick={() => goToPage(38)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">38-39: Encore Collection</button>
-                  <button onClick={() => goToPage(40)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">40-45: Signature Collection</button>
-                  <button onClick={() => goToPage(48)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">48-49: Riser Series</button>
-                  <button onClick={() => goToPage(50)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">50-53: Height Adjustable</button>
-                  <button onClick={() => goToPage(140)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">140-143: Accessories</button>
+                  <button onClick={() => goToPage(2)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">02-32: Classic Laminate</button>
+                  <button onClick={() => goToPage(34)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">34-35: Riser Series</button>
+                  <button onClick={() => goToPage(38)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">38-43: Elements Collection</button>
+                  <button onClick={() => goToPage(44)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">44-45: Encore Collection</button>
+                  <button onClick={() => goToPage(46)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">46-50: Signature Collection</button>
+                  <button onClick={() => goToPage(52)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">52-53: Struxture Series</button>
+                  <button onClick={() => goToPage(56)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">56-58: Height Adjustable</button>
+                  <button onClick={() => goToPage(156)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">156-157: Pedestals</button>
                 </div>
               )}
             </div>
@@ -516,10 +517,10 @@ export default function TurnJSSimple() {
               </button>
               {activeDropdown === 'panels' && (
                 <div className="absolute top-full left-0 mt-0 bg-slate-800 rounded-b shadow-xl py-2 min-w-[250px] border border-slate-700" style={{ zIndex: 9999 }}>
-                  <button onClick={() => goToPage(56)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">56-59: Webb Panels</button>
-                  <button onClick={() => goToPage(60)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">60-61: Borders</button>
-                  <button onClick={() => goToPage(62)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">62: SpaceMax Panels</button>
-                  <button onClick={() => goToPage(63)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">63: Drawing Services</button>
+                  <button onClick={() => goToPage(61)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">61: Drawing Services</button>
+                  <button onClick={() => goToPage(62)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">62-67: Webb Panels</button>
+                  <button onClick={() => goToPage(68)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">68: SpaceMax Panels</button>
+                  <button onClick={() => goToPage(70)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">70-71: Borders</button>
                 </div>
               )}
             </div>
@@ -530,15 +531,15 @@ export default function TurnJSSimple() {
                 onClick={() => setActiveDropdown(activeDropdown === 'tables' ? null : 'tables')}
                 className="text-green-500 hover:text-green-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2"
               >
-                Tables
+                Tables & Presentations
                 <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'tables' ? 'rotate-180' : ''}`} />
               </button>
               {activeDropdown === 'tables' && (
                 <div className="absolute top-full left-0 mt-0 bg-slate-800 rounded-b shadow-xl py-2 min-w-[250px] border border-slate-700" style={{ zIndex: 9999 }}>
-                  <button onClick={() => goToPage(66)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">66-67: Gathering Tables</button>
-                  <button onClick={() => goToPage(68)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">68-71: Training Room</button>
-                  <button onClick={() => goToPage(73)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">73-78: Conference Tables</button>
-                  <button onClick={() => goToPage(79)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">79-83: Occasional Tables</button>
+                  <button onClick={() => goToPage(72)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">72-75: Training Room Tables</button>
+                  <button onClick={() => goToPage(76)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">76-77: Gathering Tables</button>
+                  <button onClick={() => goToPage(78)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">78-85: Conference Tables</button>
+                  <button onClick={() => goToPage(86)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">86-89: Occasional Tables</button>
                 </div>
               )}
             </div>
@@ -554,13 +555,14 @@ export default function TurnJSSimple() {
               </button>
               {activeDropdown === 'seating' && (
                 <div className="absolute top-full right-0 md:left-0 md:right-auto mt-0 bg-slate-800 rounded-b shadow-xl py-2 min-w-[250px] border border-slate-700" style={{ zIndex: 9999 }}>
-                  <button onClick={() => goToPage(86)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">86-89: Chair Guide</button>
-                  <button onClick={() => goToPage(90)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">90-98: Reception & Lounge</button>
-                  <button onClick={() => goToPage(99)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">99-113: Management</button>
-                  <button onClick={() => goToPage(114)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">114-121: Task</button>
-                  <button onClick={() => goToPage(122)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">122-123: Big & Tall</button>
-                  <button onClick={() => goToPage(124)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">124-125: Drafting</button>
-                  <button onClick={() => goToPage(126)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">126-139: Guest & Multi</button>
+                  <button onClick={() => goToPage(92)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">92-95: Chair Guide</button>
+                  <button onClick={() => goToPage(96)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">96-103: Reception & Lounge</button>
+                  <button onClick={() => goToPage(104)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">104-117: Guest & Multi-Purpose</button>
+                  <button onClick={() => goToPage(118)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">118-122: Drafting & Bar Height</button>
+                  <button onClick={() => goToPage(123)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">123-141: Mgmt & Conference</button>
+                  <button onClick={() => goToPage(142)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">142-152: Task</button>
+                  <button onClick={() => goToPage(153)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">153: Healthcare</button>
+                  <button onClick={() => goToPage(154)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">154-155: Big & Tall</button>
                 </div>
               )}
             </div>

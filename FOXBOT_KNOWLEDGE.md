@@ -123,7 +123,7 @@ This document contains all the information FOXBOT knows about FoxBuilt. Edit thi
 8. Eco-friendly refurbished options
 
 ## Catalog
-- **Pages**: 148
+- **Pages**: 164
 - **Access**: Available at /catalog on website
 - **Contents**: Complete product listings, specifications, finishes, pricing
 

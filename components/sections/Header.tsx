@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Phone, MapPin, Mail, ChevronDown, Menu, X, Search } from 'lucide-react'
+import { Phone, MapPin, Mail, ChevronDown, Menu, X, Search, BookOpen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import MapConfirmModal from '@/components/ui/MapConfirmModal'
 import RollingYearCounter from '@/components/ui/RollingYearCounter'
@@ -115,27 +115,37 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-col items-end gap-2">
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => window.location.href = 'tel:+18018999406'}
+                      className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="Call us"
+                    >
+                      <Phone className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => setShowMapConfirm(true)}
+                      className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="View on map"
+                    >
+                      <MapPin className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="Send message"
+                    >
+                      <Mail className="w-5 h-5" />
+                    </button>
+                  </div>
                   <button
-                    onClick={() => window.location.href = 'tel:+18018999406'}
-                    className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="Call us"
+                    onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs tracking-wider rounded flex items-center gap-1.5 transition-all"
+                    aria-label="View catalog"
                   >
-                    <Phone className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => setShowMapConfirm(true)}
-                    className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="View on map"
-                  >
-                    <MapPin className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="Send message"
-                  >
-                    <Mail className="w-5 h-5" />
+                    <BookOpen className="w-3.5 h-3.5" />
+                    CATALOG
                   </button>
                 </div>
               </>
@@ -190,27 +200,37 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                 )}
 
                 {/* Action Buttons - Desktop */}
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-col items-end gap-2">
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => window.location.href = 'tel:+18018999406'}
+                      className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="Call us"
+                    >
+                      <Phone className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => setShowMapConfirm(true)}
+                      className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="View on map"
+                    >
+                      <MapPin className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="Send message"
+                    >
+                      <Mail className="w-5 h-5" />
+                    </button>
+                  </div>
                   <button
-                    onClick={() => window.location.href = 'tel:+18018999406'}
-                    className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="Call us"
+                    onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs tracking-wider rounded flex items-center gap-1.5 transition-all"
+                    aria-label="View catalog"
                   >
-                    <Phone className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => setShowMapConfirm(true)}
-                    className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="View on map"
-                  >
-                    <MapPin className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="Send message"
-                  >
-                    <Mail className="w-5 h-5" />
+                    <BookOpen className="w-3.5 h-3.5" />
+                    CATALOG
                   </button>
                 </div>
               </>
@@ -247,27 +267,37 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex items-center gap-1 flex-shrink-0">
+                <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => window.location.href = 'tel:+18018999406'}
+                      className="w-8 h-8 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="Call us"
+                    >
+                      <Phone className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setShowMapConfirm(true)}
+                      className="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="View on map"
+                    >
+                      <MapPin className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="w-8 h-8 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all"
+                      aria-label="Send message"
+                    >
+                      <Mail className="w-4 h-4" />
+                    </button>
+                  </div>
                   <button
-                    onClick={() => window.location.href = 'tel:+18018999406'}
-                    className="w-8 h-8 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="Call us"
+                    onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white font-bold text-[10px] tracking-wider rounded flex items-center gap-1 transition-all"
+                    aria-label="View catalog"
                   >
-                    <Phone className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setShowMapConfirm(true)}
-                    className="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="View on map"
-                  >
-                    <MapPin className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="w-8 h-8 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all"
-                    aria-label="Send message"
-                  >
-                    <Mail className="w-4 h-4" />
+                    <BookOpen className="w-3 h-3" />
+                    CATALOG
                   </button>
                 </div>
               </div>
@@ -317,27 +347,37 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                   )}
 
                   {/* Action Buttons - Mobile (compact) */}
-                  <div className="flex items-center gap-1 flex-shrink-0">
+                  <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => window.location.href = 'tel:+18018999406'}
+                        className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
+                        aria-label="Call us"
+                      >
+                        <Phone className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => setShowMapConfirm(true)}
+                        className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-all"
+                        aria-label="View on map"
+                      >
+                        <MapPin className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all"
+                        aria-label="Send message"
+                      >
+                        <Mail className="w-5 h-5" />
+                      </button>
+                    </div>
                     <button
-                      onClick={() => window.location.href = 'tel:+18018999406'}
-                      className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
-                      aria-label="Call us"
+                      onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white font-bold text-[10px] tracking-wider rounded flex items-center gap-1 transition-all"
+                      aria-label="View catalog"
                     >
-                      <Phone className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => setShowMapConfirm(true)}
-                      className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-all"
-                      aria-label="View on map"
-                    >
-                      <MapPin className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all"
-                      aria-label="Send message"
-                    >
-                      <Mail className="w-5 h-5" />
+                      <BookOpen className="w-3 h-3" />
+                      CATALOG
                     </button>
                   </div>
                 </div>
