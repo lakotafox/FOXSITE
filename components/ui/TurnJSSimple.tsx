@@ -606,7 +606,7 @@ export default function TurnJSSimple() {
       </div>
 
       {/* Flipbook / Carousel Container */}
-      <div className="flex-grow-0 md:flex-1 relative flex items-start justify-center overflow-hidden" style={{ zIndex: activeDropdown ? 1 : 100 }}>
+      <div className={`flex-grow-0 md:flex-1 relative flex items-center justify-center ${activeDropdown ? '' : 'overflow-hidden'}`} style={{ zIndex: activeDropdown ? 1 : 100, position: 'relative' }}>
         {/* Loading indicator */}
         {!isReady && (
           <div className="text-white text-2xl font-bold py-12">
@@ -633,7 +633,7 @@ export default function TurnJSSimple() {
                 WebkitUserSelect: 'none',
                 display: 'block',
                 visibility: isReady ? 'visible' : 'hidden',
-                zIndex: 200,
+                zIndex: activeDropdown ? 0 : 200,
               }}
             >
               {generatePages()}
