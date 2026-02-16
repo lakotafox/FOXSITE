@@ -7,7 +7,6 @@ import useEmblaCarousel from 'embla-carousel-react'
 export default function TurnJSSimple() {
   const [isReady, setIsReady] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [bottomIndexOpen, setBottomIndexOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : false)
   const [loadingError, setLoadingError] = useState<string | null>(null)
@@ -78,12 +77,12 @@ export default function TurnJSSimple() {
     }
   }
 
-  // Handle click outside to close dropdowns
+  // Handle click outside to close index dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
       if (!target.closest('.relative')) {
-        setActiveDropdown(null)
+        setBottomIndexOpen(false)
       }
     }
 
@@ -430,7 +429,6 @@ export default function TurnJSSimple() {
   }
 
   const goToPage = (catalogPageNumber: number) => {
-    setActiveDropdown(null)
     setBottomIndexOpen(false)
     if (isDesktop && pageFlipRef.current) {
       try {
@@ -509,104 +507,8 @@ export default function TurnJSSimple() {
       className="relative w-full bg-slate-800 flex flex-col h-full"
       style={{ zIndex: 30 }}
     >
-      {/* Navigation Bar - KEEPING YOUR SUPERIOR NAVIGATION! */}
-      <div className="bg-slate-900 px-4 border-b border-slate-700 relative" style={{ zIndex: activeDropdown ? 10000 : 10, position: 'relative' }}>
-        <div className="max-w-7xl mx-auto">
-          {/* Catalog Index Header */}
-          <div className="text-center mb-2">
-            <h2 className="text-white text-sm font-bold uppercase tracking-wider">CATALOG INDEX</h2>
-          </div>
-          {/* Navigation Dropdowns */}
-          <div className="flex items-center justify-start md:justify-center gap-3 md:gap-6 overflow-x-auto scrollbar-hide pb-1">
-            {/* Desking Dropdown */}
-            <div className="relative flex-shrink-0" style={{ zIndex: activeDropdown === 'desking' ? 10000 : 'auto' }}>
-              <button
-                onClick={() => setActiveDropdown(activeDropdown === 'desking' ? null : 'desking')}
-                className="text-yellow-500 hover:text-yellow-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
-              >
-                Desking
-                <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desking' ? 'rotate-180' : ''}`} />
-              </button>
-              {activeDropdown === 'desking' && (
-                <div className="absolute top-full left-0 mt-0 bg-slate-800 rounded-b shadow-xl py-2 min-w-[250px] border border-slate-700" style={{ zIndex: 9999 }}>
-                  <button onClick={() => goToPage(2)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">02-32: Classic Laminate</button>
-                  <button onClick={() => goToPage(34)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">34-35: Riser Series</button>
-                  <button onClick={() => goToPage(38)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">38-43: Elements Collection</button>
-                  <button onClick={() => goToPage(44)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">44-45: Encore Collection</button>
-                  <button onClick={() => goToPage(46)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">46-50: Signature Collection</button>
-                  <button onClick={() => goToPage(52)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">52-53: Struxture Series</button>
-                  <button onClick={() => goToPage(56)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">56-58: Height Adjustable</button>
-                  <button onClick={() => goToPage(156)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">156-157: Pedestals</button>
-                </div>
-              )}
-            </div>
-
-            {/* Panels Dropdown */}
-            <div className="relative flex-shrink-0" style={{ zIndex: activeDropdown === 'panels' ? 10000 : 'auto' }}>
-              <button
-                onClick={() => setActiveDropdown(activeDropdown === 'panels' ? null : 'panels')}
-                className="text-blue-500 hover:text-blue-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
-              >
-                Panels
-                <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'panels' ? 'rotate-180' : ''}`} />
-              </button>
-              {activeDropdown === 'panels' && (
-                <div className="absolute top-full left-0 mt-0 bg-slate-800 rounded-b shadow-xl py-2 min-w-[250px] border border-slate-700" style={{ zIndex: 9999 }}>
-                  <button onClick={() => goToPage(61)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">61: Drawing Services</button>
-                  <button onClick={() => goToPage(62)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">62-67: Webb Panels</button>
-                  <button onClick={() => goToPage(68)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">68: SpaceMax Panels</button>
-                  <button onClick={() => goToPage(70)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">70-71: Borders</button>
-                </div>
-              )}
-            </div>
-
-            {/* Tables Dropdown */}
-            <div className="relative flex-shrink-0" style={{ zIndex: activeDropdown === 'tables' ? 10000 : 'auto' }}>
-              <button
-                onClick={() => setActiveDropdown(activeDropdown === 'tables' ? null : 'tables')}
-                className="text-green-500 hover:text-green-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
-              >
-                Tables
-                <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'tables' ? 'rotate-180' : ''}`} />
-              </button>
-              {activeDropdown === 'tables' && (
-                <div className="absolute top-full left-0 mt-0 bg-slate-800 rounded-b shadow-xl py-2 min-w-[250px] border border-slate-700" style={{ zIndex: 9999 }}>
-                  <button onClick={() => goToPage(72)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">72-75: Training Room Tables</button>
-                  <button onClick={() => goToPage(76)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">76-77: Gathering Tables</button>
-                  <button onClick={() => goToPage(78)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">78-85: Conference Tables</button>
-                  <button onClick={() => goToPage(86)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">86-89: Occasional Tables</button>
-                </div>
-              )}
-            </div>
-
-            {/* Seating Dropdown */}
-            <div className="relative flex-shrink-0" style={{ zIndex: activeDropdown === 'seating' ? 10000 : 'auto' }}>
-              <button
-                onClick={() => setActiveDropdown(activeDropdown === 'seating' ? null : 'seating')}
-                className="text-red-500 hover:text-red-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
-              >
-                Seating
-                <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'seating' ? 'rotate-180' : ''}`} />
-              </button>
-              {activeDropdown === 'seating' && (
-                <div className="absolute top-full right-0 md:left-0 md:right-auto mt-0 bg-slate-800 rounded-b shadow-xl py-2 min-w-[250px] border border-slate-700" style={{ zIndex: 9999 }}>
-                  <button onClick={() => goToPage(92)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">92-95: Chair Guide</button>
-                  <button onClick={() => goToPage(96)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">96-103: Reception & Lounge</button>
-                  <button onClick={() => goToPage(104)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">104-117: Guest & Multi-Purpose</button>
-                  <button onClick={() => goToPage(118)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">118-122: Drafting & Bar Height</button>
-                  <button onClick={() => goToPage(123)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">123-141: Mgmt & Conference</button>
-                  <button onClick={() => goToPage(142)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">142-152: Task</button>
-                  <button onClick={() => goToPage(153)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">153: Healthcare</button>
-                  <button onClick={() => goToPage(154)} className="block w-full text-left px-4 py-2.5 text-sm text-white hover:bg-slate-600 transition-colors">154-155: Big & Tall</button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Flipbook / Carousel Container */}
-      <div className="flex-1 relative flex items-center justify-center overflow-hidden" style={{ zIndex: activeDropdown ? -1 : 'auto', pointerEvents: activeDropdown ? 'none' : 'auto' }}>
+      <div className="flex-1 relative flex items-center justify-center overflow-hidden">
         {/* Loading indicator */}
         {!isReady && (
           <div className="text-white text-2xl font-bold py-12">
@@ -716,62 +618,29 @@ export default function TurnJSSimple() {
         .stf__block {
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
+
       `}</style>
     </div>
 
-    {/* Page indicator + controls (mobile only) */}
-    {!isDesktop && (
-    <div className="bg-slate-800 text-center" style={{ zIndex: bottomIndexOpen ? 10001 : 5, position: 'relative' }}>
-      <div className="flex items-center justify-center gap-2">
-        {/* Back button - Now with monkey-patch fix */}
-        {!isDesktop && currentPage > 1 && (
-          <button
-            onClick={prevPage}
-            className="bg-black/60 text-white p-2 rounded-full"
-            aria-label="Previous page"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-        )}
-        
+    {/* Page indicator + controls */}
+    <div className="bg-slate-800 text-center py-2" style={{ zIndex: bottomIndexOpen ? 10001 : 5, position: 'relative' }}>
+      <div className="flex items-center justify-center gap-3">
         {/* Page indicator */}
-        <div className="bg-black/60 text-white px-3 py-1 md:px-4 md:py-2 rounded-full inline-block text-xs md:text-base">
-          {currentPage === 1 ? 'Cover' : 
+        <div className="bg-black/60 text-white px-4 py-2 rounded-full inline-block text-sm">
+          {currentPage === 1 ? 'Cover' :
            currentPage === 2 ? 'Inside Cover' :
            `Page ${currentPage - 2} of ${totalPages - 2}`}
         </div>
-        
-        {/* Forward button - only show on mobile when not on last page */}
-        {!isDesktop && currentPage < totalPages && (
-          <button
-            onClick={nextPage}
-            className="bg-black/60 text-white p-2 rounded-full"
-            aria-label="Next page"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        )}
-      </div>
 
-      {/* Mobile bottom INDEX + Download buttons */}
-      {!isDesktop && (
-        <div className="relative flex justify-center items-center gap-3 mt-2 pb-2">
+        {/* INDEX button */}
+        <div className="relative">
           <button
             onClick={() => setBottomIndexOpen(!bottomIndexOpen)}
-            className="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full flex items-center gap-1 border border-slate-500"
+            className="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1 border border-slate-500"
           >
             Index
             <ChevronDown className={`w-3 h-3 transition-transform ${bottomIndexOpen ? 'rotate-180' : ''}`} />
           </button>
-
-          <a
-            href="/Catalog.pdf"
-            download="FoxBuilt-2026-Catalog.pdf"
-            className="bg-yellow-600 hover:bg-yellow-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full flex items-center gap-1 border border-yellow-500"
-          >
-            <Download className="w-3 h-3" />
-            PDF
-          </a>
 
           {bottomIndexOpen && (
             <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 rounded-lg shadow-xl border border-slate-600 py-2 w-[280px] max-h-[60vh] overflow-y-auto" style={{ zIndex: 9999 }}>
@@ -809,9 +678,18 @@ export default function TurnJSSimple() {
             </div>
           )}
         </div>
-      )}
+
+        {/* PDF Download */}
+        <a
+          href="/Catalog.pdf"
+          download="FoxBuilt-2026-Catalog.pdf"
+          className="bg-yellow-600 hover:bg-yellow-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1 border border-yellow-500"
+        >
+          <Download className="w-3 h-3" />
+          PDF
+        </a>
+      </div>
     </div>
-    )}
     </>
   )
 }
