@@ -586,26 +586,6 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
       )}
     </header>
 
-    {/* Mobile banner when no product categories are visible */}
-    {!hasAnyVisibleCategory && (
-      <div className="md:hidden fixed top-[72px] left-0 right-0 z-40 bg-slate-800 border-b border-slate-600 px-4 py-3 text-center">
-        <p className="text-white text-sm leading-relaxed">
-          We're working on adding product inventory to our site.
-          Please check out the{' '}
-          <button
-            onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-orange-400 font-bold underline"
-          >
-            catalog
-          </button>
-          {' '}or{' '}
-          <a href="tel:+18018999406" className="text-red-400 font-bold underline">
-            give us a call
-          </a>!
-        </p>
-      </div>
-    )}
-
     {/* Mobile Menu Overlay */}
     {mobileMenuOpen && (
       <div className="md:hidden fixed inset-0 z-40 bg-white overflow-y-auto" style={{ paddingTop: '56px' }}>
