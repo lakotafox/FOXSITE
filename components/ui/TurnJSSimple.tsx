@@ -540,7 +540,7 @@ export default function TurnJSSimple() {
               {generatePages()}
             </div>
 
-            {/* Desktop nav arrows + fullscreen */}
+            {/* Desktop nav arrows */}
             {isReady && (
               <>
                 <button
@@ -554,13 +554,6 @@ export default function TurnJSSimple() {
                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full"
                 >
                   <ChevronRight className="w-6 h-6" />
-                </button>
-                <button
-                  onClick={toggleFullscreen}
-                  className="absolute right-4 top-4 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full"
-                  aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-                >
-                  {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
                 </button>
               </>
             )}
@@ -620,74 +613,85 @@ export default function TurnJSSimple() {
         }
 
       `}</style>
-    </div>
 
-    {/* Page indicator + controls */}
-    <div className="bg-slate-800 text-center py-2" style={{ zIndex: bottomIndexOpen ? 10001 : 5, position: 'relative' }}>
-      <div className="flex items-center justify-center gap-3">
-        {/* Page indicator */}
-        <div className="bg-black/60 text-white px-4 py-2 rounded-full inline-block text-sm">
-          {currentPage === 1 ? 'Cover' :
-           currentPage === 2 ? 'Inside Cover' :
-           `Page ${currentPage - 2} of ${totalPages - 2}`}
-        </div>
+      {/* Page indicator + controls (inside containerRef for fullscreen) */}
+      <div className="bg-slate-800 text-center py-2" style={{ zIndex: bottomIndexOpen ? 10001 : 5, position: 'relative' }}>
+        <div className="flex items-center justify-center gap-3">
+          {/* Page indicator */}
+          <div className="bg-black/60 text-white px-4 py-2 rounded-full inline-block text-sm">
+            {currentPage === 1 ? 'Cover' :
+             currentPage === 2 ? 'Inside Cover' :
+             `Page ${currentPage - 2} of ${totalPages - 2}`}
+          </div>
 
-        {/* INDEX button */}
-        <div className="relative">
-          <button
-            onClick={() => setBottomIndexOpen(!bottomIndexOpen)}
-            className="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1 border border-slate-500"
+          {/* INDEX button */}
+          <div className="relative">
+            <button
+              onClick={() => setBottomIndexOpen(!bottomIndexOpen)}
+              className="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1 border border-slate-500"
+            >
+              Index
+              <ChevronDown className={`w-3 h-3 transition-transform ${bottomIndexOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {bottomIndexOpen && (
+              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 rounded-lg shadow-xl border border-slate-600 py-2 w-[280px] max-h-[60vh] overflow-y-auto" style={{ zIndex: 9999 }}>
+                <div className="px-3 py-1.5 text-yellow-500 font-bold text-xs uppercase tracking-wider border-b border-slate-700">Desking</div>
+                <button onClick={() => goToPage(2)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">02-32: Classic Laminate</button>
+                <button onClick={() => goToPage(34)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">34-35: Riser Series</button>
+                <button onClick={() => goToPage(38)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">38-43: Elements Collection</button>
+                <button onClick={() => goToPage(44)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">44-45: Encore Collection</button>
+                <button onClick={() => goToPage(46)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">46-50: Signature Collection</button>
+                <button onClick={() => goToPage(52)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">52-53: Struxture Series</button>
+                <button onClick={() => goToPage(56)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">56-58: Height Adjustable</button>
+                <button onClick={() => goToPage(156)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">156-157: Pedestals</button>
+
+                <div className="px-3 py-1.5 text-blue-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Panels</div>
+                <button onClick={() => goToPage(61)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">61: Drawing Services</button>
+                <button onClick={() => goToPage(62)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">62-67: Webb Panels</button>
+                <button onClick={() => goToPage(68)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">68: SpaceMax Panels</button>
+                <button onClick={() => goToPage(70)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">70-71: Borders</button>
+
+                <div className="px-3 py-1.5 text-green-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Tables</div>
+                <button onClick={() => goToPage(72)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">72-75: Training Room Tables</button>
+                <button onClick={() => goToPage(76)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">76-77: Gathering Tables</button>
+                <button onClick={() => goToPage(78)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">78-85: Conference Tables</button>
+                <button onClick={() => goToPage(86)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">86-89: Occasional Tables</button>
+
+                <div className="px-3 py-1.5 text-red-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Seating</div>
+                <button onClick={() => goToPage(92)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">92-95: Chair Guide</button>
+                <button onClick={() => goToPage(96)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">96-103: Reception & Lounge</button>
+                <button onClick={() => goToPage(104)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">104-117: Guest & Multi-Purpose</button>
+                <button onClick={() => goToPage(118)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">118-122: Drafting & Bar Height</button>
+                <button onClick={() => goToPage(123)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">123-141: Mgmt & Conference</button>
+                <button onClick={() => goToPage(142)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">142-152: Task</button>
+                <button onClick={() => goToPage(153)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">153: Healthcare</button>
+                <button onClick={() => goToPage(154)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">154-155: Big & Tall</button>
+              </div>
+            )}
+          </div>
+
+          {/* PDF Download */}
+          <a
+            href="/Catalog.pdf"
+            download="FoxBuilt-2026-Catalog.pdf"
+            className="bg-yellow-600 hover:bg-yellow-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1 border border-yellow-500"
           >
-            Index
-            <ChevronDown className={`w-3 h-3 transition-transform ${bottomIndexOpen ? 'rotate-180' : ''}`} />
-          </button>
+            <Download className="w-3 h-3" />
+            PDF
+          </a>
 
-          {bottomIndexOpen && (
-            <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 rounded-lg shadow-xl border border-slate-600 py-2 w-[280px] max-h-[60vh] overflow-y-auto" style={{ zIndex: 9999 }}>
-              <div className="px-3 py-1.5 text-yellow-500 font-bold text-xs uppercase tracking-wider border-b border-slate-700">Desking</div>
-              <button onClick={() => goToPage(2)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">02-32: Classic Laminate</button>
-              <button onClick={() => goToPage(34)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">34-35: Riser Series</button>
-              <button onClick={() => goToPage(38)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">38-43: Elements Collection</button>
-              <button onClick={() => goToPage(44)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">44-45: Encore Collection</button>
-              <button onClick={() => goToPage(46)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">46-50: Signature Collection</button>
-              <button onClick={() => goToPage(52)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">52-53: Struxture Series</button>
-              <button onClick={() => goToPage(56)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">56-58: Height Adjustable</button>
-              <button onClick={() => goToPage(156)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">156-157: Pedestals</button>
-
-              <div className="px-3 py-1.5 text-blue-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Panels</div>
-              <button onClick={() => goToPage(61)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">61: Drawing Services</button>
-              <button onClick={() => goToPage(62)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">62-67: Webb Panels</button>
-              <button onClick={() => goToPage(68)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">68: SpaceMax Panels</button>
-              <button onClick={() => goToPage(70)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">70-71: Borders</button>
-
-              <div className="px-3 py-1.5 text-green-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Tables</div>
-              <button onClick={() => goToPage(72)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">72-75: Training Room Tables</button>
-              <button onClick={() => goToPage(76)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">76-77: Gathering Tables</button>
-              <button onClick={() => goToPage(78)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">78-85: Conference Tables</button>
-              <button onClick={() => goToPage(86)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">86-89: Occasional Tables</button>
-
-              <div className="px-3 py-1.5 text-red-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Seating</div>
-              <button onClick={() => goToPage(92)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">92-95: Chair Guide</button>
-              <button onClick={() => goToPage(96)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">96-103: Reception & Lounge</button>
-              <button onClick={() => goToPage(104)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">104-117: Guest & Multi-Purpose</button>
-              <button onClick={() => goToPage(118)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">118-122: Drafting & Bar Height</button>
-              <button onClick={() => goToPage(123)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">123-141: Mgmt & Conference</button>
-              <button onClick={() => goToPage(142)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">142-152: Task</button>
-              <button onClick={() => goToPage(153)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">153: Healthcare</button>
-              <button onClick={() => goToPage(154)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">154-155: Big & Tall</button>
-            </div>
+          {/* Fullscreen toggle (desktop only) */}
+          {isDesktop && (
+            <button
+              onClick={toggleFullscreen}
+              className="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1 border border-slate-500"
+              aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+            >
+              {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+            </button>
           )}
         </div>
-
-        {/* PDF Download */}
-        <a
-          href="/Catalog.pdf"
-          download="FoxBuilt-2026-Catalog.pdf"
-          className="bg-yellow-600 hover:bg-yellow-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1 border border-yellow-500"
-        >
-          <Download className="w-3 h-3" />
-          PDF
-        </a>
       </div>
     </div>
     </>
