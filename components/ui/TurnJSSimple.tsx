@@ -504,9 +504,9 @@ export default function TurnJSSimple() {
 
   return (
     <>
-    <div 
+    <div
       ref={containerRef}
-      className="relative w-full bg-slate-800"
+      className="relative w-full bg-slate-800 flex flex-col h-full"
       style={{ zIndex: 30 }}
     >
       {/* Navigation Bar - KEEPING YOUR SUPERIOR NAVIGATION! */}
@@ -606,7 +606,7 @@ export default function TurnJSSimple() {
       </div>
 
       {/* Flipbook / Carousel Container */}
-      <div className={`flex-grow-0 md:flex-1 relative flex items-center justify-center ${activeDropdown ? '' : 'overflow-hidden'}`} style={{ zIndex: activeDropdown ? 1 : 100, position: 'relative' }}>
+      <div className={`flex-1 relative flex items-center justify-center ${activeDropdown ? '' : 'overflow-hidden'}`} style={{ zIndex: activeDropdown ? 1 : 100, position: 'relative' }}>
         {/* Loading indicator */}
         {!isReady && (
           <div className="text-white text-2xl font-bold py-12">
