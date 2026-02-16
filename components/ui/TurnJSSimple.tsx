@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronDown, Download } from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
 
 export default function TurnJSSimple() {
@@ -446,10 +446,22 @@ export default function TurnJSSimple() {
     return pages
   }
 
+  // Preload pages ahead of current position for smooth mobile swiping
+  const PRELOAD_AHEAD = 5
+  useEffect(() => {
+    if (isDesktop) return
+    for (let i = currentPage + 1; i <= Math.min(currentPage + PRELOAD_AHEAD, totalPages); i++) {
+      const img = new Image()
+      img.src = `/catalog-pages/page-${i.toString().padStart(3, '0')}.jpg`
+    }
+  }, [currentPage, isDesktop])
+
   // Generate carousel slides for mobile
   const generateCarouselSlides = () => {
     const slides = []
     for (let i = 1; i <= totalPages; i++) {
+      // Eager load pages near current position, lazy load the rest
+      const isNearby = Math.abs(i - currentPage) <= PRELOAD_AHEAD
       slides.push(
         <div
           key={i}
@@ -458,7 +470,7 @@ export default function TurnJSSimple() {
           <img
             src={`/catalog-pages/page-${i.toString().padStart(3, '0')}.jpg`}
             alt={`Page ${i}`}
-            loading={i <= 3 ? 'eager' : 'lazy'}
+            loading={isNearby ? 'eager' : 'lazy'}
             style={{
               width: '100%',
               height: 'auto',
@@ -716,9 +728,9 @@ export default function TurnJSSimple() {
         )}
       </div>
 
-      {/* Mobile bottom INDEX button */}
+      {/* Mobile bottom INDEX + Download buttons */}
       {!isDesktop && (
-        <div className="relative flex justify-center mt-2 pb-2">
+        <div className="relative flex justify-center items-center gap-3 mt-2 pb-2">
           <button
             onClick={() => setBottomIndexOpen(!bottomIndexOpen)}
             className="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full flex items-center gap-1 border border-slate-500"
@@ -726,6 +738,15 @@ export default function TurnJSSimple() {
             Index
             <ChevronDown className={`w-3 h-3 transition-transform ${bottomIndexOpen ? 'rotate-180' : ''}`} />
           </button>
+
+          <a
+            href="/Catalog.pdf"
+            download="FoxBuilt-2026-Catalog.pdf"
+            className="bg-yellow-600 hover:bg-yellow-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full flex items-center gap-1 border border-yellow-500"
+          >
+            <Download className="w-3 h-3" />
+            PDF
+          </a>
 
           {bottomIndexOpen && (
             <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 rounded-lg shadow-xl border border-slate-600 py-2 w-[280px] max-h-[60vh] overflow-y-auto" style={{ zIndex: 9999 }}>
