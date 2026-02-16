@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, ChevronDown, Download } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronDown, Download, Maximize, Minimize } from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
 
 export default function TurnJSSimple() {
@@ -12,6 +12,7 @@ export default function TurnJSSimple() {
   const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : false)
   const [loadingError, setLoadingError] = useState<string | null>(null)
   const [PageFlipModule, setPageFlipModule] = useState<any>(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const flipbookRef = useRef<HTMLDivElement>(null)
   const pageFlipRef = useRef<any>(null)
@@ -380,6 +381,23 @@ export default function TurnJSSimple() {
     return () => { emblaApi.off('select', onSelect) }
   }, [emblaApi, isDesktop])
 
+  // Fullscreen toggle for desktop
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(() => {})
+    } else {
+      document.exitFullscreen().catch(() => {})
+    }
+  }
+
+  // Sync fullscreen state with browser
+  useEffect(() => {
+    const handleChange = () => setIsFullscreen(!!document.fullscreenElement)
+    document.addEventListener('fullscreenchange', handleChange)
+    return () => document.removeEventListener('fullscreenchange', handleChange)
+  }, [])
+
   const nextPage = () => {
     if (isDesktop) {
       if (pageFlipRef.current) {
@@ -621,7 +639,7 @@ export default function TurnJSSimple() {
               {generatePages()}
             </div>
 
-            {/* Desktop nav arrows */}
+            {/* Desktop nav arrows + fullscreen */}
             {isReady && (
               <>
                 <button
@@ -635,6 +653,13 @@ export default function TurnJSSimple() {
                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full"
                 >
                   <ChevronRight className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={toggleFullscreen}
+                  className="absolute right-4 top-4 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full"
+                  aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+                >
+                  {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
                 </button>
               </>
             )}
