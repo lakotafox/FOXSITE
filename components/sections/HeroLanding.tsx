@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { ChevronRight, Star, Shield, Truck } from 'lucide-react'
 import ImageWithLoader from '@/components/ui/ImageWithLoader'
 import { Star3DCSS } from '@/components/ui/Star3D'
+import RollingYearCounter from '@/components/ui/RollingYearCounter'
 
 interface HeroLandingProps {
   galleryImages?: string[]
@@ -83,6 +84,11 @@ export default function HeroLanding({ galleryImages = [], getImageUrl }: HeroLan
               <span className="text-white">BUILT</span>
               <span className="text-blue-500">OFFICE</span>
             </h1>
+            {/* EST. 1999 */}
+            <div className="flex items-center justify-center mb-1">
+              <span className="text-white text-sm md:text-xl font-bold">EST.</span>
+              <RollingYearCounter year={1999} delay={3} duration={5} className="text-white text-sm md:text-xl font-bold ml-1" />
+            </div>
             {/* Sub-headline */}
             <p className="text-sm md:text-2xl lg:text-3xl italic text-right">
               <span className="text-yellow-400">Your</span>

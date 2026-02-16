@@ -391,11 +391,7 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                     </button>
                   </div>
                 </div>
-                {/* Second row with EST 1999 centered */}
-                <div className="flex justify-center pb-2">
-                  <span className="text-white text-sm font-bold">EST.</span>
-                  <RollingYearCounter year={1999} delay={3} duration={5} className="text-white text-sm font-bold ml-1" />
-                </div>
+                {/* EST 1999 moved to hero title */}
               </div>
               </>
             )}
