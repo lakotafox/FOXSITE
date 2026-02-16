@@ -631,9 +631,8 @@ export default function TurnJSSimple() {
                 touchAction: 'pinch-zoom',
                 userSelect: 'none',
                 WebkitUserSelect: 'none',
-                display: 'block',
+                display: activeDropdown ? 'none' : 'block',
                 visibility: isReady ? 'visible' : 'hidden',
-                zIndex: activeDropdown ? 0 : 200,
               }}
             >
               {generatePages()}
@@ -720,7 +719,8 @@ export default function TurnJSSimple() {
       `}</style>
     </div>
 
-    {/* Static page indicator below catalog with mobile back button */}
+    {/* Page indicator + controls (mobile only) */}
+    {!isDesktop && (
     <div className="bg-slate-800 text-center" style={{ zIndex: bottomIndexOpen ? 10001 : 5, position: 'relative' }}>
       <div className="flex items-center justify-center gap-2">
         {/* Back button - Now with monkey-patch fix */}
@@ -811,6 +811,7 @@ export default function TurnJSSimple() {
         </div>
       )}
     </div>
+    )}
     </>
   )
 }
