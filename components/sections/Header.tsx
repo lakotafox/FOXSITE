@@ -30,6 +30,16 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
   const [showSearchBar, setShowSearchBar] = useState(true)
   const [categoryNames, setCategoryNames] = useState<any>(null)
 
+  // Check if ANY category group is visible (for hiding hamburger when all are off)
+  const hasAnyVisibleCategory =
+    categoryVisibility.showDesksWorkstations !== false ||
+    categoryVisibility.showCubicles !== false ||
+    categoryVisibility.showSeating !== false ||
+    categoryVisibility.showStorage !== false ||
+    categoryVisibility.showConferenceMeeting !== false ||
+    categoryVisibility.showReceptionLounge !== false ||
+    categoryVisibility.showFoxbot !== false
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
@@ -307,8 +317,8 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                 <div className="flex flex-col gap-2">
                   {/* First row with menu, search, and buttons */}
                   <div className="flex items-center gap-2">
-                  {/* Mobile Hamburger - Top Left - Only show if nav is enabled */}
-                  {categoryVisibility.showNavBar !== false && (
+                  {/* Mobile Hamburger - Only show if nav is enabled AND categories exist */}
+                  {categoryVisibility.showNavBar !== false && hasAnyVisibleCategory && (
                   <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     className="w-10 h-10 bg-slate-700 hover:bg-slate-600 text-white rounded-full flex items-center justify-center transition-all flex-shrink-0"
@@ -575,6 +585,26 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
       </nav>
       )}
     </header>
+
+    {/* Mobile banner when no product categories are visible */}
+    {!hasAnyVisibleCategory && (
+      <div className="md:hidden fixed top-[72px] left-0 right-0 z-40 bg-slate-800 border-b border-slate-600 px-4 py-3 text-center">
+        <p className="text-white text-sm leading-relaxed">
+          We're working on adding product inventory to our site.
+          Please check out the{' '}
+          <button
+            onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}
+            className="text-orange-400 font-bold underline"
+          >
+            catalog
+          </button>
+          {' '}or{' '}
+          <a href="tel:+18018999406" className="text-red-400 font-bold underline">
+            give us a call
+          </a>!
+        </p>
+      </div>
+    )}
 
     {/* Mobile Menu Overlay */}
     {mobileMenuOpen && (
