@@ -63,7 +63,7 @@ function ProductDetailContent() {
     if (returnTo === 'products-carousel') {
       router.push(`/products?openCarousel=true&category=${category}&index=${imageIndex}`)
     } else if (returnTo === 'list-carousel') {
-      router.push(`/list-view?openCarousel=true&category=${category}&index=${imageIndex}`)
+      router.push(`/products?openCarousel=true&category=${category}&index=${imageIndex}`)
     } else if (returnTo === 'main-carousel') {
       router.push(`/?openCarousel=true&category=${category}&index=${imageIndex}`)
     } else {

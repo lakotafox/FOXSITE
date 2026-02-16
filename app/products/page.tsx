@@ -264,20 +264,6 @@ function ProductsPageContent() {
         </div>
       </section>
 
-      {/* List View button */}
-      <section className="py-8 bg-slate-800">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <button
-              onClick={() => router.push('/list-view')}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black font-black text-sm md:text-base px-6 py-3 tracking-wider transition-all shadow-lg hover:shadow-xl rounded"
-            >
-              LIST VIEW
-            </button>
-          </div>
-        </div>
-      </section>
-      
       <ProductsSection 
         products={currentProducts}
         category={productCategory}

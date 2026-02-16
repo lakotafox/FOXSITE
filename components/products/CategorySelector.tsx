@@ -33,19 +33,5 @@ export default function CategorySelector({
     return () => window.removeEventListener("scroll", handleScroll)
   }, [onFloatingVisibilityChange])
 
-  return (
-    <>
-      {/* List View button */}
-      <div className="flex flex-col items-center gap-3 mb-4">
-        <Button
-          onClick={() => {
-            router.push('/list-view')
-          }}
-          className="bg-yellow-500 hover:bg-yellow-600 text-black font-black text-sm md:text-base px-6 py-3 tracking-wider transition-all shadow-lg hover:shadow-xl"
-        >
-          LIST VIEW
-        </Button>
-      </div>
-    </>
-  )
+  return null
 }
