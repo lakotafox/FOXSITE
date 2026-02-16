@@ -548,7 +548,7 @@ export default function TurnJSSimple() {
                 onClick={() => setActiveDropdown(activeDropdown === 'tables' ? null : 'tables')}
                 className="text-green-500 hover:text-green-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
               >
-                Tables & Presentations
+                Tables
                 <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'tables' ? 'rotate-180' : ''}`} />
               </button>
               {activeDropdown === 'tables' && (
@@ -588,7 +588,7 @@ export default function TurnJSSimple() {
       </div>
 
       {/* Flipbook / Carousel Container */}
-      <div className="flex-grow-0 md:flex-1 relative flex items-start justify-center overflow-hidden" style={{ zIndex: 100 }}>
+      <div className="flex-grow-0 md:flex-1 relative flex items-start justify-center overflow-hidden" style={{ zIndex: activeDropdown ? 1 : 100 }}>
         {/* Loading indicator */}
         {!isReady && (
           <div className="text-white text-2xl font-bold py-12">
@@ -766,7 +766,7 @@ export default function TurnJSSimple() {
               <button onClick={() => goToPage(68)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">68: SpaceMax Panels</button>
               <button onClick={() => goToPage(70)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">70-71: Borders</button>
 
-              <div className="px-3 py-1.5 text-green-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Tables & Presentations</div>
+              <div className="px-3 py-1.5 text-green-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Tables</div>
               <button onClick={() => goToPage(72)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">72-75: Training Room Tables</button>
               <button onClick={() => goToPage(76)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">76-77: Gathering Tables</button>
               <button onClick={() => goToPage(78)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">78-85: Conference Tables</button>
