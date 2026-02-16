@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
+import useEmblaCarousel from 'embla-carousel-react'
 
 export default function TurnJSSimple() {
   const [isReady, setIsReady] = useState(false)
@@ -13,7 +14,18 @@ export default function TurnJSSimple() {
   const containerRef = useRef<HTMLDivElement>(null)
   const flipbookRef = useRef<HTMLDivElement>(null)
   const pageFlipRef = useRef<any>(null)
-  
+
+  // Embla carousel for mobile
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    containScroll: 'trimSnaps',
+    dragFree: false,
+    skipSnaps: false,
+    duration: 20,
+    startIndex: 0,
+  })
+  const prevEmblaIndexRef = useRef(0)
+
   const totalPages = 164
 
   // Array of page turn sound files - KEEPING YOUR SOUNDS!
@@ -104,9 +116,9 @@ export default function TurnJSSimple() {
     }
   }, [])
 
-  // Load PageFlip module
+  // Load PageFlip module (desktop only)
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && isDesktop) {
       import('page-flip').then(module => {
         setPageFlipModule(() => module.PageFlip)
         console.log('PageFlip module loaded successfully')
@@ -121,9 +133,9 @@ export default function TurnJSSimple() {
     }
   }, [])
 
-  // Initialize StPageFlip when module is ready
+  // Initialize StPageFlip when module is ready (desktop only)
   useEffect(() => {
-    if (!PageFlipModule || !flipbookRef.current) return
+    if (!PageFlipModule || !flipbookRef.current || !isDesktop) return
 
     console.log('Starting flipbook initialization...')
     
@@ -264,38 +276,6 @@ export default function TurnJSSimple() {
       })
 
 
-      // Add manual swipe detection for mobile since flipPrev is broken
-      if (window.innerWidth < 768 && flipbookRef.current) {
-        let touchStartX = 0
-        let touchStartY = 0
-        
-        const handleTouchStart = (e: TouchEvent) => {
-          touchStartX = e.touches[0].clientX
-          touchStartY = e.touches[0].clientY
-        }
-        
-        
-        const handleTouchEnd = (e: TouchEvent) => {
-          if (!e.changedTouches[0]) return
-          
-          const touchEndX = e.changedTouches[0].clientX
-          const touchEndY = e.changedTouches[0].clientY
-          const deltaX = touchEndX - touchStartX
-          const deltaY = Math.abs(touchEndY - touchStartY)
-          
-          // Detect right swipe (prev page)
-          if (deltaX > 50 && deltaY < 100) {
-            console.log('Manual swipe right detected!')
-            prevPage()
-            e.preventDefault()
-            e.stopPropagation()
-          }
-        }
-        
-        flipbookRef.current.addEventListener('touchstart', handleTouchStart, { passive: true })
-        flipbookRef.current.addEventListener('touchend', handleTouchEnd, { passive: false })
-      }
-      
       console.log('Flipbook initialization complete!')
       setIsReady(true)
       
@@ -331,11 +311,11 @@ export default function TurnJSSimple() {
         }
       }
     }
-  }, [PageFlipModule])
+  }, [PageFlipModule, isDesktop])
 
-  // Handle window resize
+  // Handle window resize (desktop only)
   useEffect(() => {
-    if (!isReady || !pageFlipRef.current) return
+    if (!isReady || !pageFlipRef.current || !isDesktop) return
 
     const handleResize = () => {
       const isMobile = window.innerWidth < 768
@@ -368,82 +348,79 @@ export default function TurnJSSimple() {
     return () => window.removeEventListener('resize', handleResize)
   }, [isReady])
 
-  const nextPage = () => {
-    if (pageFlipRef.current) {
-      try {
-        pageFlipRef.current.flipNext()
-        // Sound will be played by the changeState event listener at start of animation
-      } catch (e) {
-        console.error('Error flipping next:', e)
+  // Embla carousel: track slide changes and play sounds (mobile only)
+  useEffect(() => {
+    if (!emblaApi || isDesktop) return
+
+    setIsReady(true)
+
+    const onSelect = () => {
+      const index = emblaApi.selectedScrollSnap()
+      const newPage = index + 1
+      const oldPage = prevEmblaIndexRef.current + 1
+
+      if (index === prevEmblaIndexRef.current) return
+      prevEmblaIndexRef.current = index
+      setCurrentPage(newPage)
+
+      // Sound logic matching page-flip handler
+      if (newPage === 1 || (oldPage === 1 && newPage === 2)) {
+        initAudioPool()
+        if (coverAudioRef.current) {
+          coverAudioRef.current.currentTime = 0
+          coverAudioRef.current.play().catch(() => {})
+        }
+      } else {
+        playRandomPageTurnSound()
       }
+    }
+
+    emblaApi.on('select', onSelect)
+    return () => { emblaApi.off('select', onSelect) }
+  }, [emblaApi, isDesktop])
+
+  const nextPage = () => {
+    if (isDesktop) {
+      if (pageFlipRef.current) {
+        try {
+          pageFlipRef.current.flipNext()
+        } catch (e) {
+          console.error('Error flipping next:', e)
+        }
+      }
+    } else if (emblaApi) {
+      emblaApi.scrollNext()
     }
   }
 
   const prevPage = () => {
-    if (pageFlipRef.current && currentPage > 1) {
-      const isMobile = window.innerWidth < 768
-      
-      if (!isMobile) {
-        // Desktop: Use normal flip animation
+    if (isDesktop) {
+      if (pageFlipRef.current && currentPage > 1) {
         try {
           pageFlipRef.current.flipPrev('bottom')
         } catch (e) {
-          // Fallback for desktop
           const targetPage = currentPage - 2
           if (targetPage >= 0) {
             pageFlipRef.current.flip(targetPage, 'bottom')
           }
         }
-      } else {
-        // Mobile: Since flipPrev is broken, let's do a static slide like you had working
-        const targetPage = currentPage - 1
-        
-        // Update the page immediately (static change, no animation)
-        setCurrentPage(targetPage)
-        
-        // Try to sync with the library
-        try {
-          // Use turnToPage which might bypass the broken flipPrev
-          if (pageFlipRef.current.turnToPage) {
-            pageFlipRef.current.turnToPage(targetPage - 1) // 0-based
-          } else {
-            // Force update the display without animation
-            const pages = flipbookRef.current?.querySelectorAll('.page')
-            if (pages && pages.length > 0) {
-              // Reload at the target page
-              pageFlipRef.current.loadFromHTML(pages)
-              pageFlipRef.current.currentPageIndex = targetPage - 1
-              pageFlipRef.current.update()
-            }
-          }
-        } catch (e) {
-          console.log('Static page change, library sync failed:', e)
-        }
-        
-        // Play sound for feedback even if animation doesn't work
-        if (targetPage === 1) {
-          // Cover sound - only for actual cover, not inside cover
-          if (coverAudioRef.current) {
-            coverAudioRef.current.currentTime = 0
-            coverAudioRef.current.play().catch(() => {})
-          }
-        } else {
-          // Page turn sound for all other pages including inside cover
-          playRandomPageTurnSound()
-        }
       }
+    } else if (emblaApi) {
+      emblaApi.scrollPrev()
     }
   }
 
   const goToPage = (catalogPageNumber: number) => {
-    if (pageFlipRef.current) {
+    setActiveDropdown(null)
+    if (isDesktop && pageFlipRef.current) {
       try {
-        const pageIndex = catalogPageNumber + 1 // Adjust for 0-based index
+        const pageIndex = catalogPageNumber + 1
         pageFlipRef.current.flip(pageIndex)
-        setActiveDropdown(null)
       } catch (e) {
         console.error('Error going to page:', e)
       }
+    } else if (!isDesktop && emblaApi) {
+      emblaApi.scrollTo(catalogPageNumber + 1, false)
     }
   }
 
@@ -467,6 +444,32 @@ export default function TurnJSSimple() {
     return pages
   }
 
+  // Generate carousel slides for mobile
+  const generateCarouselSlides = () => {
+    const slides = []
+    for (let i = 1; i <= totalPages; i++) {
+      slides.push(
+        <div
+          key={i}
+          style={{ flex: '0 0 100%', minWidth: 0 }}
+        >
+          <img
+            src={`/catalog-pages/page-${i.toString().padStart(3, '0')}.jpg`}
+            alt={`Page ${i}`}
+            loading={i <= 3 ? 'eager' : 'lazy'}
+            style={{
+              width: '100%',
+              height: 'auto',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
+        </div>
+      )
+    }
+    return slides
+  }
+
   return (
     <>
     <div 
@@ -482,12 +485,12 @@ export default function TurnJSSimple() {
             <h2 className="text-white text-sm font-bold uppercase tracking-wider">CATALOG INDEX</h2>
           </div>
           {/* Navigation Dropdowns */}
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex items-center justify-start md:justify-center gap-3 md:gap-6 overflow-x-auto scrollbar-hide pb-1">
             {/* Desking Dropdown */}
-            <div className="relative" style={{ zIndex: activeDropdown === 'desking' ? 10000 : 'auto' }}>
-              <button 
+            <div className="relative flex-shrink-0" style={{ zIndex: activeDropdown === 'desking' ? 10000 : 'auto' }}>
+              <button
                 onClick={() => setActiveDropdown(activeDropdown === 'desking' ? null : 'desking')}
-                className="text-yellow-500 hover:text-yellow-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2"
+                className="text-yellow-500 hover:text-yellow-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
               >
                 Desking
                 <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desking' ? 'rotate-180' : ''}`} />
@@ -507,10 +510,10 @@ export default function TurnJSSimple() {
             </div>
 
             {/* Panels Dropdown */}
-            <div className="relative" style={{ zIndex: activeDropdown === 'panels' ? 10000 : 'auto' }}>
-              <button 
+            <div className="relative flex-shrink-0" style={{ zIndex: activeDropdown === 'panels' ? 10000 : 'auto' }}>
+              <button
                 onClick={() => setActiveDropdown(activeDropdown === 'panels' ? null : 'panels')}
-                className="text-blue-500 hover:text-blue-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2"
+                className="text-blue-500 hover:text-blue-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
               >
                 Panels
                 <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'panels' ? 'rotate-180' : ''}`} />
@@ -526,10 +529,10 @@ export default function TurnJSSimple() {
             </div>
 
             {/* Tables Dropdown */}
-            <div className="relative" style={{ zIndex: activeDropdown === 'tables' ? 10000 : 'auto' }}>
-              <button 
+            <div className="relative flex-shrink-0" style={{ zIndex: activeDropdown === 'tables' ? 10000 : 'auto' }}>
+              <button
                 onClick={() => setActiveDropdown(activeDropdown === 'tables' ? null : 'tables')}
-                className="text-green-500 hover:text-green-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2"
+                className="text-green-500 hover:text-green-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
               >
                 Tables & Presentations
                 <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'tables' ? 'rotate-180' : ''}`} />
@@ -545,10 +548,10 @@ export default function TurnJSSimple() {
             </div>
 
             {/* Seating Dropdown */}
-            <div className="relative" style={{ zIndex: activeDropdown === 'seating' ? 10000 : 'auto' }}>
-              <button 
+            <div className="relative flex-shrink-0" style={{ zIndex: activeDropdown === 'seating' ? 10000 : 'auto' }}>
+              <button
                 onClick={() => setActiveDropdown(activeDropdown === 'seating' ? null : 'seating')}
-                className="text-red-500 hover:text-red-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2"
+                className="text-red-500 hover:text-red-400 font-semibold text-sm uppercase tracking-wider flex items-center gap-1 py-2 whitespace-nowrap"
               >
                 Seating
                 <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'seating' ? 'rotate-180' : ''}`} />
@@ -570,11 +573,11 @@ export default function TurnJSSimple() {
         </div>
       </div>
 
-      {/* Flipbook Container */}
-      <div className="flex-grow-0 md:flex-1 relative flex items-start justify-center overflow-visible" style={{ zIndex: 100 }}>
-        {/* Show loading or error message */}
+      {/* Flipbook / Carousel Container */}
+      <div className="flex-grow-0 md:flex-1 relative flex items-start justify-center overflow-hidden" style={{ zIndex: 100 }}>
+        {/* Loading indicator */}
         {!isReady && (
-          <div className="text-white text-2xl font-bold">
+          <div className="text-white text-2xl font-bold py-12">
             Loading Catalog...
             {loadingError && (
               <div className="text-red-500 text-sm mt-2">
@@ -583,42 +586,60 @@ export default function TurnJSSimple() {
             )}
           </div>
         )}
-        
-        {/* Always render the flipbook container, even while loading */}
-        <div 
-          ref={flipbookRef}
-          id="flipbook"
-          className="flipbook"
-          style={{
-            position: 'relative',
-            touchAction: 'pinch-zoom',  // Allow pinch zoom on mobile
-            userSelect: 'none',
-            WebkitUserSelect: 'none',
-            display: 'block',
-            visibility: isReady ? 'visible' : 'hidden',
-            zIndex: 200
-          }}
-        >
-          {generatePages()}
-        </div>
 
-        {/* Navigation - Hidden on mobile */}
-        {isReady && (
+        {/* Desktop: Page-flip flipbook */}
+        {isDesktop && (
           <>
-            <button
-              onClick={prevPage}
-              className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full"
+            <div
+              ref={flipbookRef}
+              id="flipbook"
+              className="flipbook"
+              style={{
+                position: 'relative',
+                touchAction: 'pinch-zoom',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                display: 'block',
+                visibility: isReady ? 'visible' : 'hidden',
+                zIndex: 200,
+              }}
             >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
+              {generatePages()}
+            </div>
 
-            <button
-              onClick={nextPage}
-              className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+            {/* Desktop nav arrows */}
+            {isReady && (
+              <>
+                <button
+                  onClick={prevPage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={nextPage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
           </>
+        )}
+
+        {/* Mobile: Embla carousel */}
+        {!isDesktop && (
+          <div
+            ref={emblaRef}
+            className="w-full overflow-hidden"
+            style={{
+              visibility: isReady ? 'visible' : 'hidden',
+            }}
+          >
+            <div className="flex" style={{ touchAction: 'pan-y pinch-zoom' }}>
+              {generateCarouselSlides()}
+            </div>
+          </div>
         )}
       </div>
 
@@ -630,29 +651,12 @@ export default function TurnJSSimple() {
           -ms-user-select: none;
           transition: none;
         }
-        
-        /* Peel away animation for back navigation on mobile - mimics corner grab */
-        @media (max-width: 767px) {
-          .flipbook.page-sliding-in .stf__wrapper {
-            animation: peelAway 0.6s ease-out forwards;
-            transform-origin: left center;
-          }
-          
-          @keyframes peelAway {
-            from {
-              transform: translateX(0);
-            }
-            to {
-              transform: translateX(100vw);
-            }
-          }
-        }
-        
+
         .flipbook .page {
           background-color: white !important;
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .flipbook .page-content {
           width: 100%;
           height: 100%;
@@ -661,7 +665,7 @@ export default function TurnJSSimple() {
           justify-content: center;
           background: white;
         }
-        
+
         .flipbook .page img {
           pointer-events: none;
           -webkit-user-drag: none;
@@ -671,41 +675,9 @@ export default function TurnJSSimple() {
           object-fit: contain;
         }
 
-        /* Mobile: Show full page width */
-        @media (max-width: 767px) {
-          .flipbook .page {
-            background-color: transparent !important;
-          }
-          
-          .flipbook .page-content {
-            padding: 0 !important;
-            background: transparent !important;
-          }
-          
-          .flipbook .page img {
-            object-fit: cover;
-            object-position: center;
-            width: 100% !important;
-            height: 100% !important;
-          }
-          
-          .flipbook {
-            width: 100vw !important;
-          }
-          
-          .stf__parent {
-            width: 100vw !important;
-            margin: 0 !important;
-            padding: 0 !important;
-          }
-        }
-
-        /* StPageFlip adds its own shadow classes for spine effect */
         .stf__block {
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
-
-        /* The library handles the spine shadow automatically! */
       `}</style>
     </div>
 
