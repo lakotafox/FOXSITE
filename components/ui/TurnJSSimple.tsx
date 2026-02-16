@@ -684,7 +684,7 @@ export default function TurnJSSimple() {
     </div>
 
     {/* Static page indicator below catalog with mobile back button */}
-    <div className="bg-slate-800 text-center" style={{ zIndex: 5, position: 'relative' }}>
+    <div className="bg-slate-800 text-center" style={{ zIndex: bottomIndexOpen ? 10001 : 5, position: 'relative' }}>
       <div className="flex items-center justify-center gap-2">
         {/* Back button - Now with monkey-patch fix */}
         {!isDesktop && currentPage > 1 && (
