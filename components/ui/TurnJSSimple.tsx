@@ -143,19 +143,18 @@ export default function TurnJSSimple() {
     
     try {
       const isMobile = window.innerWidth < 768
-      const containerWidth = window.innerWidth
-      const containerHeight = window.innerHeight - 80  // Minimal space for header/footer
-      
+      const containerWidth = containerRef.current?.clientWidth || window.innerWidth
+      // Use actual container height (80vh) minus bottom bar (~50px)
+      const containerHeight = (containerRef.current?.clientHeight || window.innerHeight * 0.8) - 50
+
       let bookWidth, bookHeight
       if (isMobile) {
-        // Mobile: Use smaller size - maybe full screen is too big
-        bookWidth = Math.min(containerWidth * 0.9, 400)  // Max 400px wide
-        // Height based on standard 8.5x11 aspect ratio (1.294)
-        bookHeight = Math.min(bookWidth * 1.294, containerHeight * 0.8)
+        bookWidth = Math.min(containerWidth * 0.9, 400)
+        bookHeight = Math.min(bookWidth * 1.294, containerHeight * 0.95)
       } else {
-        // Desktop - balanced dimensions for double page spread
-        bookWidth = Math.min(containerWidth * 0.78, 1150)  // Slightly narrower pages
-        bookHeight = Math.min(containerHeight * 0.88, 950)  // Reduce height to prevent spilling
+        // Desktop — fit within container, never exceed available space
+        bookWidth = Math.min(containerWidth * 0.78, 1150)
+        bookHeight = Math.min(containerHeight * 0.95, 950)
       }
 
       console.log(`Initializing with dimensions: ${bookWidth}x${bookHeight}, mobile: ${isMobile}`)
@@ -321,18 +320,16 @@ export default function TurnJSSimple() {
 
     const handleResize = () => {
       const isMobile = window.innerWidth < 768
-      const containerWidth = window.innerWidth
-      const containerHeight = window.innerHeight - 80  // Match initial setup
-      
+      const containerWidth = containerRef.current?.clientWidth || window.innerWidth
+      const containerHeight = (containerRef.current?.clientHeight || window.innerHeight * 0.8) - 50
+
       let bookWidth, bookHeight
       if (isMobile) {
-        // Match the initial mobile setup exactly - smaller size
-        bookWidth = Math.min(containerWidth * 0.9, 400)  // Max 400px wide
-        bookHeight = Math.min(bookWidth * 1.294, containerHeight * 0.8)
+        bookWidth = Math.min(containerWidth * 0.9, 400)
+        bookHeight = Math.min(bookWidth * 1.294, containerHeight * 0.95)
       } else {
-        // Match the initial desktop setup
         bookWidth = Math.min(containerWidth * 0.78, 1150)
-        bookHeight = Math.min(containerHeight * 0.88, 950)
+        bookHeight = Math.min(containerHeight * 0.95, 950)
       }
 
       try {
@@ -534,15 +531,15 @@ export default function TurnJSSimple() {
       slides.push(
         <div
           key={i}
-          style={{ flex: '0 0 100%', minWidth: 0 }}
+          style={{ flex: '0 0 100%', minWidth: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}
         >
           <img
             src={`/catalog-pages/page-${i.toString().padStart(3, '0')}.jpg`}
             alt={`Page ${i}`}
             loading={isNearby ? 'eager' : 'lazy'}
             style={{
-              width: '100%',
-              height: 'auto',
+              maxWidth: '100%',
+              maxHeight: '100%',
               objectFit: 'contain',
               display: 'block',
             }}
@@ -621,12 +618,12 @@ export default function TurnJSSimple() {
         {!isDesktop && (
           <div
             ref={emblaRef}
-            className="w-full overflow-hidden"
+            className="w-full h-full overflow-hidden"
             style={{
               visibility: isReady ? 'visible' : 'hidden',
             }}
           >
-            <div className="flex" style={{ touchAction: 'pan-y pinch-zoom' }}>
+            <div className="flex h-full" style={{ touchAction: 'pan-y pinch-zoom' }}>
               {generateCarouselSlides()}
             </div>
           </div>
