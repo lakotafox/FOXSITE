@@ -437,40 +437,49 @@ export default function TurnJSSimple() {
     }
   }
 
-  // Grab-and-pan when zoomed in
-  const panRef = useRef<HTMLDivElement>(null)
+  // Grab-and-pan when zoomed — pure translate, no scroll limits
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 })
   const isPanningRef = useRef(false)
-  const panStartRef = useRef({ x: 0, y: 0, scrollLeft: 0, scrollTop: 0 })
+  const panStartRef = useRef({ x: 0, y: 0, ox: 0, oy: 0 })
+
+  // Reset pan when zoom resets
+  useEffect(() => {
+    if (!isZoomed) setPanOffset({ x: 0, y: 0 })
+  }, [isZoomed])
 
   useEffect(() => {
-    const el = panRef.current
-    if (!el || !isZoomed) return
+    if (!isZoomed) return
 
     const onMouseDown = (e: MouseEvent) => {
       isPanningRef.current = true
-      panStartRef.current = { x: e.clientX, y: e.clientY, scrollLeft: el.scrollLeft, scrollTop: el.scrollTop }
-      el.style.cursor = 'grabbing'
+      panStartRef.current = { x: e.clientX, y: e.clientY, ox: panOffset.x, oy: panOffset.y }
+      document.body.style.cursor = 'grabbing'
       e.preventDefault()
     }
     const onMouseMove = (e: MouseEvent) => {
       if (!isPanningRef.current) return
-      el.scrollLeft = panStartRef.current.scrollLeft - (e.clientX - panStartRef.current.x)
-      el.scrollTop = panStartRef.current.scrollTop - (e.clientY - panStartRef.current.y)
+      setPanOffset({
+        x: panStartRef.current.ox + (e.clientX - panStartRef.current.x),
+        y: panStartRef.current.oy + (e.clientY - panStartRef.current.y),
+      })
     }
     const onMouseUp = () => {
       isPanningRef.current = false
-      el.style.cursor = 'grab'
+      document.body.style.cursor = ''
     }
 
-    el.addEventListener('mousedown', onMouseDown)
+    const container = containerRef.current
+    if (!container) return
+    container.addEventListener('mousedown', onMouseDown)
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('mouseup', onMouseUp)
     return () => {
-      el.removeEventListener('mousedown', onMouseDown)
+      container.removeEventListener('mousedown', onMouseDown)
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseup', onMouseUp)
+      document.body.style.cursor = ''
     }
-  }, [isZoomed])
+  }, [isZoomed, panOffset])
 
   const goToPage = (catalogPageNumber: number) => {
     setBottomIndexOpen(false)
@@ -552,7 +561,7 @@ export default function TurnJSSimple() {
       style={{ zIndex: 30 }}
     >
       {/* Flipbook / Carousel Container */}
-      <div ref={panRef} className={`flex-1 relative flex items-center justify-center ${isZoomed ? 'overflow-auto' : 'overflow-hidden'}`} style={{ cursor: isZoomed ? 'grab' : undefined }}>
+      <div className="flex-1 relative flex items-center justify-center overflow-hidden" style={{ cursor: isZoomed ? 'grab' : undefined }}>
         {/* Loading indicator */}
         {!isReady && (
           <div className="text-white text-2xl font-bold py-12">
@@ -568,33 +577,24 @@ export default function TurnJSSimple() {
         {/* Desktop: Page-flip flipbook */}
         {isDesktop && (
           <>
-            <div style={{
-              width: isZoomed ? `${zoomLevel * 100}%` : undefined,
-              height: isZoomed ? `${zoomLevel * 100}%` : undefined,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}>
-              <div
-                ref={flipbookRef}
-                id="flipbook"
-                className="flipbook"
-                style={{
-                  position: 'relative',
-                  touchAction: 'pinch-zoom',
-                  userSelect: 'none',
-                  WebkitUserSelect: 'none',
-                  display: 'block',
-                  visibility: isReady ? 'visible' : 'hidden',
-                  transform: `scale(${zoomLevel})`,
-                  transformOrigin: 'center center',
-                  transition: 'transform 0.2s ease',
-                  pointerEvents: isZoomed ? 'none' : 'auto',
-                }}
-              >
-                {generatePages()}
-              </div>
+            <div
+              ref={flipbookRef}
+              id="flipbook"
+              className="flipbook"
+              style={{
+                position: 'relative',
+                touchAction: 'pinch-zoom',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                display: 'block',
+                visibility: isReady ? 'visible' : 'hidden',
+                transform: `scale(${zoomLevel}) translate(${panOffset.x / zoomLevel}px, ${panOffset.y / zoomLevel}px)`,
+                transformOrigin: 'center center',
+                transition: isPanningRef.current ? 'none' : 'transform 0.2s ease',
+                pointerEvents: isZoomed ? 'none' : 'auto',
+              }}
+            >
+              {generatePages()}
             </div>
 
             {/* Desktop nav arrows (hidden when zoomed) */}
