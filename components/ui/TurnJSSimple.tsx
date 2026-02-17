@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, ChevronDown, Download, Maximize, Minimize } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronDown, Download, Maximize, Minimize, ZoomIn, ZoomOut } from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
 
 export default function TurnJSSimple() {
@@ -12,6 +12,7 @@ export default function TurnJSSimple() {
   const [loadingError, setLoadingError] = useState<string | null>(null)
   const [PageFlipModule, setPageFlipModule] = useState<any>(null)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [zoomLevel, setZoomLevel] = useState(1)
   const containerRef = useRef<HTMLDivElement>(null)
   const flipbookRef = useRef<HTMLDivElement>(null)
   const pageFlipRef = useRef<any>(null)
@@ -392,7 +393,11 @@ export default function TurnJSSimple() {
 
   // Sync fullscreen state with browser
   useEffect(() => {
-    const handleChange = () => setIsFullscreen(!!document.fullscreenElement)
+    const handleChange = () => {
+      const fs = !!document.fullscreenElement
+      setIsFullscreen(fs)
+      if (!fs) setZoomLevel(1)
+    }
     document.addEventListener('fullscreenchange', handleChange)
     return () => document.removeEventListener('fullscreenchange', handleChange)
   }, [])
@@ -508,7 +513,7 @@ export default function TurnJSSimple() {
       style={{ zIndex: 30 }}
     >
       {/* Flipbook / Carousel Container */}
-      <div className="flex-1 relative flex items-center justify-center overflow-hidden">
+      <div className={`flex-1 relative flex items-center justify-center ${zoomLevel > 1 ? 'overflow-auto' : 'overflow-hidden'}`}>
         {/* Loading indicator */}
         {!isReady && (
           <div className="text-white text-2xl font-bold py-12">
@@ -535,6 +540,9 @@ export default function TurnJSSimple() {
                 WebkitUserSelect: 'none',
                 display: 'block',
                 visibility: isReady ? 'visible' : 'hidden',
+                transform: `scale(${zoomLevel})`,
+                transformOrigin: 'center center',
+                transition: 'transform 0.2s ease',
               }}
             >
               {generatePages()}
@@ -680,6 +688,29 @@ export default function TurnJSSimple() {
             <Download className="w-3 h-3" />
             PDF
           </a>
+
+          {/* Zoom controls (fullscreen only) */}
+          {isFullscreen && (
+            <>
+              <button
+                onClick={() => setZoomLevel(z => Math.max(1, z - 0.25))}
+                className="bg-slate-700 hover:bg-slate-600 text-white p-2 rounded-full border border-slate-500 disabled:opacity-40"
+                disabled={zoomLevel <= 1}
+                aria-label="Zoom out"
+              >
+                <ZoomOut className="w-4 h-4" />
+              </button>
+              <span className="text-white text-xs font-bold min-w-[3rem] text-center">{Math.round(zoomLevel * 100)}%</span>
+              <button
+                onClick={() => setZoomLevel(z => Math.min(3, z + 0.25))}
+                className="bg-slate-700 hover:bg-slate-600 text-white p-2 rounded-full border border-slate-500 disabled:opacity-40"
+                disabled={zoomLevel >= 3}
+                aria-label="Zoom in"
+              >
+                <ZoomIn className="w-4 h-4" />
+              </button>
+            </>
+          )}
 
           {/* Fullscreen toggle (desktop only) */}
           {isDesktop && (
