@@ -568,24 +568,33 @@ export default function TurnJSSimple() {
         {/* Desktop: Page-flip flipbook */}
         {isDesktop && (
           <>
-            <div
-              ref={flipbookRef}
-              id="flipbook"
-              className="flipbook"
-              style={{
-                position: 'relative',
-                touchAction: 'pinch-zoom',
-                userSelect: 'none',
-                WebkitUserSelect: 'none',
-                display: 'block',
-                visibility: isReady ? 'visible' : 'hidden',
-                transform: `scale(${zoomLevel})`,
-                transformOrigin: 'center center',
-                transition: 'transform 0.2s ease',
-                pointerEvents: isZoomed ? 'none' : 'auto',
-              }}
-            >
-              {generatePages()}
+            <div style={{
+              width: isZoomed ? `${zoomLevel * 100}%` : undefined,
+              height: isZoomed ? `${zoomLevel * 100}%` : undefined,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}>
+              <div
+                ref={flipbookRef}
+                id="flipbook"
+                className="flipbook"
+                style={{
+                  position: 'relative',
+                  touchAction: 'pinch-zoom',
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  display: 'block',
+                  visibility: isReady ? 'visible' : 'hidden',
+                  transform: `scale(${zoomLevel})`,
+                  transformOrigin: 'center center',
+                  transition: 'transform 0.2s ease',
+                  pointerEvents: isZoomed ? 'none' : 'auto',
+                }}
+              >
+                {generatePages()}
+              </div>
             </div>
 
             {/* Desktop nav arrows (hidden when zoomed) */}
