@@ -402,7 +402,7 @@ export default function TurnJSSimple() {
   const isZoomed = zoomLevel > 1
 
   const nextPage = () => {
-    if (isZoomed) return
+    if (isZoomed) setPanOffset({ x: 0, y: 0 })
     if (isDesktop) {
       if (pageFlipRef.current) {
         try {
@@ -417,7 +417,7 @@ export default function TurnJSSimple() {
   }
 
   const prevPage = () => {
-    if (isZoomed) return
+    if (isZoomed) setPanOffset({ x: 0, y: 0 })
     if (isDesktop) {
       if (pageFlipRef.current && currentPage > 1) {
         try {
@@ -594,18 +594,20 @@ export default function TurnJSSimple() {
               {generatePages()}
             </div>
 
-            {/* Desktop nav arrows (hidden when zoomed) */}
-            {isReady && !isZoomed && (
+            {/* Desktop nav arrows — always visible, float above zoomed content */}
+            {isReady && (
               <>
                 <button
                   onClick={prevPage}
                   className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full"
+                  style={{ zIndex: 10 }}
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
                 <button
                   onClick={nextPage}
                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full"
+                  style={{ zIndex: 10 }}
                 >
                   <ChevronRight className="w-6 h-6" />
                 </button>
