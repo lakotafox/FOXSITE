@@ -402,7 +402,10 @@ export default function TurnJSSimple() {
     return () => document.removeEventListener('fullscreenchange', handleChange)
   }, [])
 
+  const isZoomed = zoomLevel > 1
+
   const nextPage = () => {
+    if (isZoomed) return
     if (isDesktop) {
       if (pageFlipRef.current) {
         try {
@@ -417,6 +420,7 @@ export default function TurnJSSimple() {
   }
 
   const prevPage = () => {
+    if (isZoomed) return
     if (isDesktop) {
       if (pageFlipRef.current && currentPage > 1) {
         try {
@@ -432,6 +436,41 @@ export default function TurnJSSimple() {
       emblaApi.scrollPrev()
     }
   }
+
+  // Grab-and-pan when zoomed in
+  const panRef = useRef<HTMLDivElement>(null)
+  const isPanningRef = useRef(false)
+  const panStartRef = useRef({ x: 0, y: 0, scrollLeft: 0, scrollTop: 0 })
+
+  useEffect(() => {
+    const el = panRef.current
+    if (!el || !isZoomed) return
+
+    const onMouseDown = (e: MouseEvent) => {
+      isPanningRef.current = true
+      panStartRef.current = { x: e.clientX, y: e.clientY, scrollLeft: el.scrollLeft, scrollTop: el.scrollTop }
+      el.style.cursor = 'grabbing'
+      e.preventDefault()
+    }
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isPanningRef.current) return
+      el.scrollLeft = panStartRef.current.scrollLeft - (e.clientX - panStartRef.current.x)
+      el.scrollTop = panStartRef.current.scrollTop - (e.clientY - panStartRef.current.y)
+    }
+    const onMouseUp = () => {
+      isPanningRef.current = false
+      el.style.cursor = 'grab'
+    }
+
+    el.addEventListener('mousedown', onMouseDown)
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+    return () => {
+      el.removeEventListener('mousedown', onMouseDown)
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+    }
+  }, [isZoomed])
 
   const goToPage = (catalogPageNumber: number) => {
     setBottomIndexOpen(false)
@@ -513,7 +552,7 @@ export default function TurnJSSimple() {
       style={{ zIndex: 30 }}
     >
       {/* Flipbook / Carousel Container */}
-      <div className={`flex-1 relative flex items-center justify-center ${zoomLevel > 1 ? 'overflow-auto' : 'overflow-hidden'}`}>
+      <div ref={panRef} className={`flex-1 relative flex items-center justify-center ${isZoomed ? 'overflow-auto' : 'overflow-hidden'}`} style={{ cursor: isZoomed ? 'grab' : undefined }}>
         {/* Loading indicator */}
         {!isReady && (
           <div className="text-white text-2xl font-bold py-12">
@@ -543,13 +582,14 @@ export default function TurnJSSimple() {
                 transform: `scale(${zoomLevel})`,
                 transformOrigin: 'center center',
                 transition: 'transform 0.2s ease',
+                pointerEvents: isZoomed ? 'none' : 'auto',
               }}
             >
               {generatePages()}
             </div>
 
-            {/* Desktop nav arrows */}
-            {isReady && (
+            {/* Desktop nav arrows (hidden when zoomed) */}
+            {isReady && !isZoomed && (
               <>
                 <button
                   onClick={prevPage}
@@ -644,7 +684,10 @@ export default function TurnJSSimple() {
 
             {bottomIndexOpen && (
               <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 rounded-lg shadow-xl border border-slate-600 py-2 w-[280px] max-h-[60vh] overflow-y-auto" style={{ zIndex: 9999 }}>
-                <div className="px-3 py-1.5 text-yellow-500 font-bold text-xs uppercase tracking-wider border-b border-slate-700">Desking</div>
+                <div className="px-3 py-1.5 text-purple-400 font-bold text-xs uppercase tracking-wider border-b border-slate-700">Desk Pricing</div>
+                <button onClick={() => goToPage(29)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">29: Desk Pricing</button>
+
+                <div className="px-3 py-1.5 text-yellow-500 font-bold text-xs uppercase tracking-wider border-b border-t border-slate-700 mt-1">Desking</div>
                 <button onClick={() => goToPage(2)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">02-32: Classic Laminate</button>
                 <button onClick={() => goToPage(34)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">34-35: Riser Series</button>
                 <button onClick={() => goToPage(38)} className="block w-full text-left px-4 py-2 text-xs text-white hover:bg-slate-600">38-43: Elements Collection</button>
