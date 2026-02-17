@@ -478,6 +478,24 @@ export default function TurnJSSimple() {
     }
   }, [isZoomed, panOffset])
 
+  // Scroll wheel zoom in fullscreen
+  useEffect(() => {
+    if (!isFullscreen) return
+    const container = containerRef.current
+    if (!container) return
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      setZoomLevel(z => {
+        const delta = e.deltaY > 0 ? -0.15 : 0.15
+        return Math.min(3, Math.max(1, z + delta))
+      })
+    }
+
+    container.addEventListener('wheel', onWheel, { passive: false })
+    return () => container.removeEventListener('wheel', onWheel)
+  }, [isFullscreen])
+
   const goToPage = (catalogPageNumber: number) => {
     setBottomIndexOpen(false)
     if (isDesktop && pageFlipRef.current) {
