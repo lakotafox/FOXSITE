@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /carrie
+Disallow: /products-editor
+Disallow: /api/
+Disallow: /global-view
+
+Sitemap: https://foxbuiltstore.com/sitemap.xml

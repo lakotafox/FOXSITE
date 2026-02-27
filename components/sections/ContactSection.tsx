@@ -65,6 +65,14 @@ export default function ContactSection() {
           }, '0Bkb_97n0e_1HsPH9')
           
           console.log('Email sent successfully:', response)
+          // Track contact form submission in GA4
+          if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'generate_lead', {
+              event_category: 'contact',
+              event_label: 'contact_form_submission',
+              value: 1
+            })
+          }
           alert("Thanks! Your quote request has been sent. We'll get back to you soon!")
           
           // Reset form

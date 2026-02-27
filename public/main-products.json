@@ -5,13 +5,13 @@
         "id": 1,
         "title": "Executive Desk Series",
         "image": "/images/desk grey L showroom.jpg",
-        "description": "",
+        "description": "Professional L-shaped and straight executive desks built for serious workspaces. Solid construction, built-in cable management, and premium finishes that look great in any office.",
         "features": [
           "Solid wood construction",
           "Cable management",
           "5-year warranty"
         ],
-        "price": "",
+        "price": "Call for pricing",
         "imageCrop": {
           "scale": 3.045213915504014,
           "x": 44,
@@ -22,13 +22,13 @@
         "id": 2,
         "title": "Ergonomic Task Chair",
         "image": "/images/reception-area.jpg",
-        "description": "",
+        "description": "All-day comfort with adjustable lumbar support, breathable mesh back, and fully adjustable arms. Perfect for long hours at the desk.",
         "features": [
           "Lumbar support",
           "Adjustable arms",
           "Breathable mesh"
         ],
-        "price": "",
+        "price": "Call for pricing",
         "imageCrop": {
           "scale": 1.5,
           "x": 50,
@@ -39,13 +39,13 @@
         "id": 3,
         "title": "Conference Table",
         "image": "/images/tanconf.jpg",
-        "description": "",
+        "description": "Make a statement in your meeting room. Seats 8-12 with integrated power and data ports. Available in multiple sizes and premium wood finishes.",
         "features": [
           "Seats 8-12",
           "Power integration",
           "Premium finishes"
         ],
-        "price": ""
+        "price": "Call for pricing"
       }
     ],
     "battleTested": [
@@ -53,13 +53,13 @@
         "id": 10,
         "title": "Pre-Owned Executive Desk",
         "image": "/images/showroom-2.jpg",
-        "description": "",
+        "description": "Quality executive desks at a fraction of retail. Every piece is inspected, cleaned, and certified. Looks like new, priced like used.",
         "features": [
           "Inspected & certified",
           "Like-new condition",
           "50% off retail"
         ],
-        "price": "",
+        "price": "Call for pricing",
         "imageCrop": {
           "scale": 1.2,
           "x": 50,
@@ -70,13 +70,13 @@
         "id": 11,
         "title": "Desk",
         "image": "https://res.cloudinary.com/dltlrgaay/image/upload/v1771027034/o6y7lrsbvgajsh1nwobf.jpg",
-        "description": "",
+        "description": "Solid pre-owned desk in great condition. Professionally delivered and installed. Backed by our 1-year warranty.",
         "features": [
           "A really good desk it is really good ",
           "Professionally stored delivered and installed",
           "1-year warranty"
         ],
-        "price": "",
+        "price": "Call for pricing",
         "imageCrop": {
           "scale": 1.4282462475762734,
           "x": 50,
@@ -87,13 +87,13 @@
         "id": 12,
         "title": "Pre-Owned Task Chairs",
         "image": "/images/reception-area.jpg",
-        "description": "",
+        "description": "Fully functional task chairs with new casters and fresh upholstery. Bulk discounts available for outfitting your whole team.",
         "features": [
           "Fully functional",
           "New casters",
           "Bulk discounts"
         ],
-        "price": "",
+        "price": "Call for pricing",
         "imageCrop": {
           "scale": 1.5,
           "x": 50,
@@ -106,13 +106,13 @@
         "id": 19,
         "title": "Executive Office Chair",
         "image": "/images/showfacinggarage.jpg",
-        "description": "",
+        "description": "Premium leather executive chair with memory foam cushioning. Built to last with a lifetime frame warranty. The boss chair.",
         "features": [
           "Premium leather",
           "Memory foam",
           "Lifetime frame warranty"
         ],
-        "price": "",
+        "price": "Call for pricing",
         "imageCrop": {
           "scale": 1.3,
           "x": 55,
@@ -123,13 +123,13 @@
         "id": 20,
         "title": "Ergonomic Mesh Chair",
         "image": "/images/desk grey L showroom.jpg",
-        "description": "",
+        "description": "Breathable mesh back with 3D adjustable armrests and synchro-tilt mechanism. Weight-activated for effortless comfort all day.",
         "features": [
           "3D armrests",
           "Synchro-tilt",
           "Weight-activated"
         ],
-        "price": "",
+        "price": "Call for pricing",
         "imageCrop": {
           "scale": 3.045213915504014,
           "x": 44,
@@ -140,13 +140,13 @@
         "id": 21,
         "title": "Conference Room Chairs",
         "image": "/images/reception-area.jpg",
-        "description": "",
+        "description": "Matching set of 6 commercial-grade conference chairs. Clean, professional look that ties your meeting room together.",
         "features": [
           "Set of 6",
           "Matching design",
           "Commercial grade"
         ],
-        "price": "",
+        "price": "Call for pricing",
         "imageCrop": {
           "scale": 1.5,
           "x": 50,

@@ -70,6 +70,57 @@ html {
       <body>
         {/* Add your Google Analytics ID here - get it from https://analytics.google.com */}
         <GoogleAnalytics GA_MEASUREMENT_ID="G-KP2P0MHQW0" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FurnitureStore",
+              "name": "FoxBuilt Office",
+              "image": "https://foxbuiltstore.com/images/foxbuilt-logo.png",
+              "url": "https://foxbuiltstore.com",
+              "telephone": "+1-801-899-9406",
+              "email": "kylefox@foxbuilt.com",
+              "description": "Office furniture store in Pleasant Grove, Utah serving Utah County and Salt Lake County since 1999. New and pre-owned desks, chairs, cubicles, and full office setups.",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "420 W Industrial Dr",
+                "addressLocality": "Pleasant Grove",
+                "addressRegion": "UT",
+                "postalCode": "84062",
+                "addressCountry": "US"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 40.3641,
+                "longitude": -111.7385
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                  "opens": "10:00",
+                  "closes": "17:00"
+                }
+              ],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5.0",
+                "bestRating": "5",
+                "worstRating": "1",
+                "ratingCount": "50"
+              },
+              "priceRange": "$$",
+              "foundingDate": "1999",
+              "areaServed": [
+                { "@type": "State", "name": "Utah" },
+                { "@type": "AdministrativeArea", "name": "Utah County" },
+                { "@type": "AdministrativeArea", "name": "Salt Lake County" }
+              ],
+              "sameAs": []
+            })
+          }}
+        />
         {children}
       </body>
     </html>
