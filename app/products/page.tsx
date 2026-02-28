@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import FlyingPosters from '@/components/ui/FlyingPosters'
 import VoidModal from '@/components/ui/VoidModal'
 import { X } from 'lucide-react'
-import FloatingActionButtons from '@/components/sections/FloatingActionButtons'
 import ProductsSection from '@/components/products/ProductsSection'
 import CategorySelector from '@/components/products/CategorySelector'
 import Header from '@/components/sections/Header'
@@ -236,10 +235,6 @@ function ProductsPageContent() {
 
   return (
     <div className="min-h-screen bg-slate-800">
-      {/* Floating Action Buttons */}
-      <FloatingActionButtons />
-
-
       {/* Header with full navigation */}
       <Header showAddress={showAddress} setShowAddress={setShowAddress} />
 

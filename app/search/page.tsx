@@ -6,7 +6,6 @@ import Header from '@/components/sections/Header'
 import ProductsSection from '@/components/products/ProductsSection'
 import ContactForm from '@/components/products/ContactForm'
 import ASCIISection from '@/components/sections/ASCIISection'
-import FloatingActionButtons from '@/components/sections/FloatingActionButtons'
 import VoidModal from '@/components/ui/VoidModal'
 import FlyingPosters from '@/components/ui/FlyingPosters'
 import { X } from 'lucide-react'
@@ -173,9 +172,6 @@ function SearchPageContent() {
 
   return (
     <div className="min-h-screen bg-slate-800">
-      {/* Floating Action Buttons */}
-      <FloatingActionButtons />
-
       {/* Header with full navigation */}
       <Header showAddress={showAddress} setShowAddress={setShowAddress} />
 

@@ -121,6 +121,65 @@ html {
             })
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Where can I buy office furniture in Utah?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "FoxBuilt Office has a showroom at 420 W Industrial Dr in Pleasant Grove, UT. We serve businesses across Utah County, Salt Lake County, and the entire Wasatch Front. Stop by Monday through Friday 10am–5pm or call (801) 899-9406 to schedule a visit."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How much does office furniture cost?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Office furniture pricing varies based on condition, brand, and customization. At FoxBuilt we carry new and pre-owned options — desks start around $200 and executive setups can run several thousand. Call us at (801) 899-9406 for a free, no-obligation quote."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do you deliver and set up office furniture?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. FoxBuilt offers delivery and professional installation throughout Utah. We handle everything from single desks to full office build-outs so your team can get to work right away."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Can I buy used office furniture near me?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely. We carry a large selection of quality pre-owned desks, chairs, cubicles, and conference tables at our Pleasant Grove showroom. Inventory changes often — call (801) 899-9406 to ask about current stock."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do you offer bulk discounts for businesses?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes — we regularly furnish entire offices and offer volume pricing for larger orders. Whether you need 5 desks or 500, we can put together a package that fits your budget."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What brands of office furniture do you carry?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "FoxBuilt carries a mix of top commercial brands and American-made lines. Our catalog includes over 160 pages of desks, seating, storage, and conference room furniture."
+                  }
+                }
+              ]
+            })
+          }}
+        />
         {children}
       </body>
     </html>

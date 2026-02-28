@@ -5,7 +5,6 @@ import { useSearchParams } from 'next/navigation'
 import { getMainProducts, defaultMainProducts } from "@/lib/main-products-data"
 
 // Import all our extracted components
-import FloatingActionButtons from "@/components/sections/FloatingActionButtons"
 import Header from "@/components/sections/Header"
 import HeroSection from "@/components/sections/HeroSection"
 import HeroLanding from "@/components/sections/HeroLanding"
@@ -15,6 +14,7 @@ import CatalogSection from "@/components/sections/CatalogSection"
 import AboutSection from "@/components/sections/AboutSection"
 import ContactSection from "@/components/sections/ContactSection"
 import ASCIISection from "@/components/sections/ASCIISection"
+import FAQSection from "@/components/sections/FAQSection"
 import Footer from "@/components/sections/Footer"
 
 // Declare window.emailjs type
@@ -159,7 +159,6 @@ function FoxBuiltWebsiteContent() {
 
   return (
     <div className="min-h-screen bg-slate-800">
-      <FloatingActionButtons />
       <Header showAddress={showAddress} setShowAddress={setShowAddress} />
       <div style={{ marginTop: isMobile ? '80px' : '90px' }}>
         <HeroLanding 
@@ -179,6 +178,7 @@ function FoxBuiltWebsiteContent() {
           setShowAddress={setShowAddress}
         />
         <ContactSection />
+        <FAQSection />
         <ASCIISection />
         <Footer />
       </div>

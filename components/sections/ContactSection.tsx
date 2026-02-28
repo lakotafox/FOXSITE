@@ -103,6 +103,16 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-20 bg-slate-900 text-white">
       <div className="container mx-auto px-4">
+        {/* Section Heading */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-3">
+            GET A <span className="text-red-500">FREE QUOTE</span>
+          </h2>
+          <p className="text-zinc-400 text-lg max-w-xl mx-auto">
+            Tell us what you need and we&apos;ll put together a custom quote for your space.
+          </p>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-16 max-w-5xl mx-auto">
           <div>
             <StoreHours className="mt-12" />
@@ -143,8 +153,8 @@ export default function ContactSection() {
                 />
               </div>
               <div className="flex gap-4">
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isSubmitting}
                   className="flex-1 bg-red-600 hover:bg-red-700 py-4 font-black text-lg tracking-widest border-4 border-red-600 disabled:opacity-50"
                 >
@@ -153,6 +163,19 @@ export default function ContactSection() {
                 <RocketButton />
               </div>
             </form>
+
+            {/* Trust Signals */}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6 text-sm text-zinc-400">
+              <span className="flex items-center gap-1.5">
+                <span className="text-green-400">&#10003;</span> No obligation
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-green-400">&#10003;</span> Same-day response
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-green-400">&#10003;</span> Serving Utah since 1999
+              </span>
+            </div>
           </div>
         </div>
       </div>

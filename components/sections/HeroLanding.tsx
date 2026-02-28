@@ -97,6 +97,22 @@ export default function HeroLanding({ galleryImages = [], getImageUrl }: HeroLan
           </div>
         </div>
 
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pb-16">
+          <a
+            href="tel:+18018999406"
+            className="bg-red-600 hover:bg-red-700 text-white font-black text-lg md:text-xl tracking-wider px-8 py-4 rounded-lg border-4 border-red-500 transition-all hover:scale-105 shadow-lg shadow-red-900/30"
+          >
+            CALL (801) 899-9406
+          </a>
+          <button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-black text-lg md:text-xl tracking-wider px-8 py-4 rounded-lg border-4 border-white/30 transition-all hover:scale-105"
+          >
+            GET A FREE QUOTE
+          </button>
+        </div>
+
       </div>
 
     </section>
