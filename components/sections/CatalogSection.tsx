@@ -20,24 +20,23 @@ export default function CatalogSection() {
       </div>
 
       {/* CTA Bar */}
-      <div className="relative z-30 bg-slate-900/80 backdrop-blur-sm border-y-4 border-red-600 py-8 mt-8">
+      <div className="relative z-30 bg-slate-900/80 backdrop-blur-sm border-t border-slate-700 py-6 mt-8">
         <div className="container mx-auto px-4 text-center">
-          <h3 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight">
-            SEE SOMETHING YOU LIKE?
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
+            See something you like?
           </h3>
-          <p className="text-zinc-400 mb-6 text-lg">Let us help you find the perfect setup for your office.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="tel:+18018999406"
-              className="bg-red-600 hover:bg-red-700 text-white font-black text-lg tracking-wider px-8 py-4 rounded-lg border-4 border-red-500 transition-all hover:scale-105"
+              className="bg-red-600 hover:bg-red-500 text-white font-bold text-base md:text-lg px-6 py-3 rounded-md shadow-lg shadow-red-900/20 transition-colors"
             >
-              CALL (801) 899-9406
+              Call (801) 899-9406
             </a>
             <button
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-black text-lg tracking-wider px-8 py-4 rounded-lg border-4 border-white/30 transition-all hover:scale-105"
+              className="border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-bold text-base md:text-lg px-6 py-3 rounded-md transition-colors"
             >
-              GET A FREE QUOTE
+              Get a Free Quote
             </button>
           </div>
         </div>

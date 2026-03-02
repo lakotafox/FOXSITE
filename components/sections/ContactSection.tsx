@@ -105,11 +105,12 @@ export default function ContactSection() {
       <div className="container mx-auto px-4">
         {/* Section Heading */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-3">
-            GET A <span className="text-red-500">FREE QUOTE</span>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white">
+            Get a Free Quote
           </h2>
-          <p className="text-zinc-400 text-lg max-w-xl mx-auto">
-            Tell us what you need and we&apos;ll put together a custom quote for your space.
+          <div className="w-12 h-0.5 bg-red-600 mx-auto mt-3 mb-4" />
+          <p className="text-zinc-400 text-base">
+            No obligation — we respond same day.
           </p>
         </div>
 
@@ -165,17 +166,9 @@ export default function ContactSection() {
             </form>
 
             {/* Trust Signals */}
-            <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6 text-sm text-zinc-400">
-              <span className="flex items-center gap-1.5">
-                <span className="text-green-400">&#10003;</span> No obligation
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="text-green-400">&#10003;</span> Same-day response
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="text-green-400">&#10003;</span> Serving Utah since 1999
-              </span>
-            </div>
+            <p className="mt-6 text-zinc-500 text-sm">
+              No obligation &middot; Same-day response &middot; Serving Utah since 1999
+            </p>
           </div>
         </div>
       </div>

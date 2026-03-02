@@ -255,7 +255,7 @@ export default function FeaturedProducts({
                     ))}
                   </ul>
                 )}
-                {product.price && (
+                {product.price && product.price !== 'Call for pricing' && (
                   <div className="card__price" style={{
                     color: featuredCategory === "new"
                       ? "rgb(220, 38, 38)"

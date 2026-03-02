@@ -191,7 +191,7 @@ export default function ProductsSection({
                     ))}
                   </ul>
                 )}
-                {product.price && (
+                {product.price && product.price !== 'Call for pricing' && (
                   <div className="card__price" style={{
                     color: category === "new"
                       ? "rgb(220, 38, 38)"
