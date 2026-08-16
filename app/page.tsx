@@ -165,12 +165,13 @@ function FoxBuiltWebsiteContent() {
           galleryImages={isMobile ? mobileGalleryImages : galleryImages}
           getImageUrl={getImageUrl}
         />
-        <FeaturedProducts 
+        {/* OUR FAVORITES — hidden 2026-08-16, may come back later. Re-enable by uncommenting. */}
+        {/* <FeaturedProducts
           featuredProducts={featuredProducts}
           cropSettings={cropSettings}
           getImageUrl={getImageUrl}
           openCarouselData={openCarouselData}
-        />
+        /> */}
         <CatalogSection />
         <InteractiveParticles />
         <AboutSection 
