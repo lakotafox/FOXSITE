@@ -12,3 +12,18 @@
 # Enable Next.js plugin for proper API route handling
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+# Old domain (printed on business card QR codes) -> new site.
+# Send every path to the homepage: old-site URLs don't exist on the new site.
+# These rules only take effect once foxbuiltofficefurniture.com is added as a
+# domain alias on this Netlify site and its DNS points to Netlify.
+[[redirects]]
+  from = "https://foxbuiltofficefurniture.com/*"
+  to = "https://foxbuiltstore.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.foxbuiltofficefurniture.com/*"
+  to = "https://foxbuiltstore.com/"
+  status = 301
+  force = true
