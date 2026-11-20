@@ -79,10 +79,14 @@ export default function HeroLanding({ galleryImages = [], getImageUrl }: HeroLan
         {/* Main Title - Centered */}
         <div className="flex-1 flex items-center justify-center">
           <div className="bg-black/50 backdrop-blur-sm border-2 border-white/20 rounded-lg px-4 md:px-8 py-3 md:py-6 inline-block">
-            <h1 className="text-3xl md:text-8xl lg:text-9xl font-bold leading-tight mb-2">
-              <span className="text-red-500">FOX</span>
-              <span className="text-white">BUILT</span>
-              <span className="text-blue-500">OFFICE</span>
+            {/* Reads "FoxBuilt Office Furniture" to screen readers and search engines; the
+                screen-reader-only space and word leave the look unchanged */}
+            <h1 className="text-3xl md:text-8xl lg:text-9xl font-bold leading-tight mb-2 uppercase">
+              <span className="text-red-500">Fox</span>
+              <span className="text-white">Built</span>
+              <span className="sr-only"> </span>
+              <span className="text-blue-500">Office</span>
+              <span className="sr-only"> Furniture</span>
             </h1>
             {/* EST. 1999 */}
             <div className="flex items-center justify-center mb-1">

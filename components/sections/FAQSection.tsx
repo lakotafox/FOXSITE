@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 
 const faqs = [
@@ -37,8 +36,6 @@ const faqs = [
 ]
 
 export default function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
   return (
     <section className="py-16 bg-slate-800">
       <div className="container mx-auto px-4 max-w-3xl">
@@ -46,26 +43,19 @@ export default function FAQSection() {
           Common Questions
         </h2>
 
+        {/* <details> keeps every answer in the page's HTML and opens without JavaScript.
+            Sharing name="faq" keeps one answer open at a time, as before. */}
         <div className="divide-y divide-slate-700">
           {faqs.map((faq, i) => (
-            <div key={i}>
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full text-left px-4 py-4 flex items-center justify-between hover:bg-slate-700/30 transition-colors"
-              >
+            <details key={i} name="faq" className="group">
+              <summary className="w-full text-left px-4 py-4 flex items-center justify-between hover:bg-slate-700/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                 <span className="text-white font-semibold pr-4">{faq.question}</span>
-                <ChevronDown
-                  className={`w-5 h-5 text-zinc-400 flex-shrink-0 transition-transform duration-200 ${
-                    openIndex === i ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
-              {openIndex === i && (
-                <div className="px-4 pb-4 text-sm text-zinc-400 leading-relaxed">
-                  {faq.answer}
-                </div>
-              )}
-            </div>
+                <ChevronDown className="w-5 h-5 text-zinc-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" />
+              </summary>
+              <div className="px-4 pb-4 text-sm text-zinc-400 leading-relaxed">
+                {faq.answer}
+              </div>
+            </details>
           ))}
         </div>
       </div>

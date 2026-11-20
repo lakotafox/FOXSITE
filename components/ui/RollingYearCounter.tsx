@@ -144,7 +144,10 @@ export default function RollingYearCounter({
     return () => clearTimeout(timeoutId)
   }, [mounted, year, delay, duration])
   
-  if (!mounted) return <span className={className}>2025</span>
+  // Until mount, which includes the first HTML, hold the real year rather than the roll's
+  // starting year, so the page never reads "EST. 2025". It stays invisible, so the roll
+  // still starts from its first frame.
+  if (!mounted) return <span className={className} style={{ visibility: 'hidden' }}>{year}</span>
   
   return (
     <span 

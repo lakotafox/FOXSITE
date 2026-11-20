@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { Phone, MapPin, Mail, ChevronDown, Menu, X, Search, BookOpen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import MapConfirmModal from '@/components/ui/MapConfirmModal'
 import RollingYearCounter from '@/components/ui/RollingYearCounter'
-import { getCategoryVisibility } from '@/lib/category-visibility'
+import { builtCategoryVisibility, getCategoryVisibility } from '@/lib/category-visibility'
 import { getCategoryNames } from '@/lib/category-names'
 
 interface HeaderProps {
@@ -18,6 +18,7 @@ interface HeaderProps {
 
 export default function Header({ showAddress, setShowAddress }: HeaderProps) {
   const router = useRouter()
+  const isHomePage = usePathname() === '/'
   const [isScrolled, setIsScrolled] = useState(false)
   const [showMapConfirm, setShowMapConfirm] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -25,9 +26,10 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null)
   const [dynamicPageName, setDynamicPageName] = useState('Executive Desks')
   const [searchQuery, setSearchQuery] = useState('')
-  const [isHomePage, setIsHomePage] = useState(false)
-  const [categoryVisibility, setCategoryVisibility] = useState<any>({})
-  const [showSearchBar, setShowSearchBar] = useState(true)
+  // Start from the settings published at build time (the first HTML matches them), then
+  // apply the live file once it loads
+  const [categoryVisibility, setCategoryVisibility] = useState<any>(builtCategoryVisibility)
+  const [showSearchBar, setShowSearchBar] = useState(builtCategoryVisibility.showSearchBar ?? true)
   const [categoryNames, setCategoryNames] = useState<any>(null)
 
   // Check if ANY category group is visible (for hiding hamburger when all are off)
@@ -47,11 +49,6 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    // Check if we're on the home page
-    setIsHomePage(window.location.pathname === '/')
   }, [])
 
   useEffect(() => {

@@ -49,7 +49,11 @@ function getCategoryDefaultName(categoryId: string): string {
   return defaultNames[categoryId] || 'Products'
 }
 
-function ProductsPageContent() {
+// The parts of the page that depend on ?category= in the URL: the category's name, its
+// products and the photo carousel. useSearchParams() makes the static export leave
+// everything up to the nearest <Suspense> to the browser, so this child has its own
+// boundary and the rest of the page (header, heading, contact form) is in the first HTML.
+function CategoryProducts() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const categoryParam = searchParams.get('category') || 'executive-desks'
@@ -63,7 +67,6 @@ function ProductsPageContent() {
   const [productsByCategory, setProductsByCategory] = useState<any>({})
   const [productsLoaded, setProductsLoaded] = useState(false)
   const [pageName, setPageName] = useState('')
-  const [showAddress, setShowAddress] = useState(false)
   const [categoryNames, setCategoryNames] = useState<any>(null)
   
   useEffect(() => {
@@ -237,14 +240,11 @@ function ProductsPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-800">
-      {/* Header with full navigation */}
-      <Header showAddress={showAddress} setShowAddress={setShowAddress} />
-
-      {/* Page Title - with proper spacing from fixed header */}
-      <section className="bg-slate-900 py-8 border-b-4 border-red-600 mt-14 md:mt-[200px]">
+    <>
+      {/* Category name, under the page heading */}
+      <section className="bg-slate-900 pt-2 pb-8 border-b-4 border-red-600">
         <div className="container mx-auto px-4">
-          <h1 className="text-5xl font-black text-center tracking-tight text-white">
+          <h2 className="text-5xl font-black text-center tracking-tight text-white">
             <span 
               className={(() => {
                 if (categoryParam.includes('desk') || categoryParam.includes('executive') || categoryParam.includes('reception')) return 'text-red-600'
@@ -258,7 +258,7 @@ function ProductsPageContent() {
             >
               {pageName.toUpperCase()}
             </span>
-          </h1>
+          </h2>
         </div>
       </section>
 
@@ -275,29 +275,6 @@ function ProductsPageContent() {
         />
       )}
 
-
-      {/* Contact Form */}
-      <ContactForm />
-
-      {/* ASCII Section */}
-      <ASCIISection />
-
-      {/* Footer */}
-      <footer className="bg-slate-800 border-t-4 border-red-600 text-zinc-400 py-6">
-        <div className="container mx-auto px-4 relative">
-          <p className="text-sm font-bold">&copy; 2026, FOXBUILT.</p>
-          <p className="text-xs text-yellow-500 mt-1">Want a free website? Email lakota.code@gmail.com</p>
-          
-          {/* Global View button - positioned in bottom right of footer */}
-          <button
-            onClick={() => router.push('/global-view')}
-            className="absolute top-2 right-4 bg-purple-600 hover:bg-purple-700 text-white font-black text-sm px-4 py-2 rounded-lg tracking-wider transition-all shadow-lg hover:shadow-xl"
-          >
-            GLOBAL VIEW
-          </button>
-        </div>
-      </footer>
-      
       {/* Flying Posters Modal */}
       <VoidModal
         isOpen={showFlyingPosters}
@@ -338,19 +315,55 @@ function ProductsPageContent() {
           }}
         />
       </VoidModal>
-
-    </div>
+    </>
   )
 }
 
 export default function ProductsPage() {
+  const router = useRouter()
+  const [showAddress, setShowAddress] = useState(false)
+
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
-      </div>
-    }>
-      <ProductsPageContent />
-    </Suspense>
+    <div className="min-h-screen bg-slate-800">
+      {/* Header with full navigation */}
+      <Header showAddress={showAddress} setShowAddress={setShowAddress} />
+
+      {/* Page Title - with proper spacing from fixed header */}
+      <section className="bg-slate-900 pt-8 mt-14 md:mt-[200px]">
+        <div className="container mx-auto px-4">
+          <h1 className="text-sm md:text-base font-bold text-center uppercase tracking-widest text-zinc-400">
+            Office furniture in <span className="whitespace-nowrap">Pleasant Grove, Utah</span>
+          </h1>
+        </div>
+      </section>
+
+      {/* The category's name and products. In the first HTML, before the browser has read
+          the URL, an empty title bar holds their place. */}
+      <Suspense fallback={<section className="bg-slate-900 pt-2 pb-8 border-b-4 border-red-600" />}>
+        <CategoryProducts />
+      </Suspense>
+
+      {/* Contact Form */}
+      <ContactForm />
+
+      {/* ASCII Section */}
+      <ASCIISection />
+
+      {/* Footer */}
+      <footer className="bg-slate-800 border-t-4 border-red-600 text-zinc-400 py-6">
+        <div className="container mx-auto px-4 relative">
+          <p className="text-sm font-bold">&copy; 2026, FOXBUILT.</p>
+          <p className="text-xs text-yellow-500 mt-1">Want a free website? Email lakota.code@gmail.com</p>
+
+          {/* Global View button - positioned in bottom right of footer */}
+          <button
+            onClick={() => router.push('/global-view')}
+            className="absolute top-2 right-4 bg-purple-600 hover:bg-purple-700 text-white font-black text-sm px-4 py-2 rounded-lg tracking-wider transition-all shadow-lg hover:shadow-xl"
+          >
+            GLOBAL VIEW
+          </button>
+        </div>
+      </footer>
+    </div>
   )
 }

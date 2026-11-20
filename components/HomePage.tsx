@@ -1,0 +1,193 @@
+'use client'
+
+// The home page. app/page.tsx renders it and holds the page's metadata.
+
+import { useState, useEffect } from "react"
+import { getMainProducts, defaultMainProducts } from "@/lib/main-products-data"
+
+// Import all our extracted components
+import Header from "@/components/sections/Header"
+import HeroSection from "@/components/sections/HeroSection"
+import HeroLanding from "@/components/sections/HeroLanding"
+import InteractiveParticles from "@/components/sections/InteractiveParticles"
+import FeaturedProducts from "@/components/sections/FeaturedProducts"
+import CatalogSection from "@/components/sections/CatalogSection"
+import AboutSection from "@/components/sections/AboutSection"
+import ContactSection from "@/components/sections/ContactSection"
+import ASCIISection from "@/components/sections/ASCIISection"
+import FAQSection from "@/components/sections/FAQSection"
+import Footer from "@/components/sections/Footer"
+import ShowroomDetails from "@/components/sections/ShowroomDetails"
+
+// Declare window.emailjs type
+declare global {
+  interface Window {
+    emailjs: any
+  }
+}
+
+export default function HomePage() {
+  const [showAddress, setShowAddress] = useState(false)
+  const [featuredProducts, setFeaturedProducts] = useState(defaultMainProducts)
+  const [cropSettings, setCropSettings] = useState<{[key: string]: {scale: number, x: number, y: number}}>({})
+  const [galleryCrops, setGalleryCrops] = useState<{[key: string]: {scale: number, x: number, y: number}}>({})
+  const [openCarouselData, setOpenCarouselData] = useState<{open: boolean, category?: string, index?: number}>({open: false})
+  
+  // Helper function to get displayable image URL
+  const getImageUrl = (imagePath: string) => {
+    if (!imagePath) return "/placeholder.svg"
+    return imagePath
+  }
+
+  // Gallery images - start empty to prevent flash
+  const [galleryImages, setGalleryImages] = useState<string[]>([])
+  const [mobileGalleryImages, setMobileGalleryImages] = useState<string[]>([])
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Load products from products.json (published by editor) and gallery from content.json
+  useEffect(() => {
+    // Load products from main-products.json (what the carrie editor publishes)
+    fetch('/main-products.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(data => {
+        if (data && data.products) {
+          setFeaturedProducts(data.products)
+
+          // Use productsCrops if available, otherwise extract from products
+          if (data.productsCrops) {
+            setCropSettings(data.productsCrops)
+          } else {
+            // Extract crop settings from products
+            const crops: {[key: string]: {scale: number, x: number, y: number}} = {}
+            Object.keys(data.products).forEach(category => {
+              data.products[category].forEach((product: any) => {
+                if (product.imageCrop && product.image) {
+                  crops[product.image] = product.imageCrop
+                }
+              })
+            })
+            setCropSettings(crops)
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error loading main-products.json, falling back to defaults:', error)
+        try {
+          setFeaturedProducts(getMainProducts())
+        } catch (e) {
+          console.error('Error loading fallback products:', e)
+          setFeaturedProducts(defaultMainProducts)
+        }
+      })
+    
+    // Load gallery images from content.json
+    fetch('/content.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(data => {
+        if (data) {
+          if (data.gallery) {
+            setGalleryImages(data.gallery)
+          }
+          if (data.mobileGallery) {
+            setMobileGalleryImages(data.mobileGallery)
+          }
+          if (data.galleryCrops) {
+            setGalleryCrops(data.galleryCrops)
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error loading content.json gallery:', error)
+        // Try localStorage as fallback with defensive checks
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            const savedGallery = localStorage.getItem('foxbuilt-gallery')
+            if (savedGallery) {
+              try {
+                setGalleryImages(JSON.parse(savedGallery))
+              } catch (e) {
+                console.error('Error parsing gallery images from localStorage:', e)
+              }
+            }
+          }
+        } catch (e) {
+          // localStorage might be blocked or unavailable
+          console.error('localStorage access denied or unavailable:', e)
+        }
+      })
+  }, [])
+
+  // Check if we should open carousel (returning from product detail). This reads the URL
+  // once on mount rather than through useSearchParams(), which would need a <Suspense>
+  // around the page and leave the static export with only "Loading..." in its HTML.
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.get('openCarousel') === 'true') {
+      const categoryParam = searchParams.get('category')
+      const indexParam = searchParams.get('index')
+      setOpenCarouselData({
+        open: true,
+        category: categoryParam || undefined,
+        index: indexParam ? parseInt(indexParam) : undefined
+      })
+      // Clean up the URL
+      const newUrl = new URL(window.location.href)
+      newUrl.searchParams.delete('openCarousel')
+      newUrl.searchParams.delete('category')
+      newUrl.searchParams.delete('index')
+      window.history.replaceState({}, '', newUrl)
+    }
+  }, [])
+
+  return (
+    <div className="min-h-screen bg-slate-800">
+      <Header showAddress={showAddress} setShowAddress={setShowAddress} />
+      <div style={{ marginTop: isMobile ? '80px' : '90px' }}>
+        <HeroLanding 
+          galleryImages={isMobile ? mobileGalleryImages : galleryImages}
+          getImageUrl={getImageUrl}
+        />
+        <ShowroomDetails />
+        {/* OUR FAVORITES — hidden 2026-08-16, may come back later. Re-enable by uncommenting. */}
+        {/* <FeaturedProducts
+          featuredProducts={featuredProducts}
+          cropSettings={cropSettings}
+          getImageUrl={getImageUrl}
+          openCarouselData={openCarouselData}
+        /> */}
+        <CatalogSection />
+        <InteractiveParticles />
+        <AboutSection 
+          showAddress={showAddress}
+          setShowAddress={setShowAddress}
+        />
+        <ContactSection />
+        <FAQSection />
+        <ASCIISection />
+        <Footer />
+      </div>
+    </div>
+  )
+}

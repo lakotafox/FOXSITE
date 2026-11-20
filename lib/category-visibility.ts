@@ -1,21 +1,30 @@
 // Helper functions for category visibility
 
+import publishedVisibility from '@/public/category-visibility.json'
+
+function visibilitySettingsOf(data: any) {
+  // Handle new format that includes categoryNames
+  if (data.categoryNames) {
+    // Extract just the visibility settings
+    const { categoryNames, lastUpdated, ...visibilitySettings } = data
+    return visibilitySettings
+  }
+
+  // Old format - return as is
+  return data
+}
+
+// The settings as published when the site was built. The header starts from these, so its
+// first HTML already hides what they hide (nav groups, search bar, FOXBOT link) instead of
+// showing everything until getCategoryVisibility() returns.
+export const builtCategoryVisibility = visibilitySettingsOf(publishedVisibility)
+
 export async function getCategoryVisibility() {
   try {
     // Try to fetch from published file
     const response = await fetch('/category-visibility.json', { cache: 'no-store' })
     if (response.ok) {
-      const data = await response.json()
-      
-      // Handle new format that includes categoryNames
-      if (data.categoryNames) {
-        // Extract just the visibility settings
-        const { categoryNames, lastUpdated, ...visibilitySettings } = data
-        return visibilitySettings
-      }
-      
-      // Old format - return as is
-      return data
+      return visibilitySettingsOf(await response.json())
     }
   } catch (e) {
     console.log('No visibility settings found, using defaults')

@@ -25,7 +25,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="block text-zinc-400 hover:text-white transition-colors mb-2"
             >
-              420 W Industrial Dr<br />
+              420 W Industrial Dr, Bldg LL<br />
               Pleasant Grove, UT 84062
             </a>
             <p className="text-zinc-500 text-sm mt-2">Mon–Fri: 10am – 5pm</p>
