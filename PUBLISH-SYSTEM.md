@@ -33,7 +33,6 @@ If your editor updates a JSON file that's NOT in this list, Netlify will CANCEL 
   ```json
   {
     "showSearchBar": true,
-    "showFoxbot": true,
     "executive-desks": true,
     // ... other categories
     "categoryNames": { /* names data */ },
@@ -127,6 +126,6 @@ Required in Netlify:
 ## Important Notes
 
 - Gallery uses same images for mobile and desktop now
-- Search bar and FOXBOT visibility controlled by visibility editor
+- Search bar visibility controlled by visibility editor
 - All editors save to localStorage for draft changes
 - Publishing clears localStorage after success

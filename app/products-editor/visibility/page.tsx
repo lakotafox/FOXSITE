@@ -65,7 +65,6 @@ export default function CategoryVisibilityEditor() {
   const [showSuccessScreen, setShowSuccessScreen] = useState(false)
   const [allCategories, setAllCategories] = useState(defaultCategories)
   const [showSearchBar, setShowSearchBar] = useState(true)
-  const [showFoxbot, setShowFoxbot] = useState(true)
   const [showDesksWorkstations, setShowDesksWorkstations] = useState(true)
   const [showCubicles, setShowCubicles] = useState(true)
   const [showSeating, setShowSeating] = useState(true)
@@ -105,9 +104,6 @@ export default function CategoryVisibilityEditor() {
             if (data.showSearchBar !== undefined) {
               setShowSearchBar(data.showSearchBar)
             }
-            if (data.showFoxbot !== undefined) {
-              setShowFoxbot(data.showFoxbot)
-            }
             // Load group visibility settings
             if (data.showDesksWorkstations !== undefined) setShowDesksWorkstations(data.showDesksWorkstations)
             if (data.showCubicles !== undefined) setShowCubicles(data.showCubicles)
@@ -120,9 +116,6 @@ export default function CategoryVisibilityEditor() {
             setVisibility(data)
             if (data.showSearchBar !== undefined) {
               setShowSearchBar(data.showSearchBar)
-            }
-            if (data.showFoxbot !== undefined) {
-              setShowFoxbot(data.showFoxbot)
             }
             // Load group visibility settings
             if (data.showDesksWorkstations !== undefined) setShowDesksWorkstations(data.showDesksWorkstations)
@@ -140,9 +133,6 @@ export default function CategoryVisibilityEditor() {
             setVisibility(parsed)
             if (parsed.showSearchBar !== undefined) {
               setShowSearchBar(parsed.showSearchBar)
-            }
-            if (parsed.showFoxbot !== undefined) {
-              setShowFoxbot(parsed.showFoxbot)
             }
           } else {
             // Default all categories to visible
@@ -232,8 +222,7 @@ export default function CategoryVisibilityEditor() {
     // Save to localStorage immediately for local persistence
     localStorage.setItem('foxbuilt-category-visibility', JSON.stringify({
       ...newVisibility,
-      showSearchBar,
-      showFoxbot
+      showSearchBar
     }))
   }
 
@@ -249,8 +238,7 @@ export default function CategoryVisibilityEditor() {
     // Save to localStorage immediately for local persistence
     localStorage.setItem('foxbuilt-category-visibility', JSON.stringify({
       ...newVisibility,
-      showSearchBar,
-      showFoxbot
+      showSearchBar
     }))
   }
 
@@ -334,7 +322,6 @@ export default function CategoryVisibilityEditor() {
     const visibilitySettingsToPublish = {
       ...visibility,
       showSearchBar: showSearchBar,
-      showFoxbot: showFoxbot,
       showDesksWorkstations: showDesksWorkstations,
       showCubicles: showCubicles,
       showSeating: showSeating,
@@ -491,8 +478,7 @@ export default function CategoryVisibilityEditor() {
                   // Save to localStorage immediately
                   localStorage.setItem('foxbuilt-category-visibility', JSON.stringify({
                     ...visibility,
-                    showSearchBar: newValue,
-                    showFoxbot
+                    showSearchBar: newValue
                   }))
                 }}
                 className={`p-3 rounded-lg transition-all ${
@@ -503,40 +489,6 @@ export default function CategoryVisibilityEditor() {
                 aria-label={showSearchBar ? 'Hide search bar' : 'Show search bar'}
               >
                 {showSearchBar ? (
-                  <Eye className="w-6 h-6" />
-                ) : (
-                  <EyeOff className="w-6 h-6" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* FOXBOT AI Toggle */}
-          <div className="mb-8 bg-slate-900 rounded-lg p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-black text-white">FOXBOT AI ASSISTANT</h2>
-                <p className="text-yellow-500 text-sm mt-1 font-bold">Show or hide the FOXBOT AI chat assistant in navigation</p>
-              </div>
-              <button
-                onClick={() => {
-                  const newValue = !showFoxbot
-                  setShowFoxbot(newValue)
-                  // Save to localStorage immediately
-                  localStorage.setItem('foxbuilt-category-visibility', JSON.stringify({
-                    ...visibility,
-                    showSearchBar,
-                    showFoxbot: newValue
-                  }))
-                }}
-                className={`p-3 rounded-lg transition-all ${
-                  showFoxbot
-                    ? 'bg-green-600 hover:bg-green-700 text-white'
-                    : 'bg-red-600 hover:bg-red-700 text-white'
-                }`}
-                aria-label={showFoxbot ? 'Hide FOXBOT' : 'Show FOXBOT'}
-              >
-                {showFoxbot ? (
                   <Eye className="w-6 h-6" />
                 ) : (
                   <EyeOff className="w-6 h-6" />
