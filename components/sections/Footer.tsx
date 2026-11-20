@@ -1,10 +1,20 @@
 'use client'
 
+import Link from 'next/link'
+
+// The main pages, as plain links that visitors and search engines can follow.
+const pageLinks = [
+  { href: '/products', label: 'Products' },
+  { href: '/catalog', label: 'Catalog' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/#contact', label: 'Contact' },
+]
+
 export default function Footer() {
   return (
     <footer className="bg-slate-800 border-t border-slate-700 text-zinc-400 py-10">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Contact Info */}
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 mb-3">Contact</h4>
@@ -30,6 +40,20 @@ export default function Footer() {
             </a>
             <p className="text-zinc-500 text-sm mt-2">Mon–Fri: 10am – 5pm</p>
           </div>
+
+          {/* Pages */}
+          <nav aria-label="Footer">
+            <h4 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 mb-3">Explore</h4>
+            <ul className="space-y-2">
+              {pageLinks.map(link => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-zinc-400 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
 
         <div className="border-t border-slate-700 pt-4 flex flex-col sm:flex-row justify-between items-center gap-2">
