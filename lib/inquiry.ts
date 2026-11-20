@@ -32,7 +32,7 @@ export interface Inquiry {
 
 export type InquiryResult =
   | { status: 'sent' }
-  | { status: 'busy' } // this form is still sending, so the extra tap sent nothing
+  | { status: 'busy' } // from inquirySender(): this form is still sending, so the extra tap sent nothing
   | { status: 'invalid' | 'failed'; message: string } // not sent; message tells the visitor why
 
 // An email address, a phone number (anything else with at least 7 digits), or neither.
@@ -76,18 +76,13 @@ export function templateParams(inquiry: Inquiry): Record<string, string> {
   return params
 }
 
-// Forms with a send under way. Another tap on the same form sends nothing until it ends.
-const sending = new Set<string>()
-
 export async function sendInquiry(inquiry: Inquiry): Promise<InquiryResult> {
-  if (sending.has(inquiry.form)) return { status: 'busy' }
   const problem = checkInquiry(inquiry)
   if (problem) {
     trackFormError(inquiry.form, 'invalid_contact')
     return { status: 'invalid', message: problem }
   }
 
-  sending.add(inquiry.form)
   try {
     await postToEmailJS(templateParams(inquiry))
     trackLead(inquiry.form)
@@ -96,8 +91,23 @@ export async function sendInquiry(inquiry: Inquiry): Promise<InquiryResult> {
     console.error('Inquiry not sent:', error)
     trackFormError(inquiry.form, 'send_failed')
     return { status: 'failed', message: FAILED_MESSAGE }
-  } finally {
-    sending.delete(inquiry.form)
+  }
+}
+
+// A sendInquiry for one form on the page: another tap while that form's send is under way
+// sends nothing ('busy'). Each form makes its own when it first shows, so a send still
+// under way never blocks another form, or a new copy of the same form after the visitor
+// moves to another page and back.
+export function inquirySender() {
+  let sending = false
+  return async function send(inquiry: Inquiry): Promise<InquiryResult> {
+    if (sending) return { status: 'busy' }
+    sending = true
+    try {
+      return await sendInquiry(inquiry)
+    } finally {
+      sending = false
+    }
   }
 }
 

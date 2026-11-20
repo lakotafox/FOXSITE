@@ -7,7 +7,7 @@ import CroppedImageWithLoader from '@/components/ui/CroppedImageWithLoader'
 import { X, Phone, MapPin, Mail, MessageCircle } from 'lucide-react'
 import Image from 'next/image'
 import MapConfirmModal from '@/components/ui/MapConfirmModal'
-import { sendInquiry } from '@/lib/inquiry'
+import { inquirySender } from '@/lib/inquiry'
 import { trackCall, trackFormStart } from '@/lib/track'
 
 // The message form's name in the email to Kyle and in GA4
@@ -42,6 +42,8 @@ export default function ProductInfoModal({
   const [isMobile, setIsMobile] = useState(false)
   const [showContactForm, setShowContactForm] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  // This form's own sender, so a double tap sends once
+  const [sendInquiry] = useState(() => inquirySender())
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
   const [showMapConfirm, setShowMapConfirm] = useState(false)
@@ -158,6 +160,7 @@ export default function ProductInfoModal({
               <input
                 type="text"
                 placeholder="EMAIL / PHONE *"
+                required
                 value={formData.contact}
                 onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                 className="w-full px-4 py-3 bg-slate-700/50 text-white placeholder-gray-400 rounded-lg border border-slate-600 focus:border-blue-500 focus:outline-none"

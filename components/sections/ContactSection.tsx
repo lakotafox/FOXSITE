@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import RocketButton from '@/components/ui/RocketButton'
 import StoreHours from '@/components/ui/StoreHours'
-import { sendInquiry } from '@/lib/inquiry'
+import { inquirySender } from '@/lib/inquiry'
 import { trackFormStart } from '@/lib/track'
 
 // The form's name in the email to Kyle and in GA4
@@ -21,6 +21,8 @@ const emptyForm: ContactFormData = { name: "", email: "", message: "" }
 export default function ContactSection() {
   const [formData, setFormData] = useState<ContactFormData>(emptyForm)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  // This form's own sender, so a double tap sends once
+  const [sendInquiry] = useState(() => inquirySender())
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({

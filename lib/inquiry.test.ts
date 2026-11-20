@@ -3,7 +3,7 @@
 // put a stand-in gtag on a stand-in window.
 
 import { afterEach, beforeEach, describe, expect, spyOn, test } from 'bun:test'
-import { checkInquiry, contactKind, sendInquiry, templateParams, type Inquiry } from './inquiry'
+import { checkInquiry, contactKind, inquirySender, sendInquiry, templateParams, type Inquiry } from './inquiry'
 
 const PAGE = 'https://foxbuiltstore.com/products?category=task-chairs'
 
@@ -165,33 +165,6 @@ describe('sendInquiry', () => {
     expect(requests[0].body.template_id).toBe('template_preview_test')
   })
 
-  test('sends once for a double tap', async () => {
-    const held = heldAnswers()
-    const requests = fakeEmailJS(held.answer)
-    const first = sendInquiry(inquiry())
-    const second = sendInquiry(inquiry())
-    expect(await second).toEqual({ status: 'busy' })
-    held.release()
-    expect(await first).toEqual({ status: 'sent' })
-    expect(requests).toHaveLength(1)
-
-    // Once that send is done, the form can send again
-    const next = sendInquiry(inquiry())
-    held.release()
-    expect(await next).toEqual({ status: 'sent' })
-    expect(requests).toHaveLength(2)
-  })
-
-  test('lets a different form send while one is sending', async () => {
-    const held = heldAnswers()
-    const requests = fakeEmailJS(held.answer)
-    const home = sendInquiry(inquiry({ form: 'Homepage quote form' }))
-    const product = sendInquiry(inquiry({ form: 'Product form' }))
-    held.release()
-    expect(await Promise.all([home, product])).toEqual([{ status: 'sent' }, { status: 'sent' }])
-    expect(requests).toHaveLength(2)
-  })
-
   test('sends nothing when the contact box is empty', async () => {
     const requests = fakeEmailJS()
     const result = await sendInquiry(inquiry({ contact: '' }))
@@ -213,6 +186,57 @@ describe('sendInquiry', () => {
   test('reports a failure when the network is down', async () => {
     fakeEmailJS(async () => { throw new TypeError('Failed to fetch') })
     expect((await sendInquiry(inquiry())).status).toBe('failed')
+  })
+})
+
+describe('inquirySender', () => {
+  test('sends once for a double tap', async () => {
+    const held = heldAnswers()
+    const requests = fakeEmailJS(held.answer)
+    const send = inquirySender()
+    const first = send(inquiry())
+    const second = send(inquiry())
+    expect(await second).toEqual({ status: 'busy' })
+    held.release()
+    expect(await first).toEqual({ status: 'sent' })
+    expect(requests).toHaveLength(1)
+
+    // Once that send is done, the form can send again
+    const next = send(inquiry())
+    held.release()
+    expect(await next).toEqual({ status: 'sent' })
+    expect(requests).toHaveLength(2)
+  })
+
+  test('lets a different form send while one is sending', async () => {
+    const held = heldAnswers()
+    const requests = fakeEmailJS(held.answer)
+    const home = inquirySender()(inquiry({ form: 'Homepage quote form' }))
+    const product = inquirySender()(inquiry({ form: 'Product form' }))
+    held.release()
+    expect(await Promise.all([home, product])).toEqual([{ status: 'sent' }, { status: 'sent' }])
+    expect(requests).toHaveLength(2)
+  })
+
+  test('lets a new copy of the same form send while the old copy is still sending', async () => {
+    // The visitor sends, goes to another page and back before that send ends, and sends again
+    const held = heldAnswers()
+    const requests = fakeEmailJS(held.answer)
+    const before = inquirySender()(inquiry())
+    const after = inquirySender()(inquiry())
+    held.release()
+    expect(await Promise.all([before, after])).toEqual([{ status: 'sent' }, { status: 'sent' }])
+    expect(requests).toHaveLength(2)
+  })
+
+  test('frees the form after a send that failed or was refused', async () => {
+    const send = inquirySender()
+    fakeEmailJS(async () => { throw new TypeError('Failed to fetch') })
+    expect((await send(inquiry())).status).toBe('failed')
+    expect((await send(inquiry({ contact: '' }))).status).toBe('invalid')
+    const requests = fakeEmailJS()
+    expect(await send(inquiry())).toEqual({ status: 'sent' })
+    expect(requests).toHaveLength(1)
   })
 })
 
@@ -247,8 +271,9 @@ describe('what sendInquiry tells GA4', () => {
     const held = heldAnswers()
     fakeEmailJS(held.answer)
     const events = fakeGA()
-    const first = sendInquiry(inquiry())
-    await sendInquiry(inquiry())
+    const send = inquirySender()
+    const first = send(inquiry())
+    await send(inquiry())
     held.release()
     await first
     expect(events.map(event => event[1])).toEqual(['generate_lead'])

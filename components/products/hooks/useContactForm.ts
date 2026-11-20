@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { sendInquiry } from '@/lib/inquiry'
+import { inquirySender } from '@/lib/inquiry'
 import { trackFormStart } from '@/lib/track'
 
 // The form's name in the email to Kyle and in GA4
@@ -18,6 +18,8 @@ const emptyForm: FormData = { name: "", email: "", message: "" }
 export function useContactForm() {
   const [formData, setFormData] = useState<FormData>(emptyForm)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  // This form's own sender, so a double tap sends once
+  const [sendInquiry] = useState(() => inquirySender())
 
   // Handle form changes
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

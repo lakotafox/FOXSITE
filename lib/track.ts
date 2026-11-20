@@ -67,9 +67,11 @@ export function trackLead(formName: string) {
   })
 }
 
-// A form wasn't sent: 'invalid_contact' when the email / phone box held neither, so the
-// visitor was asked to fix it; 'send_failed' when EmailJS or the network failed, so the
-// visitor was shown the phone number instead.
+// A form wasn't sent: 'invalid_contact' when the email / phone box held something that is
+// neither an email address nor a phone number, so the visitor was asked to fix it (every
+// form marks that box required, so the browser stops an empty one before it gets here);
+// 'send_failed' when EmailJS or the network failed, so the visitor was shown the phone
+// number instead.
 export function trackFormError(formName: string, errorType: 'invalid_contact' | 'send_failed') {
   track('form_error', { form_name: formName, error_type: errorType })
 }
