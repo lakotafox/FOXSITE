@@ -39,8 +39,7 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
     categoryVisibility.showSeating !== false ||
     categoryVisibility.showStorage !== false ||
     categoryVisibility.showConferenceMeeting !== false ||
-    categoryVisibility.showReceptionLounge !== false ||
-    categoryVisibility.showFoxbot !== false
+    categoryVisibility.showReceptionLounge !== false
 
   useEffect(() => {
     const handleScroll = () => {
@@ -557,16 +556,6 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
               </div>
               )}
 
-              {/* FOXBOT AI Assistant */}
-              {categoryVisibility.showFoxbot !== false && (
-              <Link 
-                href="/foxbot" 
-                className="text-yellow-500 hover:text-yellow-400 font-bold whitespace-nowrap transition-colors px-6 flex items-center animate-pulse"
-              >
-                FOXBOT AI
-              </Link>
-              )}
-
             </div>
 
             {/* Empty space on the right for balance */}
@@ -722,19 +711,6 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                 <Link href="/products?category=side-tables" onClick={() => setMobileMenuOpen(false)} className="block px-12 py-3 hover:bg-gray-100">{categoryNames?.subcategories?.['side-tables'] || 'Side Tables'}</Link>
               </div>
             )}
-          </div>
-          )}
-
-          {/* FOXBOT AI Assistant */}
-          {categoryVisibility.showFoxbot !== false && (
-          <div className="border-b">
-            <Link 
-              href="/foxbot" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-4 text-lg font-bold text-yellow-500 hover:bg-gray-50 animate-pulse"
-            >
-              FOXBOT AI Assistant
-            </Link>
           </div>
           )}
 

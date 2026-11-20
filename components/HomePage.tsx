@@ -19,13 +19,6 @@ import FAQSection from "@/components/sections/FAQSection"
 import Footer from "@/components/sections/Footer"
 import ShowroomDetails from "@/components/sections/ShowroomDetails"
 
-// Declare window.emailjs type
-declare global {
-  interface Window {
-    emailjs: any
-  }
-}
-
 export default function HomePage() {
   const [showAddress, setShowAddress] = useState(false)
   const [featuredProducts, setFeaturedProducts] = useState(defaultMainProducts)

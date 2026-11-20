@@ -176,7 +176,7 @@ export default function GlobalError({
               </p>
               <p style={{ marginTop: '8px' }}>
                 <a
-                  href="mailto:kylefox@foxbuilt.com"
+                  href="mailto:kyle@foxbuiltofficefurniture.com"
                   style={{
                     color: '#60a5fa',
                     textDecoration: 'none'
@@ -184,7 +184,7 @@ export default function GlobalError({
                   onMouseOver={(e) => e.currentTarget.style.textDecoration = 'underline'}
                   onMouseOut={(e) => e.currentTarget.style.textDecoration = 'none'}
                 >
-                  kylefox@foxbuilt.com
+                  kyle@foxbuiltofficefurniture.com
                 </a>
               </p>
             </div>

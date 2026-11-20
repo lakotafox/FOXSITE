@@ -27,3 +27,10 @@
   to = "https://foxbuiltstore.com/"
   status = 301
   force = true
+
+# The FOXBOT chat page was removed; send its old links to the homepage.
+[[redirects]]
+  from = "/foxbot"
+  to = "/"
+  status = 301
+  force = true

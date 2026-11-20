@@ -66,7 +66,7 @@ html {
               "image": "https://foxbuiltstore.com/images/foxbuilt-logo.png",
               "url": "https://foxbuiltstore.com",
               "telephone": "+1-801-899-9406",
-              "email": "kylefox@foxbuilt.com",
+              "email": "kyle@foxbuiltofficefurniture.com",
               "description": "Office furniture store in Pleasant Grove, Utah serving Utah County and Salt Lake County since 1999. New and pre-owned desks, chairs, cubicles, and full office setups.",
               "address": {
                 "@type": "PostalAddress",

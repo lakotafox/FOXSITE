@@ -70,8 +70,8 @@ export default function Error({
             </a>
           </p>
           <p className="mt-2">
-            <a href="mailto:kylefox@foxbuilt.com" className="text-blue-400 hover:underline">
-              kylefox@foxbuilt.com
+            <a href="mailto:kyle@foxbuiltofficefurniture.com" className="text-blue-400 hover:underline">
+              kyle@foxbuiltofficefurniture.com
             </a>
           </p>
         </div>

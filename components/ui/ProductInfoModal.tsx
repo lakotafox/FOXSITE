@@ -7,6 +7,7 @@ import CroppedImageWithLoader from '@/components/ui/CroppedImageWithLoader'
 import { X, Phone, MapPin, Mail, MessageCircle } from 'lucide-react'
 import Image from 'next/image'
 import MapConfirmModal from '@/components/ui/MapConfirmModal'
+import { sendInquiry } from '@/lib/inquiry'
 
 interface Product {
   id: number
@@ -38,6 +39,7 @@ export default function ProductInfoModal({
   const [showContactForm, setShowContactForm] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
   const [showMapConfirm, setShowMapConfirm] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
@@ -56,60 +58,48 @@ export default function ProductInfoModal({
   }, [])
   
   if (!product) return null
-  
+
+  // Open the message form, starting the message with the product's name
+  const openContactForm = () => {
+    setFormData({
+      ...formData,
+      message: `I am interested in the ${product?.title || 'product'}`
+    })
+    setSubmitStatus('idle')
+    setErrorMessage('')
+    setShowContactForm(true)
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    
     setIsSubmitting(true)
-    
-    try {
-      // Load EmailJS dynamically only when needed
-      const script = document.createElement('script')
-      script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js'
-      document.body.appendChild(script)
-      
-      script.onload = async () => {
-        // @ts-ignore
-        const emailjs = window.emailjs
-        emailjs.init("wKKzekYUUdTxH10PY")
-        
-        await emailjs.send(
-          'service_8q4uafn',
-          'template_8u7ppqb',
-          {
-            from_name: formData.name || 'Anonymous',
-            from_email: formData.contact || 'No contact provided',
-            message: formData.message || 'No message provided',
-            to_name: 'FoxBuilt',
-          }
-        )
-        
-        setSubmitStatus('success')
-        setFormData({ name: '', contact: '', message: '' })
-        
-        // Show success message and close form after delay
-        setTimeout(() => {
-          setShowContactForm(false)
-          setSubmitStatus('idle')
-        }, 2000)
-        
-        // Clean up script
-        document.body.removeChild(script)
-      }
-      
-      script.onerror = () => {
-        console.error('Failed to load EmailJS')
-        setSubmitStatus('error')
-        setTimeout(() => setSubmitStatus('idle'), 3000)
-        setIsSubmitting(false)
-        document.body.removeChild(script)
-      }
-    } catch (error) {
-      console.error('Failed to send email:', error)
-      setSubmitStatus('error')
-      setTimeout(() => setSubmitStatus('idle'), 3000)
-      setIsSubmitting(false)
+    setErrorMessage('')
+
+    const result = await sendInquiry({
+      form: 'Product form',
+      product: product?.title,
+      // Without the query string: it holds the whole product as data
+      page: window.location.origin + window.location.pathname,
+      name: formData.name,
+      contact: formData.contact,
+      message: formData.message,
+    })
+    if (result.status === 'busy') return // an earlier tap is still sending
+    setIsSubmitting(false)
+
+    if (result.status !== 'sent') {
+      setSubmitStatus(result.status === 'failed' ? 'error' : 'idle')
+      setErrorMessage(result.message)
+      return
     }
+    setSubmitStatus('success')
+    setFormData({ name: '', contact: '', message: '' })
+
+    // Show success message and close form after delay
+    setTimeout(() => {
+      setShowContactForm(false)
+      setSubmitStatus('idle')
+    }, 2000)
   }
   
   // All cards now use purple glow
@@ -158,7 +148,7 @@ export default function ProductInfoModal({
               
               <input
                 type="text"
-                placeholder="EMAIL / PHONE"
+                placeholder="EMAIL / PHONE *"
                 value={formData.contact}
                 onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                 className="w-full px-4 py-3 bg-slate-700/50 text-white placeholder-gray-400 rounded-lg border border-slate-600 focus:border-blue-500 focus:outline-none"
@@ -183,13 +173,19 @@ export default function ProductInfoModal({
                     ? 'bg-red-800 text-white'
                     : 'bg-red-600 hover:bg-red-700 text-white'
                 }`}
-                disabled={isSubmitting}
+                disabled={isSubmitting || submitStatus === 'success'}
               >
                 {isSubmitting ? 'SENDING...' : 
                  submitStatus === 'success' ? 'MESSAGE SENT!' :
                  submitStatus === 'error' ? 'FAILED - TRY AGAIN' :
                  'SEND A MESSAGE'}
               </button>
+
+              {errorMessage && (
+                <p role="alert" className="text-sm text-red-400 text-center">
+                  {errorMessage}
+                </p>
+              )}
             </form>
           </div>
         </div>
@@ -246,13 +242,7 @@ export default function ProductInfoModal({
                   <MapPin className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => {
-                    setFormData({
-                      ...formData,
-                      message: `I am interested in the ${product?.title || 'product'}`
-                    })
-                    setShowContactForm(true)
-                  }}
+                  onClick={openContactForm}
                   className="w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center"
                   aria-label="Send message"
                 >
@@ -423,13 +413,7 @@ export default function ProductInfoModal({
                 <MapPin className="w-7 h-7" />
               </button>
               <button
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    message: `I am interested in the ${product?.title || 'product'}`
-                  })
-                  setShowContactForm(true)
-                }}
+                onClick={openContactForm}
                 className="w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-all shadow-lg hover:shadow-xl"
                 aria-label="Send message"
               >

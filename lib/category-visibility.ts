@@ -15,7 +15,7 @@ function visibilitySettingsOf(data: any) {
 }
 
 // The settings as published when the site was built. The header starts from these, so its
-// first HTML already hides what they hide (nav groups, search bar, FOXBOT link) instead of
+// first HTML already hides what they hide (nav groups, search bar) instead of
 // showing everything until getCategoryVisibility() returns.
 export const builtCategoryVisibility = visibilitySettingsOf(publishedVisibility)
 

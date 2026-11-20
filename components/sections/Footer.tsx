@@ -21,8 +21,8 @@ export default function Footer() {
             <a href="tel:+18018999406" className="block text-red-400 hover:text-red-300 font-bold text-lg mb-2 transition-colors">
               (801) 899-9406
             </a>
-            <a href="mailto:kylefox@foxbuilt.com" className="block text-zinc-400 hover:text-white transition-colors">
-              kylefox@foxbuilt.com
+            <a href="mailto:kyle@foxbuiltofficefurniture.com" className="block text-zinc-400 hover:text-white transition-colors">
+              kyle@foxbuiltofficefurniture.com
             </a>
           </div>
 

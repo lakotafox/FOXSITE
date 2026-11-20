@@ -4,21 +4,18 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import RocketButton from '@/components/ui/RocketButton'
 import StoreHours from '@/components/ui/StoreHours'
+import { sendInquiry } from '@/lib/inquiry'
 
 interface ContactFormData {
   name: string
-  email: string
-  phone: string
+  email: string // the "EMAIL / PHONE" box
   message: string
 }
 
+const emptyForm: ContactFormData = { name: "", email: "", message: "" }
+
 export default function ContactSection() {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: "",
-    email: "",
-    phone: "",
-    message: ""
-  })
+  const [formData, setFormData] = useState<ContactFormData>(emptyForm)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -30,74 +27,31 @@ export default function ContactSection() {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    if (!formData.email) {
-      alert("Please enter your email")
+    setIsSubmitting(true)
+
+    const result = await sendInquiry({
+      form: 'Homepage quote form',
+      name: formData.name,
+      contact: formData.email,
+      message: formData.message,
+    })
+    if (result.status === 'busy') return // an earlier tap is still sending
+    setIsSubmitting(false)
+
+    if (result.status !== 'sent') {
+      alert(result.message)
       return
     }
-    
-    setIsSubmitting(true)
-    
-    try {
-      // For now, just log the form data
-      console.log('Form submission:', formData)
-      
-      // Load EmailJS dynamically only when needed
-      const script = document.createElement('script')
-      script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js'
-      document.body.appendChild(script)
-      
-      script.onload = async () => {
-        try {
-          // Initialize EmailJS
-          window.emailjs.init('0Bkb_97n0e_1HsPH9')
-          
-          // Send email
-          const response = await window.emailjs.send('service_i32u95o', 'template_ocnmsya', {
-            from_name: formData.name || 'Website Visitor',
-            from_email: formData.email,
-            phone: formData.phone || 'Not provided',
-            message: formData.message || 'No message provided',
-            to_email: 'kylefox@foxbuilt.com',
-            // Additional fields for context
-            source: 'Website Contact Form',
-            timestamp: new Date().toISOString()
-          }, '0Bkb_97n0e_1HsPH9')
-          
-          console.log('Email sent successfully:', response)
-          // Track contact form submission in GA4
-          if (typeof window !== 'undefined' && (window as any).gtag) {
-            (window as any).gtag('event', 'generate_lead', {
-              event_category: 'contact',
-              event_label: 'contact_form_submission',
-              value: 1
-            })
-          }
-          alert("Thanks! Your quote request has been sent. We'll get back to you soon!")
-          
-          // Reset form
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            message: ""
-          })
-        } catch (emailError) {
-          console.error('EmailJS error:', emailError)
-          alert("Error sending email. Please try again or call us at (801) 899-9406")
-        }
-      }
-      
-      script.onerror = () => {
-        alert("Error loading email service. Please try again or call us at (801) 899-9406")
-      }
-      
-    } catch (error) {
-      console.error('Form submission error:', error)
-      alert("Error submitting form. Please try again or call us at (801) 899-9406")
-    } finally {
-      setIsSubmitting(false)
+    // Track contact form submission in GA4
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'generate_lead', {
+        event_category: 'contact',
+        event_label: 'contact_form_submission',
+        value: 1
+      })
     }
+    alert("Thanks! Your quote request has been sent. We'll get back to you soon!")
+    setFormData(emptyForm)
   }
 
   return (
