@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { MapPin, Phone } from 'lucide-react'
+import { trackCall } from '@/lib/track'
 
 export default function ShowroomCTA() {
   const [showAddress, setShowAddress] = useState(false)
@@ -41,7 +42,7 @@ export default function ShowroomCTA() {
                   </div>
                   <div className="flex items-center justify-center space-x-4">
                     <Phone className="w-6 h-6 text-white" />
-                    <a href="tel:+18018999406" className="text-xl font-bold hover:text-zinc-200 transition-colors">
+                    <a href="tel:+18018999406" onClick={() => trackCall('showroom')} className="text-xl font-bold hover:text-zinc-200 transition-colors">
                       (801) 899-9406
                     </a>
                   </div>

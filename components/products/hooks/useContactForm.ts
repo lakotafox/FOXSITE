@@ -2,6 +2,10 @@
 
 import { useState } from 'react'
 import { sendInquiry } from '@/lib/inquiry'
+import { trackFormStart } from '@/lib/track'
+
+// The form's name in the email to Kyle and in GA4
+const FORM_NAME = 'Contact form'
 
 interface FormData {
   name: string
@@ -23,13 +27,19 @@ export function useContactForm() {
     })
   }
 
+  // Tell GA4 the first time someone clicks or tabs into the form
+  const handleFormFocus = (e: React.FocusEvent<HTMLFormElement>) => {
+    trackFormStart(FORM_NAME, e.target)
+  }
+
   // Handle form submission
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
+    // sendInquiry also tells GA4 (generate_lead or form_error)
     const result = await sendInquiry({
-      form: 'Contact form',
+      form: FORM_NAME,
       name: formData.name,
       contact: formData.email,
       message: formData.message,
@@ -49,6 +59,7 @@ export function useContactForm() {
     formData,
     isSubmitting,
     handleFormChange,
+    handleFormFocus,
     handleFormSubmit
   }
 }

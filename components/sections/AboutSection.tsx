@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { MapPin, Phone } from 'lucide-react'
 import ProfileCard from '@/components/ui/ProfileCard'
+import { trackCall } from '@/lib/track'
 
 interface AboutSectionProps {
   showAddress: boolean
@@ -37,6 +38,7 @@ export default function AboutSection({ showAddress, setShowAddress, onToggleAddr
                   enableTilt={true}
                   enableMobileTilt={false}
                   onContactClick={() => {
+                    trackCall('about')
                     window.location.href = 'tel:+18018999406'
                   }}
                 />

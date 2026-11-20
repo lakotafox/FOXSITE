@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
+import { trackCall } from '@/lib/track'
 
 export default function Error({
   error,
@@ -65,7 +66,7 @@ export default function Error({
         <div className="mt-8 text-center text-sm text-gray-400">
           <p>You can also reach us at:</p>
           <p className="mt-2">
-            <a href="tel:801-899-9406" className="text-blue-400 hover:underline">
+            <a href="tel:801-899-9406" onClick={() => trackCall('error_page')} className="text-blue-400 hover:underline">
               (801) 899-9406
             </a>
           </p>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { trackCall } from '@/lib/track'
 
 export default function GlobalError({
   error,
@@ -164,6 +165,7 @@ export default function GlobalError({
               <p style={{ marginTop: '8px' }}>
                 <a
                   href="tel:801-899-9406"
+                  onClick={() => trackCall('error_page')}
                   style={{
                     color: '#60a5fa',
                     textDecoration: 'none'

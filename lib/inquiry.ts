@@ -5,7 +5,10 @@
 // form already used. The template, not this code, decides where the email goes, so no inbox
 // address sits in this public repo. To use another template on some deploys (a test one on
 // Deploy Previews, say), set NEXT_PUBLIC_EMAILJS_TEMPLATE_ID for that deploy context in
-// Netlify. Next.js reads it when it builds the site.
+// Netlify. Next.js reads it when it builds the site. Each send also tells GA4 how it went
+// (lib/track.ts), with the form's name and nothing the visitor typed.
+
+import { trackFormError, trackLead } from './track'
 
 const EMAILJS_SEND_URL = 'https://api.emailjs.com/api/v1.0/email/send'
 const EMAILJS_SERVICE_ID = 'service_axmx4b8'
@@ -79,14 +82,19 @@ const sending = new Set<string>()
 export async function sendInquiry(inquiry: Inquiry): Promise<InquiryResult> {
   if (sending.has(inquiry.form)) return { status: 'busy' }
   const problem = checkInquiry(inquiry)
-  if (problem) return { status: 'invalid', message: problem }
+  if (problem) {
+    trackFormError(inquiry.form, 'invalid_contact')
+    return { status: 'invalid', message: problem }
+  }
 
   sending.add(inquiry.form)
   try {
     await postToEmailJS(templateParams(inquiry))
+    trackLead(inquiry.form)
     return { status: 'sent' }
   } catch (error) {
     console.error('Inquiry not sent:', error)
+    trackFormError(inquiry.form, 'send_failed')
     return { status: 'failed', message: FAILED_MESSAGE }
   } finally {
     sending.delete(inquiry.form)

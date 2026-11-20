@@ -1,5 +1,7 @@
 'use client'
 
+import { trackCall } from '@/lib/track'
+
 // Shown instead of an empty product grid on /products and /search: a phone link and a
 // link to the request form further down the same page (ContactForm, id="contact").
 export default function RequestPricing({ title }: { title: string }) {
@@ -13,7 +15,7 @@ export default function RequestPricing({ title }: { title: string }) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
           <a
             href="tel:+18018999406"
-            onClick={() => { if ((window as any).gtag) { (window as any).gtag('event', 'contact', { event_category: 'phone', event_label: 'no_products_phone_click', location: 'no_products' }) } }}
+            onClick={() => trackCall('no_products')}
             className="bg-red-600 hover:bg-red-500 text-white font-bold text-base md:text-lg px-6 py-3 rounded-md shadow-lg shadow-red-900/20 transition-colors"
           >
             Call (801) 899-9406

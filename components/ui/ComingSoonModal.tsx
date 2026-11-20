@@ -2,6 +2,7 @@
 
 import ActionButton from '@/components/ui/ActionButton'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { trackCall } from '@/lib/track'
 
 interface ComingSoonModalProps {
   isOpen: boolean
@@ -24,7 +25,7 @@ export default function ComingSoonModal({ isOpen, onClose }: ComingSoonModalProp
             <ActionButton
               icon="phone"
               size="lg"
-              onClick={() => window.location.href = 'tel:+18018999406'}
+              onClick={() => { trackCall('coming_soon'); window.location.href = 'tel:+18018999406' }}
             />
             <ActionButton
               icon="map"

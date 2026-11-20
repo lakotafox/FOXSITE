@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Phone, MapPin, Mail, ChevronDown, Menu, X, ChevronRight } from 'lucide-react'
+import { trackCall } from '@/lib/track'
 
 interface ProductsHeaderProps {
   isScrolled: boolean
@@ -60,7 +61,7 @@ export default function ProductsHeader({ isScrolled, pageName = 'EXECUTIVE DESKS
           {/* Three action buttons - Desktop */}
           <div className="flex items-center space-x-2">
             <button
-              onClick={() => window.location.href = 'tel:+18018999406'}
+              onClick={() => { trackCall('header'); window.location.href = 'tel:+18018999406' }}
               className="w-12 h-12 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
               aria-label="Call us"
             >
@@ -107,7 +108,7 @@ export default function ProductsHeader({ isScrolled, pageName = 'EXECUTIVE DESKS
           {/* Mobile Action Buttons */}
           <div className="flex gap-2">
             <button
-              onClick={() => window.location.href = 'tel:+18018999406'}
+              onClick={() => { trackCall('header'); window.location.href = 'tel:+18018999406' }}
               className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center"
               aria-label="Call us"
             >

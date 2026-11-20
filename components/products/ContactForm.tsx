@@ -6,7 +6,7 @@ import StoreHours from '@/components/ui/StoreHours'
 import { useContactForm } from './hooks/useContactForm'
 
 export default function ContactForm() {
-  const { formData, isSubmitting, handleFormChange, handleFormSubmit } = useContactForm()
+  const { formData, isSubmitting, handleFormChange, handleFormFocus, handleFormSubmit } = useContactForm()
 
   return (
     <section id="contact" className="py-20 bg-slate-900 text-white">
@@ -21,7 +21,7 @@ export default function ContactForm() {
           </div>
 
           <div>
-            <form className="space-y-6" onSubmit={handleFormSubmit}>
+            <form className="space-y-6" onSubmit={handleFormSubmit} onFocus={handleFormFocus}>
               <div>
                 <input
                   type="text"

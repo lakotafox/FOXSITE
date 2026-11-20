@@ -1,5 +1,6 @@
-// Tests for lib/inquiry.ts. Run with `bun test`. They never reach EmailJS: each test that
-// sends swaps fetch for a stand-in that records the request.
+// Tests for lib/inquiry.ts. Run with `bun test`. They never reach EmailJS or Google: each
+// test that sends swaps fetch for a stand-in that records the request, and the GA4 tests
+// put a stand-in gtag on a stand-in window.
 
 import { afterEach, beforeEach, describe, expect, spyOn, test } from 'bun:test'
 import { checkInquiry, contactKind, sendInquiry, templateParams, type Inquiry } from './inquiry'
@@ -36,6 +37,13 @@ function heldAnswers() {
   }
 }
 
+// Stands in for GA4 on a page: records each gtag() call
+function fakeGA(gtag?: (...args: unknown[]) => void) {
+  const calls: unknown[][] = []
+  ;(globalThis as any).window = { gtag: gtag ?? ((...args: unknown[]) => { calls.push(args) }) }
+  return calls
+}
+
 const realFetch = globalThis.fetch
 let consoleError: ReturnType<typeof spyOn>
 beforeEach(() => {
@@ -46,6 +54,7 @@ beforeEach(() => {
 })
 afterEach(() => {
   globalThis.fetch = realFetch
+  delete (globalThis as any).window
   consoleError.mockRestore()
 })
 
@@ -204,5 +213,68 @@ describe('sendInquiry', () => {
   test('reports a failure when the network is down', async () => {
     fakeEmailJS(async () => { throw new TypeError('Failed to fetch') })
     expect((await sendInquiry(inquiry())).status).toBe('failed')
+  })
+})
+
+describe('what sendInquiry tells GA4', () => {
+  test('a sent inquiry is a lead, named by its form', async () => {
+    fakeEmailJS()
+    const events = fakeGA()
+    await sendInquiry(inquiry({ form: 'Homepage quote form' }))
+    expect(events).toEqual([['event', 'generate_lead', {
+      form_name: 'Homepage quote form',
+      event_category: 'contact',
+      event_label: 'contact_form_submission',
+      value: 1,
+    }]])
+  })
+
+  test('a failed send is a form_error of type send_failed', async () => {
+    fakeEmailJS(async () => new Response('Too many requests', { status: 429 }))
+    const events = fakeGA()
+    await sendInquiry(inquiry({ form: 'Product form' }))
+    expect(events).toEqual([['event', 'form_error', { form_name: 'Product form', error_type: 'send_failed' }]])
+  })
+
+  test('an email / phone box with neither is a form_error of type invalid_contact', async () => {
+    fakeEmailJS()
+    const events = fakeGA()
+    await sendInquiry(inquiry({ contact: 'call me' }))
+    expect(events).toEqual([['event', 'form_error', { form_name: 'Contact form', error_type: 'invalid_contact' }]])
+  })
+
+  test('the extra tap of a double tap tells GA4 nothing', async () => {
+    const held = heldAnswers()
+    fakeEmailJS(held.answer)
+    const events = fakeGA()
+    const first = sendInquiry(inquiry())
+    await sendInquiry(inquiry())
+    held.release()
+    await first
+    expect(events.map(event => event[1])).toEqual(['generate_lead'])
+  })
+
+  test('GA4 never gets what the visitor typed', async () => {
+    const events = fakeGA()
+    const typed = { name: 'Jane Doe', message: 'Ten task chairs for a new office' }
+    fakeEmailJS()
+    await sendInquiry(inquiry({ ...typed, contact: 'jane@example.com' }))
+    await sendInquiry(inquiry({ ...typed, contact: '(801) 555-0134' }))
+    await sendInquiry(inquiry({ ...typed, contact: 'jane@example' }))
+    fakeEmailJS(async () => new Response('Bad request', { status: 400 }))
+    await sendInquiry(inquiry({ ...typed, contact: 'jane@example.com' }))
+
+    expect(events.map(event => event[1])).toEqual(['generate_lead', 'generate_lead', 'form_error', 'form_error'])
+    const sent = JSON.stringify(events)
+    for (const text of ['Jane', 'jane@example', '555-0134', 'task chairs']) {
+      expect(sent).not.toContain(text)
+    }
+  })
+
+  test('a GA4 error never turns a sent inquiry into a failure', async () => {
+    const requests = fakeEmailJS()
+    fakeGA(() => { throw new Error('GA4 blocked') })
+    expect(await sendInquiry(inquiry())).toEqual({ status: 'sent' })
+    expect(requests).toHaveLength(1)
   })
 })

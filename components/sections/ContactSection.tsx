@@ -5,6 +5,10 @@ import { Button } from '@/components/ui/button'
 import RocketButton from '@/components/ui/RocketButton'
 import StoreHours from '@/components/ui/StoreHours'
 import { sendInquiry } from '@/lib/inquiry'
+import { trackFormStart } from '@/lib/track'
+
+// The form's name in the email to Kyle and in GA4
+const FORM_NAME = 'Homepage quote form'
 
 interface ContactFormData {
   name: string
@@ -29,8 +33,9 @@ export default function ContactSection() {
     e.preventDefault()
     setIsSubmitting(true)
 
+    // sendInquiry also tells GA4 (generate_lead or form_error)
     const result = await sendInquiry({
-      form: 'Homepage quote form',
+      form: FORM_NAME,
       name: formData.name,
       contact: formData.email,
       message: formData.message,
@@ -41,14 +46,6 @@ export default function ContactSection() {
     if (result.status !== 'sent') {
       alert(result.message)
       return
-    }
-    // Track contact form submission in GA4
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'generate_lead', {
-        event_category: 'contact',
-        event_label: 'contact_form_submission',
-        value: 1
-      })
     }
     alert("Thanks! Your quote request has been sent. We'll get back to you soon!")
     setFormData(emptyForm)
@@ -74,7 +71,11 @@ export default function ContactSection() {
           </div>
 
           <div>
-            <form className="space-y-6" onSubmit={handleFormSubmit}>
+            <form
+              className="space-y-6"
+              onSubmit={handleFormSubmit}
+              onFocus={(e) => trackFormStart(FORM_NAME, e.target)}
+            >
               <div>
                 <input
                   type="text"

@@ -10,6 +10,7 @@ import MapConfirmModal from '@/components/ui/MapConfirmModal'
 import RollingYearCounter from '@/components/ui/RollingYearCounter'
 import { builtCategoryVisibility, getCategoryVisibility } from '@/lib/category-visibility'
 import { getCategoryNames } from '@/lib/category-names'
+import { trackCall } from '@/lib/track'
 
 interface HeaderProps {
   showAddress: boolean
@@ -124,7 +125,7 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                 <div className="flex flex-col items-end gap-2">
                   <div className="flex items-center space-x-2">
                     <button
-                      onClick={() => { if ((window as any).gtag) { (window as any).gtag('event', 'contact', { event_category: 'phone', event_label: 'header_phone_click' }) } window.location.href = 'tel:+18018999406' }}
+                      onClick={() => { trackCall('header'); window.location.href = 'tel:+18018999406' }}
                       className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
                       aria-label="Call us"
                     >
@@ -209,7 +210,7 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                 <div className="flex flex-col items-end gap-2">
                   <div className="flex items-center space-x-2">
                     <button
-                      onClick={() => { if ((window as any).gtag) { (window as any).gtag('event', 'contact', { event_category: 'phone', event_label: 'header_phone_click' }) } window.location.href = 'tel:+18018999406' }}
+                      onClick={() => { trackCall('header'); window.location.href = 'tel:+18018999406' }}
                       className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
                       aria-label="Call us"
                     >
@@ -276,7 +277,7 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                 <div className="flex flex-col items-end gap-1 flex-shrink-0">
                   <div className="flex items-center gap-1">
                     <button
-                      onClick={() => { if ((window as any).gtag) { (window as any).gtag('event', 'contact', { event_category: 'phone', event_label: 'header_phone_click' }) } window.location.href = 'tel:+18018999406' }}
+                      onClick={() => { trackCall('header'); window.location.href = 'tel:+18018999406' }}
                       className="w-8 h-8 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
                       aria-label="Call us"
                     >
@@ -356,7 +357,7 @@ export default function Header({ showAddress, setShowAddress }: HeaderProps) {
                   <div className="flex flex-col items-end gap-1 flex-shrink-0">
                     <div className="flex items-center gap-1">
                       <button
-                        onClick={() => { if ((window as any).gtag) { (window as any).gtag('event', 'contact', { event_category: 'phone', event_label: 'header_phone_click' }) } window.location.href = 'tel:+18018999406' }}
+                        onClick={() => { trackCall('header'); window.location.href = 'tel:+18018999406' }}
                         className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all"
                         aria-label="Call us"
                       >

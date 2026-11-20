@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { trackCall } from '@/lib/track'
 
 // The main pages, as plain links that visitors and search engines can follow.
 const pageLinks = [
@@ -18,7 +19,7 @@ export default function Footer() {
           {/* Contact Info */}
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 mb-3">Contact</h4>
-            <a href="tel:+18018999406" className="block text-red-400 hover:text-red-300 font-bold text-lg mb-2 transition-colors">
+            <a href="tel:+18018999406" onClick={() => trackCall('footer')} className="block text-red-400 hover:text-red-300 font-bold text-lg mb-2 transition-colors">
               (801) 899-9406
             </a>
             <a href="mailto:kyle@foxbuiltofficefurniture.com" className="block text-zinc-400 hover:text-white transition-colors">

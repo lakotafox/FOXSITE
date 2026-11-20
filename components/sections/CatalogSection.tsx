@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { trackCall } from '@/lib/track'
 
 // Dynamically import to avoid SSR issues
 const TurnJSSimple = dynamic(() => import('@/components/ui/TurnJSSimple'), {
@@ -28,6 +29,7 @@ export default function CatalogSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="tel:+18018999406"
+              onClick={() => trackCall('catalog')}
               className="bg-red-600 hover:bg-red-500 text-white font-bold text-base md:text-lg px-6 py-3 rounded-md shadow-lg shadow-red-900/20 transition-colors"
             >
               Call (801) 899-9406

@@ -8,6 +8,10 @@ import { X, Phone, MapPin, Mail, MessageCircle } from 'lucide-react'
 import Image from 'next/image'
 import MapConfirmModal from '@/components/ui/MapConfirmModal'
 import { sendInquiry } from '@/lib/inquiry'
+import { trackCall, trackFormStart } from '@/lib/track'
+
+// The message form's name in the email to Kyle and in GA4
+const FORM_NAME = 'Product form'
 
 interface Product {
   id: number
@@ -75,8 +79,9 @@ export default function ProductInfoModal({
     setIsSubmitting(true)
     setErrorMessage('')
 
+    // sendInquiry also tells GA4 (generate_lead or form_error)
     const result = await sendInquiry({
-      form: 'Product form',
+      form: FORM_NAME,
       product: product?.title,
       // Without the query string: it holds the whole product as data
       page: window.location.origin + window.location.pathname,
@@ -136,7 +141,11 @@ export default function ProductInfoModal({
             <X className="w-5 h-5" />
           </button>
           <div className="p-6 pt-12">
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              onSubmit={handleSubmit}
+              onFocus={(e) => trackFormStart(FORM_NAME, e.target)}
+              className="space-y-4"
+            >
               <input
                 type="text"
                 placeholder="NAME"
@@ -228,7 +237,7 @@ export default function ProductInfoModal({
               {/* Action Buttons */}
               <div className="flex gap-2">
                 <button
-                  onClick={() => window.location.href = 'tel:+18018999406'}
+                  onClick={() => { trackCall('product'); window.location.href = 'tel:+18018999406' }}
                   className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center"
                   aria-label="Call us"
                 >
@@ -399,7 +408,7 @@ export default function ProductInfoModal({
           }}>
             <div style={{ display: 'flex', gap: '12px' }}>
               <button
-                onClick={() => window.location.href = 'tel:+18018999406'}
+                onClick={() => { trackCall('product'); window.location.href = 'tel:+18018999406' }}
                 className="w-14 h-14 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all shadow-lg hover:shadow-xl"
                 aria-label="Call us"
               >

@@ -6,6 +6,7 @@ import { ChevronRight, Star, Shield, Truck } from 'lucide-react'
 import ImageWithLoader from '@/components/ui/ImageWithLoader'
 import { Star3DCSS } from '@/components/ui/Star3D'
 import RollingYearCounter from '@/components/ui/RollingYearCounter'
+import { trackCall } from '@/lib/track'
 
 interface HeroLandingProps {
   galleryImages?: string[]
@@ -105,6 +106,7 @@ export default function HeroLanding({ galleryImages = [], getImageUrl }: HeroLan
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pb-16">
           <a
             href="tel:+18018999406"
+            onClick={() => trackCall('hero')}
             className="bg-red-600 hover:bg-red-500 text-white font-bold text-base md:text-lg px-6 py-3 rounded-md shadow-lg shadow-red-900/20 transition-colors"
           >
             Call (801) 899-9406
