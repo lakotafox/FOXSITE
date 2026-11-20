@@ -12,6 +12,7 @@ import FloatingCategoryButtons from '@/components/products/FloatingCategoryButto
 import ContactForm from '@/components/products/ContactForm'
 import RequestPricing from '@/components/products/RequestPricing'
 import ASCIISection from '@/components/sections/ASCIISection'
+import Footer from '@/components/sections/Footer'
 import { getPublishedProductsPageItems } from '@/lib/products-page-data'
 import { getCategoryNames } from '@/lib/category-names'
 
@@ -349,21 +350,15 @@ export default function ProductsPage() {
       {/* ASCII Section */}
       <ASCIISection />
 
-      {/* Footer */}
-      <footer className="bg-slate-800 border-t-4 border-red-600 text-zinc-400 py-6">
-        <div className="container mx-auto px-4 relative">
-          <p className="text-sm font-bold">&copy; 2026, FOXBUILT.</p>
-          <p className="text-xs text-yellow-500 mt-1">Want a free website? Email lakota.code@gmail.com</p>
-
-          {/* Global View button - positioned in bottom right of footer */}
-          <button
-            onClick={() => router.push('/global-view')}
-            className="absolute top-2 right-4 bg-purple-600 hover:bg-purple-700 text-white font-black text-sm px-4 py-2 rounded-lg tracking-wider transition-all shadow-lg hover:shadow-xl"
-          >
-            GLOBAL VIEW
-          </button>
-        </div>
-      </footer>
+      {/* Footer, with the Global View button at the end of its bottom row */}
+      <Footer>
+        <button
+          onClick={() => router.push('/global-view')}
+          className="bg-purple-600 hover:bg-purple-700 text-white font-black text-sm px-4 py-2 rounded-lg tracking-wider transition-all shadow-lg hover:shadow-xl"
+        >
+          GLOBAL VIEW
+        </button>
+      </Footer>
     </div>
   )
 }

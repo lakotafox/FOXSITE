@@ -11,7 +11,9 @@ const pageLinks = [
   { href: '/#contact', label: 'Contact' },
 ]
 
-export default function Footer() {
+// A page can add something of its own at the end of the bottom row, like the GLOBAL VIEW
+// button on /products and /search.
+export default function Footer({ children }: { children?: React.ReactNode }) {
   return (
     <footer className="bg-slate-800 border-t border-slate-700 text-zinc-400 py-10">
       <div className="container mx-auto px-4">
@@ -60,6 +62,7 @@ export default function Footer() {
         <div className="border-t border-slate-700 pt-4 flex flex-col sm:flex-row justify-between items-center gap-2">
           <p className="text-sm font-bold">&copy; 2026, FOXBUILT.</p>
           <p className="text-xs text-yellow-500">Want a free website? Email lakota.code@gmail.com</p>
+          {children}
         </div>
       </div>
     </footer>
