@@ -36,7 +36,8 @@ export type CallLocation =
   | 'showroom' // the number in the showroom section (no page shows it today)
 
 // A tap on a phone link. 'contact' is the name GA4 has counted the header's phone taps
-// under, and the old parameters stay, so earlier months still compare.
+// under, and the old parameters stay. Earlier months counted only the header's button, so
+// compare them with this event where location is 'header', not with its total.
 export function trackCall(location: CallLocation) {
   track('contact', { event_category: 'phone', event_label: `${location}_phone_click`, location })
 }

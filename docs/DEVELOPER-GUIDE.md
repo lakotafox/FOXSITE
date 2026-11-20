@@ -9,6 +9,7 @@
 6. [Image Management](#image-management)
 7. [GitHub Integration](#github-integration)
 8. [Deployment](#deployment)
+9. [Analytics (GA4)](#analytics-ga4)
 
 ## Project Overview
 
@@ -199,6 +200,43 @@ NEXT_PUBLIC_GITHUB_TOKEN=github_pat_xxx
 - Auto-deploy from GitHub main branch
 - Build command: `npm run build`
 - Publish directory: `out`
+
+## Analytics (GA4)
+
+`app/google-analytics.tsx` loads GA4 (the measurement ID is in `app/layout.tsx`), and the
+site sends its own events through `lib/track.ts`. No event carries anything a visitor types.
+
+| Event | When | Parameters |
+| --- | --- | --- |
+| `contact` | A tap on any phone link | `location` (header, hero, catalog, about, footer, no_products, product, error_page, coming_soon, showroom), plus the old `event_category` `phone` and `event_label` `<location>_phone_click` |
+| `form_start_custom` | The first click or tab into a form's boxes, once per form until the page reloads | `form_name` |
+| `generate_lead` | A form was sent | `form_name` (Homepage quote form, Contact form, Product form), plus the old `event_category`, `event_label` and `value` |
+| `form_error` | A form wasn't sent | `form_name`, `error_type` (invalid_contact or send_failed) |
+
+### One-time setup in GA4, before the first deploy that sends these
+1. **Admin > Data collection and modification > Data filters**: open the Internal Traffic
+   filter (parameter `traffic_type`, value `internal`) and set it to **Active**. GA4 starts it
+   in Testing, which only labels our own visits; they stay in the reports until it is Active.
+   See https://support.google.com/analytics/answer/10104470.
+2. **Admin > Data display > Custom definitions**: create three event-scoped custom dimensions
+   for the parameters `location`, `form_name` and `error_type`. Reports and Explorations can
+   only use them once registered, and only for data from that day on.
+
+### Leaving out our own visits
+- On each phone, laptop and browser we use, open https://foxbuiltstore.com/?internal=1 once.
+  `?internal=0` undoes it.
+- The mark is kept per browser and per site address. Clearing the browser's site data removes
+  it, and Safari deletes it after about 7 days without a visit, so open the link again then.
+- Local runs (localhost, 127.0.0.1) and Netlify's Deploy Previews and branch deploys
+  (`*.netlify.app`) always count as ours. A phone that opens a local run by the computer's
+  network address does not: add `?internal=1` there too.
+- Never share a link that contains `?internal=1`: whoever opens it drops out of the reports.
+
+### Comparing with the weeks before these events
+Before Milestone 1, only the header's phone button sent `contact` and only the homepage form
+sent `generate_lead`. Their totals now count more places, so compare like with like: `contact`
+where `location` is header, and `generate_lead` where `form_name` is Homepage quote form (or on
+page path `/`, which needs no custom dimension).
 
 ## Common Tasks
 
