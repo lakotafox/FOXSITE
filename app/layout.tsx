@@ -103,13 +103,6 @@ html {
                   "closes": "17:00"
                 }
               ],
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "5.0",
-                "bestRating": "5",
-                "worstRating": "1",
-                "ratingCount": "50"
-              },
               "priceRange": "$$",
               "foundingDate": "1999",
               "areaServed": [
