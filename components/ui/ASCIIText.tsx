@@ -1,7 +1,8 @@
 "use client"
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
+import ASCIITextFallback from "@/components/ui/ASCIITextFallback";
 
 const vertexShader = `
 varying vec2 vUv;
@@ -52,6 +53,17 @@ function map(
   stop2: number
 ) {
   return ((n - start) / (stop - start)) * (stop2 - start2) + start2;
+}
+
+// Locked-down office PCs, some virtual machines and browsers with WebGL turned off can't
+// create a WebGL context, and three.js throws when it can't. Check before creating one.
+function hasWebGL() {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
 }
 
 const PX_RATIO = typeof window !== "undefined" ? window.devicePixelRatio : 1;
@@ -371,9 +383,15 @@ class CanvAscii {
     // Check if mobile
     this.isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-    this.setMesh();
-    this.setRenderer();
-    this.setupDeviceOrientation();
+    // If setup fails partway (WebGL again), undo what was done before passing the error on.
+    try {
+      this.setMesh();
+      this.setRenderer();
+      this.setupDeviceOrientation();
+    } catch (error) {
+      this.dispose();
+      throw error;
+    }
   }
 
   setMesh() {
@@ -613,10 +631,12 @@ class CanvAscii {
     this.scene.clear();
   }
 
+  // Safe to call more than once, and after a setup that failed partway: the renderer
+  // and the filter may not exist.
   dispose() {
     cancelAnimationFrame(this.animationFrameId);
-    this.filter.dispose();
-    this.container.removeChild(this.filter.domElement);
+    this.filter?.dispose();
+    this.filter?.domElement.remove();
     this.container.removeEventListener("mousemove", this.onMouseMove);
     this.container.removeEventListener("touchmove", this.onMouseMove);
     this.container.removeEventListener("click", this.onClick);
@@ -628,7 +648,7 @@ class CanvAscii {
     }
     
     this.clear();
-    this.renderer.dispose();
+    this.renderer?.dispose();
   }
 }
 
@@ -651,11 +671,47 @@ export default function ASCIIText({
 }: ASCIITextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const asciiRef = useRef<CanvAscii | null>(null);
+  // Set when the animation can't run in this browser: the plain text shows instead.
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    const { width, height } = containerRef.current.getBoundingClientRect();
+    if (!hasWebGL()) {
+      setFailed(true);
+      return;
+    }
+
+    // Both ways of starting go through here, so an error shows the plain text instead of
+    // reaching the page. Returns whether the animation started.
+    const start = (width: number, height: number) => {
+      try {
+        asciiRef.current = new CanvAscii(
+          {
+            text,
+            asciiFontSize,
+            textFontSize,
+            textColor,
+            planeBaseHeight,
+            enableWaves,
+          },
+          container,
+          width,
+          height
+        );
+        asciiRef.current.load();
+        return true;
+      } catch (error) {
+        console.warn("ASCIIText: animation failed, showing plain text instead.", error);
+        asciiRef.current?.dispose();
+        asciiRef.current = null;
+        setFailed(true);
+        return false;
+      }
+    };
+
+    const { width, height } = container.getBoundingClientRect();
 
     if (width === 0 || height === 0) {
       const observer = new IntersectionObserver(
@@ -666,52 +722,23 @@ export default function ASCIIText({
             entry.boundingClientRect.height > 0
           ) {
             const { width: w, height: h } = entry.boundingClientRect;
-
-            asciiRef.current = new CanvAscii(
-              {
-                text,
-                asciiFontSize,
-                textFontSize,
-                textColor,
-                planeBaseHeight,
-                enableWaves,
-              },
-              containerRef.current!,
-              w,
-              h
-            );
-            asciiRef.current.load();
-
+            start(w, h);
             observer.disconnect();
           }
         },
         { threshold: 0.1 }
       );
 
-      observer.observe(containerRef.current);
+      observer.observe(container);
 
       return () => {
         observer.disconnect();
-        if (asciiRef.current) {
-          asciiRef.current.dispose();
-        }
+        asciiRef.current?.dispose();
+        asciiRef.current = null;
       };
     }
 
-    asciiRef.current = new CanvAscii(
-      {
-        text,
-        asciiFontSize,
-        textFontSize,
-        textColor,
-        planeBaseHeight,
-        enableWaves,
-      },
-      containerRef.current,
-      width,
-      height
-    );
-    asciiRef.current.load();
+    if (!start(width, height)) return;
 
     const ro = new ResizeObserver((entries) => {
       if (!entries[0] || !asciiRef.current) return;
@@ -720,11 +747,12 @@ export default function ASCIIText({
         asciiRef.current.setSize(w, h);
       }
     });
-    ro.observe(containerRef.current);
+    ro.observe(container);
 
     return () => {
       ro.disconnect();
       asciiRef.current?.dispose();
+      asciiRef.current = null;
     };
   }, [
     text,
@@ -745,6 +773,7 @@ export default function ASCIIText({
         height: "100%",
       }}
     >
+      {failed && <ASCIITextFallback text={text} color={textColor} />}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap');
 
