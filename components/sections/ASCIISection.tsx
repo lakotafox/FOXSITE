@@ -71,7 +71,9 @@ export default function ASCIISection() {
     if (typeof window === 'undefined' || window.innerWidth < 768 || isDuckDuckGo) return
 
     const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (!sectionRef.current) return
+      // Skip the copies dispatched below: they bubble back up to document, and handling
+      // them again would repeat until the browser runs out of stack.
+      if (!e.isTrusted || !sectionRef.current) return
       
       // Get the ASCII section's position
       const rect = sectionRef.current.getBoundingClientRect()
