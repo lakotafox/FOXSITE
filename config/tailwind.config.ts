@@ -4,11 +4,13 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
     darkMode: ["class"],
+    // No root-level glob such as "*.{js,ts,jsx,tsx,mdx}": it makes Next's build cache treat
+    // the stylesheet as unchanged, so a cached build (local, or on Netlify, which restores
+    // .next/cache) leaves out classes added since. No file at the root holds classes.
     content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "*.{js,ts,jsx,tsx,mdx}"
+    "./app/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
   	extend: {
