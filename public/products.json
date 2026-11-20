@@ -6,12 +6,8 @@
         "title": "Executive Desk Series",
         "image": "/images/desk grey L showroom.jpg",
         "description": "",
-        "features": [
-          "Solid wood construction",
-          "Cable management",
-          "5-year warranty"
-        ],
-        "price": "",
+        "features": [],
+        "price": "Request pricing",
         "imageCrop": {
           "scale": 3.045213915504014,
           "x": 44,
@@ -23,12 +19,8 @@
         "title": "Ergonomic Task Chair",
         "image": "/images/product-2-1754595166035.jpg",
         "description": "",
-        "features": [
-          "Lumbar support",
-          "Adjustable arms",
-          "Breathable mesh"
-        ],
-        "price": "",
+        "features": [],
+        "price": "Request pricing",
         "imageCrop": {
           "scale": 1,
           "x": 50,
@@ -40,84 +32,56 @@
         "title": "Conference Table",
         "image": "/images/tanconf.jpg",
         "description": "",
-        "features": [
-          "Seats 8-12",
-          "Power integration",
-          "Premium finishes"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 4,
         "title": "Storage Cabinet",
         "image": "/images/showroom-1.jpg",
         "description": "",
-        "features": [
-          "Locking drawers",
-          "Adjustable shelves",
-          "Anti-tip design"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 5,
         "title": "Reception Desk",
         "image": "/images/reception tan.jpg",
         "description": "",
-        "features": [
-          "ADA compliant",
-          "Built-in storage",
-          "Custom sizes"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 6,
         "title": "Standing Desk",
         "image": "/images/showfacinggarage.jpg",
         "description": "",
-        "features": [
-          "Electric lift",
-          "Memory settings",
-          "Anti-collision"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 7,
         "title": "Lounge Seating",
         "image": "/images/Showroomwglassboard.jpg",
         "description": "",
-        "features": [
-          "Stain resistant",
-          "Modular design",
-          "USB charging"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 8,
         "title": "File Cabinet",
         "image": "/images/small desk.jpg",
         "description": "",
-        "features": [
-          "Fire resistant",
-          "Full extension",
-          "Lock system"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 9,
         "title": "Training Table",
         "image": "/images/conference-room.jpg",
         "description": "",
-        "features": [
-          "Flip-top design",
-          "Nesting storage",
-          "Mobile casters"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       }
     ],
     "battleTested": [
@@ -126,24 +90,16 @@
         "title": "Pre-Owned Executive Desk",
         "image": "/images/showroom-2.jpg",
         "description": "",
-        "features": [
-          "Inspected & certified",
-          "Like-new condition",
-          "50% off retail"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 11,
         "title": "Refurbished Conference Set",
         "image": "/images/desk grey L showroom.jpg",
         "description": "",
-        "features": [
-          "Table & 8 chairs",
-          "Professionally cleaned",
-          "1-year warranty"
-        ],
-        "price": "",
+        "features": [],
+        "price": "Request pricing",
         "imageCrop": {
           "scale": 3.045213915504014,
           "x": 44,
@@ -155,84 +111,56 @@
         "title": "Pre-Owned Task Chairs",
         "image": "/images/reception-area.jpg",
         "description": "",
-        "features": [
-          "Fully functional",
-          "New casters",
-          "Bulk discounts"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 13,
         "title": "Refurbished Storage Units",
         "image": "/images/showroom-1.jpg",
         "description": "",
-        "features": [
-          "New locks installed",
-          "Touch-up paint",
-          "Various sizes"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 14,
         "title": "Pre-Owned Workstations",
         "image": "/images/tanconf.jpg",
         "description": "",
-        "features": [
-          "Modular design",
-          "Easy reconfiguration",
-          "Great value"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 15,
         "title": "Refurbished Reception Desk",
         "image": "/images/reception tan.jpg",
         "description": "",
-        "features": [
-          "Professional refinish",
-          "Updated hardware",
-          "60% off new"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 16,
         "title": "Pre-Owned Lounge Set",
         "image": "/images/Showroomwglassboard.jpg",
         "description": "",
-        "features": [
-          "Deep cleaned",
-          "No visible wear",
-          "Ready to use"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 17,
         "title": "Refurbished Training Tables",
         "image": "/images/conference-room.jpg",
         "description": "",
-        "features": [
-          "Flip-top mechanism",
-          "New wheels",
-          "Set of 6 available"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 18,
         "title": "Pre-Owned Executive Suite",
         "image": "/images/showfacinggarage.jpg",
         "description": "",
-        "features": [
-          "Desk, credenza, chair",
-          "Matching finish",
-          "Premium quality"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       }
     ],
     "seating": [
@@ -241,96 +169,64 @@
         "title": "Ergonomic Office Chairs",
         "image": "/images/reception-area.jpg",
         "description": "",
-        "features": [
-          "Lumbar support",
-          "Adjustable everything",
-          "5-year warranty"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 20,
         "title": "Executive Leather Chairs",
         "image": "/images/showroom-2.jpg",
         "description": "",
-        "features": [
-          "Genuine leather",
-          "Memory foam",
-          "Lifetime frame warranty"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 21,
         "title": "Conference Room Chairs",
         "image": "/images/tanconf.jpg",
         "description": "",
-        "features": [
-          "Stackable option",
-          "Arms available",
-          "Bulk pricing"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 22,
         "title": "Reception Area Seating",
         "image": "/images/reception tan.jpg",
         "description": "",
-        "features": [
-          "Anti-microbial fabric",
-          "Modular design",
-          "ADA compliant"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 23,
         "title": "Task Chairs",
         "image": "/images/small desk.jpg",
         "description": "",
-        "features": [
-          "Height adjustable",
-          "Swivel base",
-          "Multiple colors"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 24,
         "title": "Lounge Chairs",
         "image": "/images/Showroomwglassboard.jpg",
         "description": "",
-        "features": [
-          "Deep cushions",
-          "Stain resistant",
-          "Modern design"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 25,
         "title": "Drafting Stools",
         "image": "/images/showfacinggarage.jpg",
         "description": "",
-        "features": [
-          "Foot ring",
-          "360° swivel",
-          "Industrial rated"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 26,
         "title": "Guest Chairs",
         "image": "/images/desk grey L showroom.jpg",
         "description": "",
-        "features": [
-          "No assembly required",
-          "Stackable",
-          "Easy clean"
-        ],
-        "price": "",
+        "features": [],
+        "price": "Request pricing",
         "imageCrop": {
           "scale": 3.045213915504014,
           "x": 44,
@@ -342,12 +238,8 @@
         "title": "Collaborative Seating",
         "image": "/images/conference-room.jpg",
         "description": "",
-        "features": [
-          "Mobile base",
-          "Tablet arm option",
-          "Flexible design"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       }
     ],
     "executive-desks": [
@@ -356,12 +248,8 @@
         "title": "Executive Desk Series",
         "image": "/images/desk grey L showroom.jpg",
         "description": "",
-        "features": [
-          "Solid wood construction",
-          "Cable management",
-          "5-year warranty"
-        ],
-        "price": "",
+        "features": [],
+        "price": "Request pricing",
         "imageCrop": {
           "scale": 3.045213915504014,
           "x": 44,
@@ -373,12 +261,8 @@
         "title": "Ergonomic Task Chair",
         "image": "/images/product-2-1754595166035.jpg",
         "description": "",
-        "features": [
-          "Lumbar support",
-          "Adjustable arms",
-          "Breathable mesh"
-        ],
-        "price": "",
+        "features": [],
+        "price": "Request pricing",
         "imageCrop": {
           "scale": 1,
           "x": 50,
@@ -390,84 +274,56 @@
         "title": "Conference Table",
         "image": "/images/tanconf.jpg",
         "description": "",
-        "features": [
-          "Seats 8-12",
-          "Power integration",
-          "Premium finishes"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 4,
         "title": "Storage Cabinet",
         "image": "/images/showroom-1.jpg",
         "description": "",
-        "features": [
-          "Locking drawers",
-          "Adjustable shelves",
-          "Anti-tip design"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 5,
         "title": "Reception Desk",
         "image": "/images/reception tan.jpg",
         "description": "",
-        "features": [
-          "ADA compliant",
-          "Built-in storage",
-          "Custom sizes"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 6,
         "title": "Standing Desk",
         "image": "/images/showfacinggarage.jpg",
         "description": "",
-        "features": [
-          "Electric lift",
-          "Memory settings",
-          "Anti-collision"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 7,
         "title": "Lounge Seating",
         "image": "/images/Showroomwglassboard.jpg",
         "description": "",
-        "features": [
-          "Stain resistant",
-          "Modular design",
-          "USB charging"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 8,
         "title": "File Cabinet",
         "image": "/images/small desk.jpg",
         "description": "",
-        "features": [
-          "Fire resistant",
-          "Full extension",
-          "Lock system"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       },
       {
         "id": 9,
         "title": "Training Table",
         "image": "/images/conference-room.jpg",
         "description": "",
-        "features": [
-          "Flip-top design",
-          "Nesting storage",
-          "Mobile casters"
-        ],
-        "price": ""
+        "features": [],
+        "price": "Request pricing"
       }
     ]
   },

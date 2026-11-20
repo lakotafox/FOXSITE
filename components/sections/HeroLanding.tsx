@@ -62,7 +62,7 @@ export default function HeroLanding({ galleryImages = [], getImageUrl }: HeroLan
         {/* Rating Section - Near top */}
         <div className="flex justify-center pt-20 md:pt-24">
           <a 
-            href="https://www.google.com/maps/place/FoxBuilt+Office/@40.7609421,-111.8910865,17z/data=!4m8!3m7!1s0x874d852112461743:0x378fbe70e0c25e5e!8m2!3d40.7609421!4d-111.8910865!9m1!1b1!16s%2Fg%2F11c5kyjb_x"
+            href="https://maps.google.com/?cid=4003627985772109406"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 hover:scale-105 transition-transform cursor-pointer"

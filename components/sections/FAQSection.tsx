@@ -12,7 +12,7 @@ const faqs = [
   {
     question: 'How much does office furniture cost?',
     answer:
-      'Office furniture pricing varies based on condition, brand, and customization. At FoxBuilt we carry new and pre-owned options — desks start around $200 and executive setups can run several thousand. Call us at (801) 899-9406 for a free, no-obligation quote tailored to your budget.',
+      'Office furniture pricing varies based on condition, brand, and customization. At FoxBuilt we carry new and pre-owned options. Call us at (801) 899-9406 for a free, no-obligation quote tailored to your budget.',
   },
   {
     question: 'Do you deliver and set up office furniture?',
@@ -22,12 +22,12 @@ const faqs = [
   {
     question: 'Can I buy used office furniture near me?',
     answer:
-      'Absolutely. We carry a large selection of quality pre-owned desks, chairs, cubicles, and conference tables at our Pleasant Grove showroom. Pre-owned pieces are inspected and refreshed before they hit the floor. Inventory changes often — call (801) 899-9406 to ask about current stock.',
+      'Absolutely. We carry a large selection of quality pre-owned desks, chairs, cubicles, and conference tables at our Pleasant Grove showroom. Inventory changes often — call (801) 899-9406 to ask about current stock.',
   },
   {
     question: 'Do you offer bulk discounts for businesses?',
     answer:
-      'Yes — we regularly furnish entire offices and offer volume pricing for larger orders. Whether you need 5 desks or 500, we can put together a package that fits your budget. Request a free quote and let us know the scope of your project.',
+      'Yes — we regularly furnish entire offices and offer volume pricing for larger orders. Request a free quote and let us know the scope of your project.',
   },
   {
     question: 'What brands of office furniture do you carry?',

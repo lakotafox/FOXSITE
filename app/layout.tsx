@@ -134,7 +134,7 @@ html {
                   "name": "How much does office furniture cost?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Office furniture pricing varies based on condition, brand, and customization. At FoxBuilt we carry new and pre-owned options — desks start around $200 and executive setups can run several thousand. Call us at (801) 899-9406 for a free, no-obligation quote."
+                    "text": "Office furniture pricing varies based on condition, brand, and customization. At FoxBuilt we carry new and pre-owned options. Call us at (801) 899-9406 for a free, no-obligation quote."
                   }
                 },
                 {
@@ -158,7 +158,7 @@ html {
                   "name": "Do you offer bulk discounts for businesses?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes — we regularly furnish entire offices and offer volume pricing for larger orders. Whether you need 5 desks or 500, we can put together a package that fits your budget."
+                    "text": "Yes — we regularly furnish entire offices and offer volume pricing for larger orders."
                   }
                 },
                 {

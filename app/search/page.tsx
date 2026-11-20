@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import Header from '@/components/sections/Header'
 import ProductsSection from '@/components/products/ProductsSection'
 import ContactForm from '@/components/products/ContactForm'
+import RequestPricing from '@/components/products/RequestPricing'
 import ASCIISection from '@/components/sections/ASCIISection'
 import VoidModal from '@/components/ui/VoidModal'
 import FlyingPosters from '@/components/ui/FlyingPosters'
@@ -42,19 +43,6 @@ const allCategories = [
   { id: 'side-tables', name: 'Side Tables', group: 'Reception & Lounge' }
 ]
 
-// Default images for products
-const defaultImages = [
-  '/images/showroom-1.jpg',
-  '/images/tanconf.jpg',
-  '/images/reception tan.jpg',
-  '/images/small desk.jpg',
-  '/images/showfacinggarage.jpg',
-  '/images/Showroomwglassboard.jpg',
-  '/images/conference-room.jpg',
-  '/images/desk grey L showroom.jpg',
-  '/images/reception-area.jpg'
-]
-
 function SearchPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -81,7 +69,8 @@ function SearchPageContent() {
         console.log('No main products file')
       }
       
-      // Try to load category-specific files
+      // Try to load category-specific files. A category without a file has no
+      // products to search, so nothing is made up for it.
       for (const category of allCategories) {
         if (category.id === 'executive-desks') continue // Already loaded
         
@@ -90,27 +79,9 @@ function SearchPageContent() {
           if (response.ok) {
             const data = await response.json()
             productsData[category.id] = data.products[category.id] || []
-          } else {
-            // Create default products for this category
-            productsData[category.id] = Array.from({ length: 9 }, (_, i) => ({
-              id: i + 1,
-              title: `${category.name} ${i + 1}`,
-              image: defaultImages[i] || '/images/showroom-1.jpg',
-              description: '',
-              features: ['Premium Quality', 'Professional Grade', 'Warranty Included'],
-              price: ''
-            }))
           }
         } catch (e) {
-          // Create default products if file doesn't exist
-          productsData[category.id] = Array.from({ length: 9 }, (_, i) => ({
-            id: i + 1,
-            title: `${category.name} ${i + 1}`,
-            image: defaultImages[i] || '/images/showroom-1.jpg',
-            description: '',
-            features: ['Premium Quality', 'Professional Grade', 'Warranty Included'],
-            price: ''
-          }))
+          console.log(`No products file for ${category.id}`)
         }
       }
       
@@ -218,12 +189,7 @@ function SearchPageContent() {
           isCarouselOpen={showFlyingPosters}
         />
       ) : query ? (
-        <section className="py-20 bg-slate-800">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-2xl text-gray-400">No products found matching your search.</p>
-            <p className="text-gray-500 mt-4">Try searching for different keywords or browse our categories.</p>
-          </div>
-        </section>
+        <RequestPricing title="No products found matching your search." />
       ) : (
         <section className="py-20 bg-slate-800">
           <div className="container mx-auto px-4 text-center">

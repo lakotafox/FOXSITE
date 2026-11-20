@@ -1,4 +1,4 @@
-// Products page items - 9 different items per category (not shown on main page)
+// Products page items, used only when /products.json can't be loaded (not shown on main page)
 export const defaultProductsPageItems = {
   // Keep the old format for main page compatibility
   executiveDesks: [
@@ -7,146 +7,130 @@ export const defaultProductsPageItems = {
       title: "Storage Cabinet",
       image: "/images/showroom-1.jpg",
       description: "",
-      features: ["Locking drawers", "Adjustable shelves", "Anti-tip design"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 5,
       title: "Reception Desk",
       image: "/images/reception tan.jpg",
       description: "",
-      features: ["ADA compliant", "Built-in storage", "Custom sizes"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 6,
       title: "Standing Desk",
       image: "/images/showfacinggarage.jpg",
       description: "",
-      features: ["Electric lift", "Memory settings", "Anti-collision"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 7,
       title: "Lounge Seating",
       image: "/images/Showroomwglassboard.jpg",
       description: "",
-      features: ["Stain resistant", "Modular design", "USB charging"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 8,
       title: "File Cabinet",
       image: "/images/small desk.jpg",
       description: "",
-      features: ["Fire resistant", "Full extension", "Lock system"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 9,
       title: "Training Table",
       image: "/images/conference-room.jpg",
       description: "",
-      features: ["Flip-top design", "Nesting storage", "Mobile casters"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 28,
       title: "Bookshelf Unit",
       image: "/images/tanconf.jpg",
       description: "",
-      features: ["5 adjustable shelves", "Anti-sag design", "Wall anchor included"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 29,
       title: "Mobile Pedestal",
       image: "/images/reception-area.jpg",
       description: "",
-      features: ["3 drawers", "Lock system", "Cushion top option"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 30,
       title: "Privacy Screen",
       image: "/images/desk grey L showroom.jpg",
       description: "",
-      features: ["Acoustic panels", "Modular system", "Tool-free assembly"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     }
   ],
   battleTested: [
-    {
-      id: 13,
-      title: "Used Herman Miller Aeron",
-      image: "/images/showroom-1.jpg",
-      description: "",
-      features: ["Grade A condition", "Fully adjustable", "60% savings"],
-      price: ""
-    },
     {
       id: 14,
       title: "Pre-Owned Workstations",
       image: "/images/tanconf.jpg",
       description: "",
-      features: ["6x6 cubicles", "Power/data ready", "Quantity discounts"],
-      price: ""
-    },
-    {
-      id: 15,
-      title: "Refurbished Steelcase Desk",
-      image: "/images/small desk.jpg",
-      description: "",
-      features: ["Height adjustable", "New laminate top", "90-day warranty"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 16,
       title: "Used Training Tables",
       image: "/images/Showroomwglassboard.jpg",
       description: "",
-      features: ["Various sizes", "Folding design", "Bulk pricing"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 17,
       title: "Pre-Owned Filing Systems",
       image: "/images/reception tan.jpg",
       description: "",
-      features: ["Lateral files", "Fireproof options", "Key included"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 18,
       title: "Refurbished Reception Furniture",
       image: "/images/conference-room.jpg",
       description: "",
-      features: ["Complete set", "Modern look", "Installation available"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 31,
       title: "Used Conference Phones",
       image: "/images/showroom-2.jpg",
       description: "",
-      features: ["Polycom units", "Tested & working", "Cables included"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 32,
       title: "Pre-Owned Whiteboards",
       image: "/images/desk grey L showroom.jpg",
       description: "",
-      features: ["Magnetic surface", "Wall mounted", "Various sizes"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 33,
       title: "Refurbished Storage Lockers",
       image: "/images/reception-area.jpg",
       description: "",
-      features: ["Employee lockers", "New locks", "Powder coated"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     }
   ],
   seating: [
@@ -155,72 +139,72 @@ export const defaultProductsPageItems = {
       title: "Stacking Chairs",
       image: "/images/tanconf.jpg",
       description: "",
-      features: ["Stack 10 high", "Ganging option", "10-year warranty"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 23,
       title: "Big & Tall Chair",
       image: "/images/reception tan.jpg",
       description: "",
-      features: ["500lb capacity", "Extra wide seat", "Heavy-duty base"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 24,
       title: "24/7 Task Chair",
       image: "/images/small desk.jpg",
       description: "",
-      features: ["Multi-shift use", "Heavy-duty fabric", "5-year warranty"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 25,
       title: "Drafting Stools",
       image: "/images/showfacinggarage.jpg",
       description: "",
-      features: ["Foot ring", "360° swivel", "Industrial rated"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 26,
       title: "Guest Chairs",
       image: "/images/desk grey L showroom.jpg",
       description: "",
-      features: ["No assembly required", "Stackable", "Easy clean"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 27,
       title: "Collaborative Seating",
       image: "/images/conference-room.jpg",
       description: "",
-      features: ["Mobile base", "Tablet arm option", "Flexible design"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 34,
       title: "Bench Seating",
       image: "/images/Showroomwglassboard.jpg",
       description: "",
-      features: ["3-person capacity", "Storage below", "Upholstered top"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 35,
       title: "Kneeling Chair",
       image: "/images/showroom-1.jpg",
       description: "",
-      features: ["Ergonomic design", "Adjustable height", "Improves posture"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 36,
       title: "Ball Chair",
       image: "/images/reception-area.jpg",
       description: "",
-      features: ["Active sitting", "Core strength", "Includes pump"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     }
   ],
   // Also add kebab-case version for new products pages
@@ -230,72 +214,72 @@ export const defaultProductsPageItems = {
       title: "Storage Cabinet",
       image: "/images/showroom-1.jpg",
       description: "",
-      features: ["Locking drawers", "Adjustable shelves", "Anti-tip design"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 5,
       title: "Reception Desk",
       image: "/images/reception tan.jpg",
       description: "",
-      features: ["ADA compliant", "Built-in storage", "Custom sizes"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 6,
       title: "Standing Desk",
       image: "/images/showfacinggarage.jpg",
       description: "",
-      features: ["Electric lift", "Memory settings", "Anti-collision"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 7,
       title: "Lounge Seating",
       image: "/images/Showroomwglassboard.jpg",
       description: "",
-      features: ["Stain resistant", "Modular design", "USB charging"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 8,
       title: "File Cabinet",
       image: "/images/small desk.jpg",
       description: "",
-      features: ["Fire resistant", "Full extension", "Lock system"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 9,
       title: "Training Table",
       image: "/images/conference-room.jpg",
       description: "",
-      features: ["Flip-top design", "Nesting storage", "Mobile casters"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 28,
       title: "Bookshelf Unit",
       image: "/images/tanconf.jpg",
       description: "",
-      features: ["5 adjustable shelves", "Anti-sag design", "Wall anchor included"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 29,
       title: "Mobile Pedestal",
       image: "/images/reception-area.jpg",
       description: "",
-      features: ["3 drawers", "Lock system", "Cushion top option"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     },
     {
       id: 30,
       title: "Privacy Screen",
       image: "/images/desk grey L showroom.jpg",
       description: "",
-      features: ["Acoustic panels", "Modular system", "Tool-free assembly"],
-      price: ""
+      features: [],
+      price: "Request pricing"
     }
   ]
 }

@@ -47,7 +47,6 @@ export default function ShowroomCTA() {
                   </div>
                   <div className="text-lg font-bold text-zinc-200">
                     <p>Monday–Friday: 10:00am–5:00pm</p>
-                    <p>Saturday–Sunday: By Appointment</p>
                   </div>
                 </div>
               </div>

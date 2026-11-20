@@ -10,6 +10,7 @@ import CategorySelector from '@/components/products/CategorySelector'
 import Header from '@/components/sections/Header'
 import FloatingCategoryButtons from '@/components/products/FloatingCategoryButtons'
 import ContactForm from '@/components/products/ContactForm'
+import RequestPricing from '@/components/products/RequestPricing'
 import ASCIISection from '@/components/sections/ASCIISection'
 import { getPublishedProductsPageItems } from '@/lib/products-page-data'
 import { getCategoryNames } from '@/lib/category-names'
@@ -60,6 +61,7 @@ function ProductsPageContent() {
   const [clickedIndex, setClickedIndex] = useState(0)
   const [showFloatingCategories, setShowFloatingCategories] = useState(false)
   const [productsByCategory, setProductsByCategory] = useState<any>({})
+  const [productsLoaded, setProductsLoaded] = useState(false)
   const [pageName, setPageName] = useState('')
   const [showAddress, setShowAddress] = useState(false)
   const [categoryNames, setCategoryNames] = useState<any>(null)
@@ -96,6 +98,7 @@ function ProductsPageContent() {
   useEffect(() => {
     // Load products when component mounts or category changes
     const loadProducts = async () => {
+      setProductsLoaded(false)
       try {
         // Try to load category-specific products file
         const response = await fetch(`/products-${categoryParam}.json`, { cache: 'no-store' })
@@ -120,9 +123,8 @@ function ProductsPageContent() {
           }
           
           setCropSettings(data.productsCrops || {})
-          if (data.pageName) {
-            setPageName(data.pageName)
-          }
+          setPageName(data.pageName || getCategoryDefaultName(categoryParam))
+          setProductsLoaded(true)
           return
         }
       } catch (e) {
@@ -134,8 +136,9 @@ function ProductsPageContent() {
       console.log('Loaded fallback products data:', data)
       setProductsByCategory(data.products || {})
       setCropSettings(data.crops || {})
-      // Set page name from data or use default
-      setPageName(data.pageName || 'Executive Desks')
+      // Set page name from data or use this category's name
+      setPageName(data.pageName || getCategoryDefaultName(categoryParam))
+      setProductsLoaded(true)
     }
     loadProducts()
   }, [categoryParam])
@@ -259,13 +262,18 @@ function ProductsPageContent() {
         </div>
       </section>
 
-      <ProductsSection 
-        products={currentProducts}
-        category={productCategory}
-        cropSettings={cropSettings}
-        onImageClick={handleImageClick}
-        isCarouselOpen={showFlyingPosters}
-      />
+      {/* No products listed for this category: offer a call or a pricing request instead of an empty grid */}
+      {productsLoaded && currentProducts.length === 0 ? (
+        <RequestPricing title={`Ask us about ${pageName}`} />
+      ) : (
+        <ProductsSection
+          products={currentProducts}
+          category={productCategory}
+          cropSettings={cropSettings}
+          onImageClick={handleImageClick}
+          isCarouselOpen={showFlyingPosters}
+        />
+      )}
 
 
       {/* Contact Form */}
